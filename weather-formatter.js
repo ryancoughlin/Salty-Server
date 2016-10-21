@@ -6,7 +6,8 @@ export default class {
   format() {
     return {
       currentWeather: this.currentWeatherString(),
-      currentWind: this.currentWindString()
+      currentWind: this.currentWindString(),
+      icon: this.weather.currently.icon
     }
   }
 

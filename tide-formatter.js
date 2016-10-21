@@ -7,12 +7,26 @@ export default class {
   }
 
   findCurrentTide() {
-    console.log(this.tides)
-    const currentTide = _.find(this.tides, function(tide) {
-      console.log(tide)
-      const tideDate = moment(tide.time, "YYYY-M-D HH:mm")
+    const currentTime = moment().format('YYYY-M-D HH:mm')
+    const allTides = _.flatten(_.values(this.tides));
 
-      return tide
+    const tide = _.find(allTides, function(tide) {
+      const tideTime = moment(tide.time, 'YYYY-M-D HH:mm')
+      const nowFromTide = tideTime.diff(currentTime, 'minutes')
+
+      return nowFromTide > 0;
     });
+
+    return tide.tide
+  }
+
+  format() {
+    var type;
+
+    if(tide.tide == "high") {
+      type = "incoming"
+    } else {
+      type = "outgoing"
+    }
   }
 }

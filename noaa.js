@@ -2,7 +2,6 @@ import fetch from 'node-fetch';
 import moment from 'moment';
 import _ from 'lodash';
 
-const NOAA_URL = 'http://tidesandcurrents.noaa.gov/api/datagetter?date=recent&range=5&product=one_minute_water_level&units=english&time_zone=lst&format=json&datum=mllw&station=';
 export function fetchNextTides(stationId) {
   return fetchTides(stationId).then((allStations) => {
     const tidesByDay = _.groupBy(allStations, function(station) {
@@ -86,7 +85,33 @@ function getHighest(stations) {
 }
 
 function fetchTides(stationId) {
-  return fetch(NOAA_URL + stationId)
+  const tideUrl = urlForTideQuery(stationId);
+  return fetch(tideUrl)
     .then(res => res.json())
-    .then(json => json.data)
+    .then(json => json.predictions)
+    .catch(e => console.log(e));
+}
+
+function urlForTideQuery(stationId) {
+  const today = moment().format('MM/DD/YYYY')
+  const future = moment(today, 'MM/DD/YYYY').add(5, 'days').format('MM/DD/YYYY')
+  const queryParameters = {
+    'begin_date': today,
+    'end_date': future,
+    'product': 'predictions',
+    'units': 'english',
+    'time_zone': 'lst',
+    'datum': 'MLLW',
+    'format': 'json',
+    'station': stationId
+  }
+  const encodedData = encodeData(queryParameters);
+
+  return `http://tidesandcurrents.noaa.gov/api/datagetter?${encodedData}`
+}
+
+function encodeData(data) {
+    return Object.keys(data).map(function(key) {
+        return [key, data[key]].map(encodeURIComponent).join("=");
+    }).join("&");
 }

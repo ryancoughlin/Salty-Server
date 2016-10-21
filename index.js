@@ -6,38 +6,39 @@ import WeatherFormatter from './weather-formatter'
 import TideFormatter from './tide-formatter'
 
 const server = new Hapi.Server();
+
 server.connection({
-    host: 'localhost',
-    port: 8000
+  host: 'localhost',
+  port: 8000
 });
 
 server.route({
-    method: 'GET',
-    path:'/api/get-data',
-    handler: function ({ query: { lat: lat, lng: lng } }, reply) {
-      const stationsPromise = getStation(lat, lng).then(function(stationId) {
-        return fetchNextTides(stationId);
-      });
+  method: 'GET',
+  path:'/api/get-data',
+  handler: function ({ query: { lat: lat, lng: lng } }, reply) {
+    const stationsPromise = getStation(lat, lng).then(function(stationId) {
+      return fetchNextTides(stationId);
+    });
 
-      const weatherPromise = fetchForecast(lat, lng);
+    const weatherPromise = fetchForecast(lat, lng);
 
-      Promise.all([stationsPromise, weatherPromise]).then(([nextTides, weather]) => {
-        const formatter = new WeatherFormatter(weather);
-        const tideFormatter = new TideFormatter(nextTides);
+    Promise.all([stationsPromise, weatherPromise]).then(([nextTides, weather]) => {
+      const formatter = new WeatherFormatter(weather);
+      const tideFormatter = new TideFormatter(nextTides);
 
-        reply({
-          currentTidePhrase: tideFormatter.findCurrentTide(),
-          tides: nextTides,
-          weather: formatter.format(),
-        })
+      reply({
+        currentTidePhrase: tideFormatter.findCurrentTide(),
+        tides: nextTides,
+        weather: formatter.format(),
+      })
 
-      }).catch(e => console.log(e));;
-    }
+    }).catch(e => console.log(e));
+  }
 });
 
 server.start((err) => {
-    if (err) {
-        throw err;
-    }
-    console.log('Server running at:', server.info.uri);
+  if (err) {
+    throw err;
+  }
+  console.log('Server running at:', server.info.uri);
 });
