@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "babel-cli": "^6.18.0",
     "dark-sky": "^1.0.7",
     "dotenv": "^2.0.0",
     "firebase": "^3.4.0",
