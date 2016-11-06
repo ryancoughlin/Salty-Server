@@ -4,6 +4,7 @@
   "description": "Fetches data and does things.",
   "main": "index.js",
   "scripts": {
+    "start": "babel-node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -16,7 +17,8 @@
     "hapi": "^15.0.3",
     "lodash": "^4.15.0",
     "moment": "^2.15.0",
-    "node-fetch": "^1.6.1"
+    "node-fetch": "^1.6.1",
+    "react-native-css": "^1.2.44"
   },
   "devDependencies": {
     "babel-preset-es2015": "^6.14.0"
