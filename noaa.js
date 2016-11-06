@@ -6,10 +6,10 @@ export function fetchNextTides(stationId) {
   return fetchTides(stationId).then((allStations) => {
     const tidesByDay = _.groupBy(allStations, function(station) {
       const time = moment(station.t, "YYYY-M-D HH:mm")
-      return time.format('DD/MM/YYYY')
+      return time.format('MM/DD/YYYY')
     });
 
-    const today = moment().add(-1, 'days').format('DD/MM/YYYY');
+    const today = moment().add(-1, 'days').format('MM/DD/YYYY');
 
     return _.mapValues(tidesByDay, function(stations) {
       if(stations.length == 0) {
