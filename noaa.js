@@ -2,14 +2,19 @@ import fetch from 'node-fetch';
 import moment from 'moment';
 import _ from 'lodash';
 
-export function fetchNextTides(stationId) {
-  return fetchTides(stationId).then((allStations) => {
-    const tidesByDay = _.groupBy(allStations, function(station) {
-      const time = moment(station.t, "YYYY-M-D HH:mm")
-      return time.format('MM/DD/YYYY')
+const NOAA_DATE_FORMAT = 'YYYY-M-D HH:mm'
+const API_DATE_FORMAT = 'MM/DD/YYYY'
+
+export function groupTides(stationId) {
+
+  return fetchTides(stationId, false).then((tides) => {
+    console.log(tides)
+    const tidesByDay = _.groupBy(tides, function(station) {
+      const time = moment(station.time, NOAA_DATE_FORMAT)
+      return time.format(API_DATE_FORMAT)
     });
 
-    const today = moment().add(-1, 'days').format('MM/DD/YYYY');
+    const today = moment().add(-1, 'days').format(API_DATE_FORMAT);
 
     return _.mapValues(tidesByDay, function(stations) {
       if(stations.length == 0) {
@@ -17,19 +22,19 @@ export function fetchNextTides(stationId) {
       }
 
       const low1 = getLowest(stations);
-      const low1Time = moment(low1.t, "YYYY-M-D HH:mm")
+      const low1Time = moment(low1.time, NOAA_DATE_FORMAT)
       const low2 = getLowest(
         _.filter(stations, function(station) {
-          const time = moment(station.t, "YYYY-M-D HH:mm")
+          const time = moment(station.time, NOAA_DATE_FORMAT)
           return Math.abs(time.hour() - low1Time.hour()) >= 6;
         })
       );
 
       const high1 = getHighest(stations);
-      const high1Time = moment(high1.t, "YYYY-M-D HH:mm")
+      const high1Time = moment(high1.time, NOAA_DATE_FORMAT)
       const high2 = getHighest(
         _.filter(stations, function(station) {
-          const time = moment(station.t, "YYYY-M-D HH:mm")
+          const time = moment(station.time, NOAA_DATE_FORMAT)
           return Math.abs(time.hour() - high1Time.hour()) >= 6;
         })
       );
@@ -42,17 +47,39 @@ export function fetchNextTides(stationId) {
       ];
 
       return _.sortBy(_.omitBy(tidesToDisplay, _.isNull), function(station) {
-        return moment(station.time, "YYYY-M-D HH:mm")
+        return moment(station.time, NOAA_DATE_FORMAT)
       })
     });
   });
 }
 
+export function fetchTides(stationId, isForCharts) {
+  var tideUrl = tidePredictionsQueryParameters(stationId);
+
+  if (isForCharts) {
+    tideUrl = urlForTideChartQuery(stationId);
+  } else {
+    tideUrl = urlForTideQuery(stationId);
+  }
+
+  return fetch(tideUrl)
+    .then(res => res.json())
+    .then(json => {
+      return _.map(json.predictions, function(prediction) {
+        return {
+          time: prediction.t,
+          height: Number(prediction.v)
+        }
+      });
+    })
+    .catch(e => console.log(e));
+}
+
 const prettify = function(station, tide) {
-  if(station){
+  if(station) {
     return {
-      time: station.t,
-      height: station.v,
+      time: station.time,
+      height: station.height,
       tide: tide
     }
   } else {
@@ -64,7 +91,7 @@ function getLowest(stations) {
   return _.reduce(stations, (firstLow, station) => {
     if (!firstLow) {
       return station;
-    } else if (firstLow.v > station.v) {
+    } else if (firstLow.height > station.height) {
       return station;
     } else {
       return firstLow;
@@ -76,7 +103,7 @@ function getHighest(stations) {
   return _.reduce(stations, (firstHigh, station) => {
     if (!firstHigh) {
       return station;
-    } else if (firstHigh.v < station.v) {
+    } else if (firstHigh.height < station.height) {
       return station;
     } else {
       return firstHigh;
@@ -84,27 +111,46 @@ function getHighest(stations) {
   });
 }
 
-function fetchTides(stationId) {
-  const tideUrl = urlForTideQuery(stationId);
-  return fetch(tideUrl)
-    .then(res => res.json())
-    .then(json => json.predictions)
-    .catch(e => console.log(e));
-}
-
-function urlForTideQuery(stationId) {
-  const today = moment().format('MM/DD/YYYY')
-  const future = moment(today, 'MM/DD/YYYY').add(5, 'days').format('MM/DD/YYYY')
-  const queryParameters = {
-    'begin_date': today,
-    'end_date': future,
+function tidePredictionsQueryParameters(stationId, startDate, endDate) {
+  return {
+    'station': stationId,
+    'begin_date': startDate,
+    'end_date': endDate,
     'product': 'predictions',
     'units': 'english',
     'time_zone': 'lst',
-    'datum': 'MLLW',
+    'datum': 'mllw',
     'format': 'json',
-    'station': stationId
   }
+}
+
+function tideChartQueryParameters(stationId, startDate, endDate) {
+  return {
+    'station': stationId,
+    'begin_date': startDate,
+    'end_date': endDate,
+    'interval': 'h',
+    'product': 'predictions',
+    'units': 'english',
+    'time_zone': 'lst',
+    'datum': 'mllw',
+    'format': 'json',
+  }
+}
+
+function urlForTideChartQuery(stationId) {
+  const yesterday = moment().add(-1, 'days').format(API_DATE_FORMAT)
+  const future = moment(yesterday, API_DATE_FORMAT).add(1, 'days').format(API_DATE_FORMAT)
+  const queryParameters = tideChartQueryParameters(stationId, yesterday, future)
+  const encodedData = encodeData(queryParameters);
+
+  return `http://tidesandcurrents.noaa.gov/api/datagetter?${encodedData}`
+}
+
+function urlForTideQuery(stationId) {
+  const yesterday = moment().add(-1, 'days').format(API_DATE_FORMAT)
+  const future = moment(yesterday, API_DATE_FORMAT).add(7, 'days').format(API_DATE_FORMAT)
+  const queryParameters = tidePredictionsQueryParameters(stationId, yesterday, future)
   const encodedData = encodeData(queryParameters);
 
   return `http://tidesandcurrents.noaa.gov/api/datagetter?${encodedData}`

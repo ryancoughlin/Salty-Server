@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 export default class {
   constructor(weather) {
     this.weather = weather
@@ -7,8 +9,19 @@ export default class {
     return {
       currentWeather: this.currentWeatherString(),
       currentWind: this.currentWindString(),
-      icon: this.weather.currently.icon
+      icon: this.weather.currently.icon,
+      wind: this.hourlyWind(),
     }
+  }
+
+  hourlyWind() {
+    const wind = _.map(this.weather.hourly.data, v => {
+      return {
+        time: v.time,
+        windSpeed: this.roundNumber(v.windSpeed),
+        windBearing: v.windBearing
+      }
+    });
   }
 
   currentWeatherString() {

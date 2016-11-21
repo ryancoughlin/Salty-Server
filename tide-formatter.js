@@ -4,6 +4,7 @@ import _ from 'lodash';
 export default class {
   constructor(tides) {
     this.tides = tides
+    console.log(this.tides)
   }
 
   findCurrentTide() {
