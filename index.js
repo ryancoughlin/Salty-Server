@@ -29,12 +29,13 @@ server.route({
 
     Promise.all([findStationPromise, weatherPromise, tidePromise]).then(([groupedTides, weather, tides]) => {
       const tideFormatter = new TideFormatter(groupedTides);
-      const formatter = new WeatherFormatter(weather);
+      const weatherFormatter = new WeatherFormatter(weather);
 
       reply({
         currentTidePhrase: tideFormatter.findCurrentTide(),
         tides: groupedTides,
-        weather: formatter.format(),
+        weather: weatherFormatter.format(),
+        wind: weatherFormatter.hourlyWind(),
         rawTides: tides,
       })
 

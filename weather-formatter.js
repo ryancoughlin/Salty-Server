@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import moment from 'moment';
 
 export default class {
   constructor(weather) {
@@ -15,9 +16,9 @@ export default class {
   }
 
   hourlyWind() {
-    const wind = _.map(this.weather.hourly.data, v => {
+    return _.map(this.weather.hourly.data, v => {
       return {
-        time: v.time,
+        time: moment.unix(v.time).format('ha'),
         windSpeed: this.roundNumber(v.windSpeed),
         windBearing: v.windBearing
       }

@@ -8,7 +8,6 @@ const API_DATE_FORMAT = 'MM/DD/YYYY'
 export function groupTides(stationId) {
 
   return fetchTides(stationId, false).then((tides) => {
-    console.log(tides)
     const tidesByDay = _.groupBy(tides, function(station) {
       const time = moment(station.time, NOAA_DATE_FORMAT)
       return time.format(API_DATE_FORMAT)
