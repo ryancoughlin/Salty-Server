@@ -24,6 +24,7 @@
     "lodash": "^4.15.0",
     "moment": "^2.15.0",
     "node-fetch": "^1.6.1",
-    "nodemon": "^1.11.0"
+    "nodemon": "^1.11.0",
+    "babel-plugin-transform-object-rest-spread": "^6.19.0"
   }
 }
