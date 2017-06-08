@@ -1,0 +1,20 @@
+{
+  "apps": [
+    {
+      "name": "salty",
+      "script": "npm",
+      "args": "start",
+      "watch": true,
+      "env": {
+        "NODE_ENV": "development",
+      },
+      "env_production": {
+        "NODE_ENV": "production"
+      }
+    },
+    {
+      "instances": 4,
+      "exec_mode": "cluster"
+    }
+  ]
+}
