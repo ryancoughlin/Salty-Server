@@ -4,9 +4,7 @@
   "description": "Fetches data and does things.",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon lib/index.js --exec babel-node",
-    "build": "babel lib -d dist --presets",
-    "serve": "node dist/index.js"
+    "start": "lib/index.js --exec babel-node"
   },
   "author": "",
   "license": "ISC",
