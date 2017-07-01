@@ -23,6 +23,6 @@
     "moment": "^2.15.0",
     "mongoose": "^4.8.6",
     "node-fetch": "^1.6.1",
-    "nodemon": "^1.11.0",
+    "nodemon": "^1.11.0"
   }
 }
