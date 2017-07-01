@@ -1,0 +1,146 @@
+[
+  {
+    "state": "connecticut",
+    "name": "WEST MYSTIC, MYSTIC RIVER",
+    "stationId": "8460751",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -71.975,
+        41.3433
+      ]
+    }
+  },
+  {
+    "state": "connecticut",
+    "name": "Silver Eel Pond, Fishers Island, N.Y.",
+    "stationId": "8510719",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -72.03,
+        41.2567
+      ]
+    }
+  },
+  {
+    "state": "connecticut",
+    "name": "NEW LONDON, State Pier",
+    "stationId": "8461490",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -72.09,
+        41.3614
+      ]
+    }
+  },
+  {
+    "state": "connecticut",
+    "name": "Clinton Harbor",
+    "stationId": "8463701",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -72.5317,
+        41.2683
+      ]
+    }
+  },
+  {
+    "state": "connecticut",
+    "name": "New Haven Harbor, New Haven Reach",
+    "stationId": "8465705",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -72.9083,
+        41.2833
+      ]
+    }
+  },
+  {
+    "state": "connecticut",
+    "name": "BRIDGEPORT",
+    "stationId": "8467150",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -73.1817,
+        41.1733
+      ]
+    }
+  },
+  {
+    "state": "connecticut",
+    "name": "Black Rock Harbor",
+    "stationId": "8467373",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -73.2133,
+        41.1567
+      ]
+    }
+  },
+  {
+    "state": "connecticut",
+    "name": "Southport, Southport Harbor",
+    "stationId": "8467726",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -73.2833,
+        41.1333
+      ]
+    }
+  },
+  {
+    "state": "connecticut",
+    "name": "SAUGATUCK, SAUGATUCK RIVER",
+    "stationId": "8468191",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -73.3683,
+        41.12
+      ]
+    }
+  },
+  {
+    "state": "connecticut",
+    "name": "South Norwalk",
+    "stationId": "8468448",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -73.415,
+        41.0967
+      ]
+    }
+  },
+  {
+    "state": "connecticut",
+    "name": "Long Neck Point",
+    "stationId": "8468799",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -73.48,
+        41.0383
+      ]
+    }
+  },
+  {
+    "state": "connecticut",
+    "name": "Stamford",
+    "stationId": "8469198",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -73.5467,
+        41.0383
+      ]
+    }
+  }
+]

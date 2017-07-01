@@ -1,0 +1,194 @@
+[
+  {
+    "state": "new jersey",
+    "name": "SANDY HOOK (Fort Hancock)",
+    "stationId": "8531680",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -74.0094,
+        40.4669
+      ]
+    }
+  },
+  {
+    "state": "new jersey",
+    "name": "Toms River (town), Toms River",
+    "stationId": "8533051",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -74.1983,
+        39.95
+      ]
+    }
+  },
+  {
+    "state": "new jersey",
+    "name": "Barnegat Inlet, USCG Station",
+    "stationId": "8533615",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -74.1117,
+        39.7617
+      ]
+    }
+  },
+  {
+    "state": "new jersey",
+    "name": "Shooting Thorofare, Little Egg Inlet",
+    "stationId": "8534319",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -74.325,
+        39.5083
+      ]
+    }
+  },
+  {
+    "state": "new jersey",
+    "name": "ATLANTIC CITY, OCEAN",
+    "stationId": "8534720",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -74.4183,
+        39.355
+      ]
+    }
+  },
+  {
+    "state": "new jersey",
+    "name": "Ventnor City, ocean pier",
+    "stationId": "8534770",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -74.4767,
+        39.335
+      ]
+    }
+  },
+  {
+    "state": "new jersey",
+    "name": "Longport (inside), Great Egg Harbor Inlet",
+    "stationId": "8534836",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -74.5333,
+        39.3083
+      ]
+    }
+  },
+  {
+    "state": "new jersey",
+    "name": "Tuckahoe, Tuckahoe River",
+    "stationId": "8534883",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -74.7483,
+        39.295
+      ]
+    }
+  },
+  {
+    "state": "new jersey",
+    "name": "Mays Landing, Great Egg Harbor River",
+    "stationId": "8534468",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -74.7283,
+        39.4483
+      ]
+    }
+  },
+  {
+    "state": "new jersey",
+    "name": "Ocean Drive bridge",
+    "stationId": "8535375",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -74.7167,
+        39.1217
+      ]
+    }
+  },
+  {
+    "state": "new jersey",
+    "name": "Wildwood Crest, ocean pier",
+    "stationId": "8535835",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -74.8233,
+        38.975
+      ]
+    }
+  },
+  {
+    "state": "new jersey",
+    "name": "Brandywine Shoal Light",
+    "stationId": "8555889",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -75.1133,
+        38.9867
+      ]
+    }
+  },
+  {
+    "state": "new jersey",
+    "name": "Cape May, ferry terminal",
+    "stationId": "8536110",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -74.96,
+        38.9683
+      ]
+    }
+  },
+  {
+    "state": "new jersey",
+    "name": "Bidwell Creek entrance",
+    "stationId": "8536581",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -74.8917,
+        39.1283
+      ]
+    }
+  },
+  {
+    "state": "new jersey",
+    "name": "Fortescue Creek",
+    "stationId": "8536931",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -75.175,
+        39.2383
+      ]
+    }
+  },
+  {
+    "state": "new jersey",
+    "name": "Ship John Shoal",
+    "stationId": "8537121",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -75.375,
+        39.305
+      ]
+    }
+  }
+]

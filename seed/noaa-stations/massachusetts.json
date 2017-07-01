@@ -1,0 +1,518 @@
+[
+  {
+    "state": "massachusetts",
+    "name": "Plum Island, Merrimack River Entrance",
+    "stationId": "8440452",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -70.82,
+        42.8167
+      ]
+    }
+  },
+  {
+    "state": "massachusetts",
+    "name": "Newburyport",
+    "stationId": "8440466",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -70.8733,
+        42.815
+      ]
+    }
+  },
+  {
+    "state": "massachusetts",
+    "name": "Salisbury Point",
+    "stationId": "8440273",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -70.9083,
+        42.8383
+      ]
+    }
+  },
+  {
+    "state": "massachusetts",
+    "name": "Merrimacport",
+    "stationId": "8440369",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -70.9883,
+        42.825
+      ]
+    }
+  },
+  {
+    "state": "massachusetts",
+    "name": "Riverside",
+    "stationId": "8440889",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -71.0767,
+        42.7633
+      ]
+    }
+  },
+  {
+    "state": "massachusetts",
+    "name": "Plum Island Sound (south end)",
+    "stationId": "8441241",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -70.7886,
+        42.7101
+      ]
+    }
+  },
+  {
+    "state": "massachusetts",
+    "name": "Essex",
+    "stationId": "8441771",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -70.7767,
+        42.6317
+      ]
+    }
+  },
+  {
+    "state": "massachusetts",
+    "name": "Rockport",
+    "stationId": "8441551",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -70.615,
+        42.6583
+      ]
+    }
+  },
+  {
+    "state": "massachusetts",
+    "name": "Salem, Salem Harbor",
+    "stationId": "8442645",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -70.8767,
+        42.5233
+      ]
+    }
+  },
+  {
+    "state": "massachusetts",
+    "name": "Lynn, Lynn Harbor",
+    "stationId": "8443187",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -70.9433,
+        42.4583
+      ]
+    }
+  },
+  {
+    "state": "massachusetts",
+    "name": "Boston Light",
+    "stationId": "8444162",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -70.8917,
+        42.3283
+      ]
+    }
+  },
+  {
+    "state": "massachusetts",
+    "name": "BOSTON",
+    "stationId": "8443970",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -71.0534,
+        42.3548
+      ]
+    }
+  },
+  {
+    "state": "massachusetts",
+    "name": "Amelia Earhart Dam, Mystic River",
+    "stationId": "8443662",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -71.0767,
+        42.395
+      ]
+    }
+  },
+  {
+    "state": "massachusetts",
+    "name": "Chelsea St. Bridge, Chelsea River",
+    "stationId": "8443725",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -71.0233,
+        42.3867
+      ]
+    }
+  },
+  {
+    "state": "massachusetts",
+    "name": "Nut Island, Quincy Bay",
+    "stationId": "8444525",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -70.9533,
+        42.28
+      ]
+    }
+  },
+  {
+    "state": "massachusetts",
+    "name": "Weymouth Fore River Bridge",
+    "stationId": "8444788",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -70.9667,
+        42.2483
+      ]
+    }
+  },
+  {
+    "state": "massachusetts",
+    "name": "Scituate, Scituate Harbor",
+    "stationId": "8445138",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -70.7267,
+        42.2017
+      ]
+    }
+  },
+  {
+    "state": "massachusetts",
+    "name": "Brant Rock, Green Harbor River",
+    "stationId": "8446009",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -70.6467,
+        42.0833
+      ]
+    }
+  },
+  {
+    "state": "massachusetts",
+    "name": "Duxbury, Duxbury Harbor",
+    "stationId": "8446166",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -70.67,
+        42.0383
+      ]
+    }
+  },
+  {
+    "state": "massachusetts",
+    "name": "Plymouth",
+    "stationId": "8446493",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -70.6617,
+        41.96
+      ]
+    }
+  },
+  {
+    "state": "massachusetts",
+    "name": "Cape Cod Canal, Sagamore",
+    "stationId": "8447173",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -70.535,
+        41.775
+      ]
+    }
+  },
+  {
+    "state": "massachusetts",
+    "name": "Cape Cod Canal, Bournedale",
+    "stationId": "8447191",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -70.5617,
+        41.77
+      ]
+    }
+  },
+  {
+    "state": "massachusetts",
+    "name": "Cape Cod Canal, Bourne Bridge",
+    "stationId": "8447259",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -70.5933,
+        41.745
+      ]
+    }
+  },
+  {
+    "state": "massachusetts",
+    "name": "Sandwich Marina, Cape Cod Canal, east entrance",
+    "stationId": "8447180",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -70.5067,
+        41.7717
+      ]
+    }
+  },
+  {
+    "state": "massachusetts",
+    "name": "Sesuit Harbor, East Dennis",
+    "stationId": "8447241",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -70.155,
+        41.7517
+      ]
+    }
+  },
+  {
+    "state": "massachusetts",
+    "name": "Provincetown",
+    "stationId": "8446121",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -70.1822,
+        42.0496
+      ]
+    }
+  },
+  {
+    "state": "massachusetts",
+    "name": "Chatham, Stage Harbor",
+    "stationId": "8447505",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -69.9667,
+        41.6667
+      ]
+    }
+  },
+  {
+    "state": "massachusetts",
+    "name": "Chatham Harbor, Aunt Lydias Cove",
+    "stationId": "8447435",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -69.9511,
+        41.6885
+      ]
+    }
+  },
+  {
+    "state": "massachusetts",
+    "name": "Saquatucket Harbor",
+    "stationId": "8447495",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -70.0567,
+        41.6683
+      ]
+    }
+  },
+  {
+    "state": "massachusetts",
+    "name": "Hyannis Port",
+    "stationId": "8447605",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -70.3,
+        41.6317
+      ]
+    }
+  },
+  {
+    "state": "massachusetts",
+    "name": "NANTUCKET",
+    "stationId": "8449130",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -70.0967,
+        41.285
+      ]
+    }
+  },
+  {
+    "state": "massachusetts",
+    "name": "Martha's Vineyard GPS Buoy",
+    "stationId": "8448875",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -70.5903,
+        41.3262
+      ]
+    }
+  },
+  {
+    "state": "massachusetts",
+    "name": "VINEYARD HAVEN, VINEYARD HVN HBR",
+    "stationId": "8448157",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -70.6,
+        41.4583
+      ]
+    }
+  },
+  {
+    "state": "massachusetts",
+    "name": "Edgartown",
+    "stationId": "8448558",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -70.5117,
+        41.3883
+      ]
+    }
+  },
+  {
+    "state": "massachusetts",
+    "name": "OCEANOGRAPHIC INSTITUTION",
+    "stationId": "8447930",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -70.6717,
+        41.5233
+      ]
+    }
+  },
+  {
+    "state": "massachusetts",
+    "name": "Penikese Island",
+    "stationId": "8448248",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -70.9217,
+        41.45
+      ]
+    }
+  },
+  {
+    "state": "massachusetts",
+    "name": "Chappaquoit Point, West Falmouth Harbor",
+    "stationId": "8447685",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -70.6517,
+        41.605
+      ]
+    }
+  },
+  {
+    "state": "massachusetts",
+    "name": "Gray Gables",
+    "stationId": "8447295",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -70.6233,
+        41.735
+      ]
+    }
+  },
+  {
+    "state": "massachusetts",
+    "name": "Cape Cod Canal, RR. bridge",
+    "stationId": "8447270",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -70.6167,
+        41.7417
+      ]
+    }
+  },
+  {
+    "state": "massachusetts",
+    "name": "Great Hill",
+    "stationId": "8447368",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -70.715,
+        41.7117
+      ]
+    }
+  },
+  {
+    "state": "massachusetts",
+    "name": "Piney Point",
+    "stationId": "8447416",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -70.72,
+        41.695
+      ]
+    }
+  },
+  {
+    "state": "massachusetts",
+    "name": "Clarks Point",
+    "stationId": "8447712",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -70.9,
+        41.5933
+      ]
+    }
+  },
+  {
+    "state": "massachusetts",
+    "name": "Round Hill Point",
+    "stationId": "8447842",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -70.9283,
+        41.5383
+      ]
+    }
+  }
+]

@@ -1,0 +1,376 @@
+[
+  {
+    "name": "Scituate, Massachusetts",
+    "spotId": 372,
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -70.7258633,
+        42.195929
+      ]
+    }
+  },
+  {
+    "name": "Squibnocket, Massachusetts",
+    "spotId": 974,
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -70.7744726,
+        41.307058
+      ]
+    }
+  },
+  {
+    "name": "Scarborough-Beach, Maine",
+    "spotId": 3710,
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -70.3130193,
+        43.5462971
+      ]
+    }
+  },
+  {
+    "name": "Ogunquit-River, Maine",
+    "spotId": 365,
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -70.60276170000002,
+        43.2692811
+      ]
+    }
+  },
+  {
+    "name": "Higgins-Beach, Maine",
+    "spotId": 362,
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -70.275256,
+        43.561816
+      ]
+    }
+  },
+  {
+    "name": "Kennebunk-Beach, Maine",
+    "spotId": 364,
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -70.5022743,
+        43.34508599999999
+      ]
+    }
+  },
+  {
+    "name": "Jenness-Beach, New Hampshire",
+    "spotId": 881,
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -70.7622864,
+        42.9857828
+      ]
+    }
+  },
+  {
+    "name": "Block-Island, Massachusetts",
+    "spotId": 4057,
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -71.58028089999999,
+        41.1693042
+      ]
+    }
+  },
+  {
+    "name": "Short-Sands, Maine",
+    "spotId": 366,
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -70.6075523,
+        43.1742547
+      ]
+    }
+  },
+  {
+    "name": "South-Beach, Massachusetts",
+    "spotId": 976,
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -70.5286769,
+        41.3498993
+      ]
+    }
+  },
+  {
+    "name": "The-Wall, New Hampshire",
+    "spotId": 369,
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -70.8142328,
+        42.9127017
+      ]
+    }
+  },
+  {
+    "name": "Baileys-Beach, Massachusetts",
+    "spotId": 2096,
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -70.7948126,
+        42.941784
+      ]
+    }
+  },
+  {
+    "name": "Costellos, New Hampshire",
+    "spotId": 2077,
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -70.94006,
+        42.9825819
+      ]
+    }
+  },
+  {
+    "name": "Rye-Rocks, New Hampshire",
+    "spotId": 368,
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -70.7204711,
+        43.0335376
+      ]
+    }
+  },
+  {
+    "name": "Wells-Beach, Maine",
+    "spotId": 4218,
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -70.5670193,
+        43.3023116
+      ]
+    }
+  },
+  {
+    "name": "Popham-Beach, Maine",
+    "spotId": 3785,
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -69.8050655,
+        43.7429497
+      ]
+    }
+  },
+  {
+    "name": "2nd-Beach-Sachuest-Beach, Massachusetts",
+    "spotId": 846,
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -71.2565946,
+        41.4875239
+      ]
+    }
+  },
+  {
+    "name": "Salisbury, Massachusetts",
+    "spotId": 1130,
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -70.8605982,
+        42.84172299999999
+      ]
+    }
+  },
+  {
+    "name": "Hampton-Beach, New Hampshire",
+    "spotId": 2074,
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -70.81348179999999,
+        42.9113098
+      ]
+    }
+  },
+  {
+    "name": "1st-Beach-Eastons-Beach, Massachusetts",
+    "spotId": 907,
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -71.292681,
+        41.4878856
+      ]
+    }
+  },
+  {
+    "name": "Seabrook-Beach, New Hampshire",
+    "spotId": 2078,
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -70.8152588,
+        42.8841004
+      ]
+    }
+  },
+  {
+    "name": "Old-Orchard-Beach, Maine",
+    "spotId": 852,
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -70.3772911,
+        43.5177659
+      ]
+    }
+  },
+  {
+    "name": "Long-Sands, Maine",
+    "spotId": 367,
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -70.6188189,
+        43.1632328
+      ]
+    }
+  },
+  {
+    "name": "Nantasket-Beach, Massachusetts",
+    "spotId": 371,
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -70.87449,
+        42.2917663
+      ]
+    }
+  },
+  {
+    "name": "Cape-Cod, Massachusetts",
+    "spotId": 373,
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -70.29624079999999,
+        41.6687897
+      ]
+    }
+  },
+  {
+    "name": "Green-Harbor, Massachusetts",
+    "spotId": 864,
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -70.6627845,
+        42.0766342
+      ]
+    }
+  },
+  {
+    "name": "Nahant, Massachusetts",
+    "spotId": 1091,
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -70.922279,
+        42.4265633
+      ]
+    }
+  },
+  {
+    "name": "East-Beach, Massachusetts",
+    "spotId": 4059,
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -71.02941109999999,
+        41.5026384
+      ]
+    }
+  },
+  {
+    "name": "Long-Point, Massachusetts",
+    "spotId": 975,
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -70.172,
+        42.027
+      ]
+    }
+  },
+  {
+    "name": "Lucy-Vincent, Massachusetts",
+    "spotId": 977,
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -70.73279529999999,
+        41.3405205
+      ]
+    }
+  },
+  {
+    "name": "Plymouth-Beach, Massachusetts",
+    "spotId": 4525,
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -70.63836789999999,
+        41.9626035
+      ]
+    }
+  },
+  {
+    "name": "Cape-Ann, Massachusetts",
+    "spotId": 370,
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -70.5930556,
+        42.648611
+      ]
+    }
+  },
+  {
+    "name": "New-England-Hurricane, Massachusetts",
+    "spotId": 1095,
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -71.0607941,
+        42.3648137
+      ]
+    }
+  },
+  {
+    "name": "Abels-Hill, Massachusetts",
+    "spotId": 978,
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -70.7119721,
+        41.3501137
+      ]
+    }
+  }
+]

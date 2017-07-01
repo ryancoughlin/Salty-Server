@@ -1,0 +1,266 @@
+[
+  {
+    "state": "south carolina",
+    "name": "MYRTLE BEACH, SPRINGMAID PIER",
+    "stationId": "8661070",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -78.9183,
+        33.655
+      ]
+    }
+  },
+  {
+    "state": "south carolina",
+    "name": "Garden City Pier (ocean)",
+    "stationId": "8661437",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -78.9967,
+        33.575
+      ]
+    }
+  },
+  {
+    "state": "south carolina",
+    "name": "Garden City Bridge, Main Creek",
+    "stationId": "8661419",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -79.0033,
+        33.5783
+      ]
+    }
+  },
+  {
+    "state": "south carolina",
+    "name": "Oaks Creek, upper end",
+    "stationId": "8661684",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -79.0683,
+        33.5117
+      ]
+    }
+  },
+  {
+    "state": "south carolina",
+    "name": "Bennet's Dock, Pawleys Island Creek",
+    "stationId": "8661989",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -79.1267,
+        33.435
+      ]
+    }
+  },
+  {
+    "state": "south carolina",
+    "name": "Pawleys Island Pier (ocean)",
+    "stationId": "8662006",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -79.1167,
+        33.4317
+      ]
+    }
+  },
+  {
+    "state": "south carolina",
+    "name": "Ward's Dock, Pawleys Inlet",
+    "stationId": "8662071",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -79.135,
+        33.4117
+      ]
+    }
+  },
+  {
+    "state": "south carolina",
+    "name": "Clambank Creek, Goat Island, North Inlet",
+    "stationId": "8662299",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -79.1933,
+        33.3333
+      ]
+    }
+  },
+  {
+    "state": "south carolina",
+    "name": "Windsor Plantation, Black River",
+    "stationId": "8662953",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -79.25,
+        33.415
+      ]
+    }
+  },
+  {
+    "state": "south carolina",
+    "name": "Waccamaw River Entrance",
+    "stationId": "8662931",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -79.255,
+        33.3667
+      ]
+    }
+  },
+  {
+    "state": "south carolina",
+    "name": "Thoroughfare Creek entrance",
+    "stationId": "8661703",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -79.145,
+        33.5067
+      ]
+    }
+  },
+  {
+    "state": "south carolina",
+    "name": "Bucksport",
+    "stationId": "8661139",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -79.095,
+        33.6467
+      ]
+    }
+  },
+  {
+    "state": "south carolina",
+    "name": "Capers Creek, South Capers Island",
+    "stationId": "8664941",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -79.7067,
+        32.8567
+      ]
+    }
+  },
+  {
+    "state": "south carolina",
+    "name": "CHARLESTON (Customhouse Wharf)",
+    "stationId": "8665530",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -79.925,
+        32.7817
+      ]
+    }
+  },
+  {
+    "state": "south carolina",
+    "name": "Goose Creek entrance",
+    "stationId": "8664662",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -79.9517,
+        32.91
+      ]
+    }
+  },
+  {
+    "state": "south carolina",
+    "name": "General Dynamics Pier",
+    "stationId": "8664022",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -79.9233,
+        33.0083
+      ]
+    }
+  },
+  {
+    "state": "south carolina",
+    "name": "Cainhoy",
+    "stationId": "8664545",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -79.83,
+        32.9267
+      ]
+    }
+  },
+  {
+    "state": "south carolina",
+    "name": "I-526 bridge",
+    "stationId": "8665099",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -80.0217,
+        32.8367
+      ]
+    }
+  },
+  {
+    "state": "south carolina",
+    "name": "Fripps Inlet, Hunting Island Bridge",
+    "stationId": "8668498",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -80.465,
+        32.34
+      ]
+    }
+  },
+  {
+    "state": "south carolina",
+    "name": "Beaufort",
+    "stationId": "8667999",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -80.675,
+        32.43
+      ]
+    }
+  },
+  {
+    "state": "south carolina",
+    "name": "Skull Creek, north entrance, Hilton Head Island",
+    "stationId": "8668918",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -80.7367,
+        32.2667
+      ]
+    }
+  },
+  {
+    "state": "south carolina",
+    "name": "Corning Landing, Whale Branch",
+    "stationId": "8667633",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -80.7841,
+        32.5025
+      ]
+    }
+  }
+]
