@@ -1,0 +1,182 @@
+[
+  {
+    "state": "texas",
+    "name": "Port Bolivar",
+    "stationId": "8771328",
+    "location": { "type": "Point", "coordinates": ["-94.7800", "29.3650"] }
+  },
+  {
+    "state": "texas",
+    "name": "Eagle Point",
+    "stationId": "8771013",
+    "location": { "type": "Point", "coordinates": ["-94.9183", "29.4800"] }
+  },
+  {
+    "state": "texas",
+    "name": "Clear Lake",
+    "stationId": "8770933",
+    "location": { "type": "Point", "coordinates": ["-95.0667", "29.5633"] }
+  },
+  {
+    "state": "texas",
+    "name": "Morgans Point, Barbours Cut",
+    "stationId": "8770613",
+    "location": { "type": "Point", "coordinates": ["-94.9850", "29.6817"] }
+  },
+  {
+    "state": "texas",
+    "name": "Lynchburg Landing, San Jacinto River",
+    "stationId": "8770733",
+    "location": { "type": "Point", "coordinates": ["-95.0789", "29.7649"] }
+  },
+  {
+    "state": "texas",
+    "name": "Manchester, Houston Ship Channel",
+    "stationId": "8770777",
+    "location": { "type": "Point", "coordinates": ["-95.2658", "29.7263"] }
+  },
+  {
+    "state": "texas",
+    "name": "Round Point, Trinity Bay",
+    "stationId": "8770559",
+    "location": { "type": "Point", "coordinates": ["-94.6900", "29.7133"] }
+  },
+  {
+    "state": "texas",
+    "name": "Umbrella Point, Trinity Bay",
+    "stationId": "8770625",
+    "location": { "type": "Point", "coordinates": ["-94.8683", "29.6800"] }
+  },
+  {
+    "state": "texas",
+    "name": "Rollover Pass",
+    "stationId": "8770971",
+    "location": { "type": "Point", "coordinates": ["-94.5106", "29.5156"] }
+  },
+  {
+    "state": "texas",
+    "name": "High Island, ICWW",
+    "stationId": "8770808",
+    "location": { "type": "Point", "coordinates": ["-94.3896", "29.5945"] }
+  },
+  {
+    "state": "texas",
+    "name": "Sabine Pass",
+    "stationId": "8770570",
+    "location": { "type": "Point", "coordinates": ["-93.8701", "29.7284"] }
+  },
+  {
+    "state": "texas",
+    "name": "Texas Point, Sabine Pass",
+    "stationId": "8770822",
+    "location": { "type": "Point", "coordinates": ["-93.8419", "29.6894"] }
+  },
+  {
+    "state": "texas",
+    "name": "Port Arthur",
+    "stationId": "8770475",
+    "location": { "type": "Point", "coordinates": ["-93.9310", "29.8671"] }
+  },
+  {
+    "state": "texas",
+    "name": "Rainbow Bridge",
+    "stationId": "8770520",
+    "location": { "type": "Point", "coordinates": ["-93.8847", "29.9812"] }
+  },
+  {
+    "state": "texas",
+    "name": "GALVESTON, Galveston Channel",
+    "stationId": "8771450",
+    "location": { "type": "Point", "coordinates": ["-94.7933", "29.3100"] }
+  },
+  {
+    "state": "texas",
+    "name": "San Luis Pass",
+    "stationId": "8771972",
+    "location": { "type": "Point", "coordinates": ["-95.1313", "29.0810"] }
+  },
+  {
+    "state": "texas",
+    "name": "Galveston Pleasure Pier",
+    "stationId": "8771510",
+    "location": { "type": "Point", "coordinates": ["-94.7894", "29.2853"] }
+  },
+  {
+    "state": "texas",
+    "name": "Sargent, ICWW",
+    "stationId": "8772985",
+    "location": { "type": "Point", "coordinates": ["-95.6168", "28.7716"] }
+  },
+  {
+    "state": "texas",
+    "name": "Freeport Harbor",
+    "stationId": "8772440",
+    "location": { "type": "Point", "coordinates": ["-95.3083", "28.9483"] }
+  },
+  {
+    "state": "texas",
+    "name": "East Matagorda",
+    "stationId": "8773146",
+    "location": { "type": "Point", "coordinates": ["-95.9140", "28.7101"] }
+  },
+  {
+    "state": "texas",
+    "name": "Aransas Wildlife Refuge",
+    "stationId": "8774230",
+    "location": { "type": "Point", "coordinates": ["-96.7966", "28.2276"] }
+  },
+  {
+    "state": "texas",
+    "name": "PORT O'CONNOR, MATAGORDA BAY",
+    "stationId": "8773701",
+    "location": { "type": "Point", "coordinates": ["-96.3956", "28.4459"] }
+  },
+  {
+    "state": "texas",
+    "name": "Nueces Bay",
+    "stationId": "8775244",
+    "location": { "type": "Point", "coordinates": ["-97.4859", "27.8328"] }
+  },
+  {
+    "state": "texas",
+    "name": "Port Aransas (H. Caldwell Pier)",
+    "stationId": "8775270",
+    "location": { "type": "Point", "coordinates": ["-97.0500", "27.8267"] }
+  },
+  {
+    "state": "texas",
+    "name": "Aransas, Aransas Pass",
+    "stationId": "8775241",
+    "location": { "type": "Point", "coordinates": ["-97.0391", "27.8366"] }
+  },
+  {
+    "state": "texas",
+    "name": "Corpus Christi",
+    "stationId": "8775870",
+    "location": { "type": "Point", "coordinates": ["-97.2164", "27.5808"] }
+  },
+  {
+    "state": "texas",
+    "name": "Packery Channel",
+    "stationId": "8775792",
+    "location": { "type": "Point", "coordinates": ["-97.2367", "27.6333"] }
+  },
+  {
+    "state": "texas",
+    "name": "South Padre Island, Brazos Santiago Pass",
+    "stationId": "8779749",
+    "location": { "type": "Point", "coordinates": ["-97.1548", "26.0674"] }
+  },
+  {
+    "state": "texas",
+    "name": "PADRE ISLAND (south end)",
+    "stationId": "8779750",
+    "location": { "type": "Point", "coordinates": ["-97.1567", "26.0683"] }
+  },
+  {
+    "state": "texas",
+    "name": "Port Isabel",
+    "stationId": "8779770",
+    "location": { "type": "Point", "coordinates": ["-97.2155", "26.0612"] }
+  }
+]

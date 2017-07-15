@@ -1,0 +1,212 @@
+[
+  {
+    "state": "maryland",
+    "name": "OCEAN CITY (FISHING PIER)",
+    "stationId": "8570280",
+    "location": { "type": "Point", "coordinates": ["-75.0833", "38.3267"] }
+  },
+  {
+    "state": "maryland",
+    "name": "Ocean City Inlet",
+    "stationId": "8570283",
+    "location": { "type": "Point", "coordinates": ["-75.0911", "38.3283"] }
+  },
+  {
+    "state": "maryland",
+    "name": "Chincoteague Channel (south end)",
+    "stationId": "8630308",
+    "location": { "type": "Point", "coordinates": ["-75.4050", "37.9067"] }
+  },
+  {
+    "state": "maryland",
+    "name": "Chincoteague Island, USCG Station",
+    "stationId": "8630249",
+    "location": { "type": "Point", "coordinates": ["-75.3833", "37.9317"] }
+  },
+  {
+    "state": "maryland",
+    "name": "Jesters Island",
+    "stationId": "8630111",
+    "location": { "type": "Point", "coordinates": ["-75.3017", "37.9817"] }
+  },
+  {
+    "state": "maryland",
+    "name": "Buntings Bridge",
+    "stationId": "8570691",
+    "location": { "type": "Point", "coordinates": ["-75.1835", "38.1389"] }
+  },
+  {
+    "state": "maryland",
+    "name": "Public Landing",
+    "stationId": "8570649",
+    "location": { "type": "Point", "coordinates": ["-75.2850", "38.1483"] }
+  },
+  {
+    "state": "maryland",
+    "name": "South Point, Sinepuxent Neck",
+    "stationId": "8570536",
+    "location": { "type": "Point", "coordinates": ["-75.1917", "38.2150"] }
+  },
+  {
+    "state": "maryland",
+    "name": "Snowhill, city park",
+    "stationId": "8571359",
+    "location": { "type": "Point", "coordinates": ["-75.3967", "38.1783"] }
+  },
+  {
+    "state": "maryland",
+    "name": "Crisfield, Little Annemessex River",
+    "stationId": "8571091",
+    "location": { "type": "Point", "coordinates": ["-75.8633", "37.9767"] }
+  },
+  {
+    "state": "maryland",
+    "name": "Ewell, Smith Island",
+    "stationId": "8571117",
+    "location": { "type": "Point", "coordinates": ["-76.0317", "37.9950"] }
+  },
+  {
+    "state": "maryland",
+    "name": "Vienna",
+    "stationId": "8571773",
+    "location": { "type": "Point", "coordinates": ["-75.8183", "38.4833"] }
+  },
+  {
+    "state": "maryland",
+    "name": "McCreedy's Creek, Fishing Bay",
+    "stationId": "8571559",
+    "location": { "type": "Point", "coordinates": ["-76.0050", "38.3000"] }
+  },
+  {
+    "state": "maryland",
+    "name": "Bishops Head, Hooper Strait",
+    "stationId": "8571421",
+    "location": { "type": "Point", "coordinates": ["-76.0386", "38.2206"] }
+  },
+  {
+    "state": "maryland",
+    "name": "Barren Island",
+    "stationId": "8571579",
+    "location": { "type": "Point", "coordinates": ["-76.2650", "38.3417"] }
+  },
+  {
+    "state": "maryland",
+    "name": "Smithville Road Bridge, Beaverdam Creek",
+    "stationId": "8571702",
+    "location": { "type": "Point", "coordinates": ["-76.2367", "38.4283"] }
+  },
+  {
+    "state": "maryland",
+    "name": "Cambridge",
+    "stationId": "8571892",
+    "location": { "type": "Point", "coordinates": ["-76.0722", "38.5742"] }
+  },
+  {
+    "state": "maryland",
+    "name": "Hillsboro, Tuckahoe Creek",
+    "stationId": "8572669",
+    "location": { "type": "Point", "coordinates": ["-75.9450", "38.9167"] }
+  },
+  {
+    "state": "maryland",
+    "name": "Poplar Island",
+    "stationId": "8572271",
+    "location": { "type": "Point", "coordinates": ["-76.3750", "38.7583"] }
+  },
+  {
+    "state": "maryland",
+    "name": "Love Point",
+    "stationId": "8572955",
+    "location": { "type": "Point", "coordinates": ["-76.3017", "39.0317"] }
+  },
+  {
+    "state": "maryland",
+    "name": "Crumpton",
+    "stationId": "8573349",
+    "location": { "type": "Point", "coordinates": ["-75.9250", "39.2450"] }
+  },
+  {
+    "state": "maryland",
+    "name": "Matapeake, Kent Island",
+    "stationId": "8572770",
+    "location": { "type": "Point", "coordinates": ["-76.3550", "38.9567"] }
+  },
+  {
+    "state": "maryland",
+    "name": "Kent Point Marina",
+    "stationId": "8572467",
+    "location": { "type": "Point", "coordinates": ["-76.3733", "38.8367"] }
+  },
+  {
+    "state": "maryland",
+    "name": "Tolchester Beach",
+    "stationId": "8573364",
+    "location": { "type": "Point", "coordinates": ["-76.2450", "39.2133"] }
+  },
+  {
+    "state": "maryland",
+    "name": "Sassafras River, Betterton",
+    "stationId": "8573704",
+    "location": { "type": "Point", "coordinates": ["-76.0633", "39.3717"] }
+  },
+  {
+    "state": "maryland",
+    "name": "Town Point Wharf",
+    "stationId": "8573903",
+    "location": { "type": "Point", "coordinates": ["-75.9167", "39.5033"] }
+  },
+  {
+    "state": "maryland",
+    "name": "Havre de Grace",
+    "stationId": "8574070",
+    "location": { "type": "Point", "coordinates": ["-76.0900", "39.5367"] }
+  },
+  {
+    "state": "maryland",
+    "name": "Pond Point, Bush River",
+    "stationId": "8574459",
+    "location": { "type": "Point", "coordinates": ["-76.2550", "39.3883"] }
+  },
+  {
+    "state": "maryland",
+    "name": "BALTIMORE, Fort McHenry",
+    "stationId": "8574680",
+    "location": { "type": "Point", "coordinates": ["-76.5783", "39.2667"] }
+  },
+  {
+    "state": "maryland",
+    "name": "Fort McHenry Marsh",
+    "stationId": "8574683",
+    "location": { "type": "Point", "coordinates": ["-76.5850", "39.2617"] }
+  },
+  {
+    "state": "maryland",
+    "name": "Annapolis (US Naval Academy)",
+    "stationId": "8575512",
+    "location": { "type": "Point", "coordinates": ["-76.4816", "38.9833"] }
+  },
+  {
+    "state": "maryland",
+    "name": "Long Beach",
+    "stationId": "8577004",
+    "location": { "type": "Point", "coordinates": ["-76.4733", "38.4650"] }
+  },
+  {
+    "state": "maryland",
+    "name": "Cove Point",
+    "stationId": "8577188",
+    "location": { "type": "Point", "coordinates": ["-76.3983", "38.3917"] }
+  },
+  {
+    "state": "maryland",
+    "name": "Solomons Island",
+    "stationId": "8577330",
+    "location": { "type": "Point", "coordinates": ["-76.4508", "38.3172"] }
+  },
+  {
+    "state": "maryland",
+    "name": "Lower Marlboro",
+    "stationId": "8579542",
+    "location": { "type": "Point", "coordinates": ["-76.6833", "38.6550"] }
+  }
+]

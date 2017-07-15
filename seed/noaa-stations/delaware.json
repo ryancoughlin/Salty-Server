@@ -1,0 +1,56 @@
+[
+  {
+    "state": "delaware",
+    "name": "LEWES (BREAKWATER HARBOR)",
+    "stationId": "8557380",
+    "location": {
+      "type": "Point",
+      "coordinates": ["-75.1192", "38.7828"]
+    }
+  },
+  {
+    "state": "delaware",
+    "name": "Mahon River entrance",
+    "stationId": "8554399",
+    "location": {
+      "type": "Point",
+      "coordinates": ["-75.4000", "39.1850"]
+    }
+  },
+  {
+    "state": "delaware",
+    "name": "REEDY POINT",
+    "stationId": "8551910",
+    "location": {
+      "type": "Point",
+      "coordinates": ["-75.5733", "39.5583"]
+    }
+  },
+  {
+    "state": "delaware",
+    "name": "Chesapeake City, Maryland",
+    "stationId": "8573927",
+    "location": {
+      "type": "Point",
+      "coordinates": ["-75.8100", "39.5267"]
+    }
+  },
+  {
+    "state": "delaware",
+    "name": "Delaware City",
+    "stationId": "8551762",
+    "location": {
+      "type": "Point",
+      "coordinates": ["-75.5883", "39.5817"]
+    }
+  },
+  {
+    "state": "delaware",
+    "name": "Indian River Inlet (Coast Guard Station)",
+    "stationId": "8558690",
+    "location": {
+      "type": "Point",
+      "coordinates": ["-75.0700", "38.6100"]
+    }
+  }
+]

@@ -1,0 +1,170 @@
+[
+  {
+    "state": "virgina",
+    "name": "Wachapreague, Wachapreague Channel",
+    "stationId": "8631044",
+    "location": { "type": "Point", "coordinates": ["-75.6858", "37.6078"] }
+  },
+  {
+    "state": "virgina",
+    "name": "Rudee Inlet, interior channel",
+    "stationId": "8639207",
+    "location": { "type": "Point", "coordinates": ["-75.9733", "36.8317"] }
+  },
+  {
+    "state": "virgina",
+    "name": "Kiptopeke Beach",
+    "stationId": "8632200",
+    "location": { "type": "Point", "coordinates": ["-75.9884", "37.1652"] }
+  },
+  {
+    "state": "virgina",
+    "name": "Gaskins Point, Occohannock Creek",
+    "stationId": "8632869",
+    "location": { "type": "Point", "coordinates": ["-75.9167", "37.5567"] }
+  },
+  {
+    "state": "virgina",
+    "name": "Tangier Island",
+    "stationId": "8633532",
+    "location": { "type": "Point", "coordinates": ["-75.9933", "37.8283"] }
+  },
+  {
+    "state": "virgina",
+    "name": "Windmill Point",
+    "stationId": "8636580",
+    "location": { "type": "Point", "coordinates": ["-76.2900", "37.6161"] }
+  },
+  {
+    "state": "virgina",
+    "name": "Wares Wharf",
+    "stationId": "8635985",
+    "location": { "type": "Point", "coordinates": ["-76.7833", "37.8733"] }
+  },
+  {
+    "state": "virgina",
+    "name": "Park Turn",
+    "stationId": "8635257",
+    "location": { "type": "Point", "coordinates": ["-77.2433", "38.2133"] }
+  },
+  {
+    "state": "virgina",
+    "name": "Yorktown, USCG Training Center",
+    "stationId": "8637689",
+    "location": { "type": "Point", "coordinates": ["-76.4788", "37.2265"] }
+  },
+  {
+    "state": "virgina",
+    "name": "Gloucester Point",
+    "stationId": "8637624",
+    "location": { "type": "Point", "coordinates": ["-76.5000", "37.2467"] }
+  },
+  {
+    "state": "virgina",
+    "name": "Lester Manor",
+    "stationId": "8636653",
+    "location": { "type": "Point", "coordinates": ["-76.9900", "37.5833"] }
+  },
+  {
+    "state": "virgina",
+    "name": "HAMPTON ROADS (Sewells Point)",
+    "stationId": "8638610",
+    "location": { "type": "Point", "coordinates": ["-76.3300", "36.9467"] }
+  },
+  {
+    "state": "virgina",
+    "name": "Lafayette River",
+    "stationId": "8638671",
+    "location": { "type": "Point", "coordinates": ["-76.2759", "36.8842"] }
+  },
+  {
+    "state": "virgina",
+    "name": "Western Branch",
+    "stationId": "8638339",
+    "location": { "type": "Point", "coordinates": ["-76.3991", "36.8232"] }
+  },
+  {
+    "state": "virgina",
+    "name": "Portsmouth, Naval Shipyard",
+    "stationId": "8638660",
+    "location": { "type": "Point", "coordinates": ["-76.2933", "36.8217"] }
+  },
+  {
+    "state": "virgina",
+    "name": "Money Point",
+    "stationId": "8639348",
+    "location": { "type": "Point", "coordinates": ["-76.3017", "36.7783"] }
+  },
+  {
+    "state": "virgina",
+    "name": "Fort Eustis (MARAD)",
+    "stationId": "8638017",
+    "location": { "type": "Point", "coordinates": ["-76.6227", "37.1382"] }
+  },
+  {
+    "state": "virgina",
+    "name": "Kingsmill",
+    "stationId": "8638424",
+    "location": { "type": "Point", "coordinates": ["-76.6633", "37.2200"] }
+  },
+  {
+    "state": "virgina",
+    "name": "Scotland",
+    "stationId": "8638433",
+    "location": { "type": "Point", "coordinates": ["-76.7833", "37.1850"] }
+  },
+  {
+    "state": "virgina",
+    "name": "Jamestown",
+    "stationId": "8637712",
+    "location": { "type": "Point", "coordinates": ["-76.7914", "37.2201"] }
+  },
+  {
+    "state": "virgina",
+    "name": "Lanexa, Chicahomny River",
+    "stationId": "8638445",
+    "location": { "type": "Point", "coordinates": ["-76.9117", "37.4033"] }
+  },
+  {
+    "state": "virgina",
+    "name": "Tettington, James River",
+    "stationId": "8638450",
+    "location": { "type": "Point", "coordinates": ["-76.9433", "37.2400"] }
+  },
+  {
+    "state": "virgina",
+    "name": "Willcox Wharf, Charles City",
+    "stationId": "8638464",
+    "location": { "type": "Point", "coordinates": ["-77.0983", "37.3150"] }
+  },
+  {
+    "state": "virgina",
+    "name": "City Point, Hopewell",
+    "stationId": "8638481",
+    "location": { "type": "Point", "coordinates": ["-77.2700", "37.3133"] }
+  },
+  {
+    "state": "virgina",
+    "name": "Puddledock, Appomattox River",
+    "stationId": "8638489",
+    "location": { "type": "Point", "coordinates": ["-77.3717", "37.2667"] }
+  },
+  {
+    "state": "virgina",
+    "name": "Richmond Deepwater Terminal, James River",
+    "stationId": "8636941",
+    "location": { "type": "Point", "coordinates": ["-77.4208", "37.4596"] }
+  },
+  {
+    "state": "virgina",
+    "name": "Richmond (river locks)",
+    "stationId": "8638495",
+    "location": { "type": "Point", "coordinates": ["-77.4200", "37.5250"] }
+  },
+  {
+    "state": "virgina",
+    "name": "CHESAPEAKE BAY BRIDGE TUNNEL",
+    "stationId": "8638863",
+    "location": { "type": "Point", "coordinates": ["-76.1133", "36.9667"] }
+  }
+]

@@ -1,0 +1,140 @@
+[
+  {
+    "state": "louisiana",
+    "name": "The Rigolets, U.S. Highway 90",
+    "stationId": "8761402",
+    "location": { "type": "Point", "coordinates": ["-89.7367", "30.1667"] }
+  },
+  {
+    "state": "louisiana",
+    "name": "New Canal USCG station, Lake Pontchartrain",
+    "stationId": "8761927",
+    "location": { "type": "Point", "coordinates": ["-90.1133", "30.0272"] }
+  },
+  {
+    "state": "louisiana",
+    "name": "Shell Beach, Lake Borgne",
+    "stationId": "8761305",
+    "location": { "type": "Point", "coordinates": ["-89.6732", "29.8681"] }
+  },
+  {
+    "state": "louisiana",
+    "name": "Grand Bay",
+    "stationId": "8760889",
+    "location": { "type": "Point", "coordinates": ["-89.3801", "29.3866"] }
+  },
+  {
+    "state": "louisiana",
+    "name": "Venice, Grand Pass",
+    "stationId": "8760849",
+    "location": { "type": "Point", "coordinates": ["-89.3517", "29.2733"] }
+  },
+  {
+    "state": "louisiana",
+    "name": "Pilottown",
+    "stationId": "8760721",
+    "location": { "type": "Point", "coordinates": ["-89.2583", "29.1783"] }
+  },
+  {
+    "state": "louisiana",
+    "name": "SOUTH PASS",
+    "stationId": "8760551",
+    "location": { "type": "Point", "coordinates": ["-89.1400", "28.9900"] }
+  },
+  {
+    "state": "louisiana",
+    "name": "EAST POINT, GRAND ISLE",
+    "stationId": "8761724",
+    "location": { "type": "Point", "coordinates": ["-89.9567", "29.2633"] }
+  },
+  {
+    "state": "louisiana",
+    "name": "Lafitte, Barataria Waterway",
+    "stationId": "8761899",
+    "location": { "type": "Point", "coordinates": ["-90.1117", "29.6667"] }
+  },
+  {
+    "state": "louisiana",
+    "name": "Port Fourchon",
+    "stationId": "8762075",
+    "location": { "type": "Point", "coordinates": ["-90.1993", "29.1142"] }
+  },
+  {
+    "state": "louisiana",
+    "name": "Leeville, Bayou LaFourche",
+    "stationId": "8762084",
+    "location": { "type": "Point", "coordinates": ["-90.2117", "29.2483"] }
+  },
+  {
+    "state": "louisiana",
+    "name": "East Timbalier Island, Timbalier Bay",
+    "stationId": "8762223",
+    "location": { "type": "Point", "coordinates": ["-90.2850", "29.0767"] }
+  },
+  {
+    "state": "louisiana",
+    "name": "Cocodrie, Terrebonne Bay",
+    "stationId": "8762928",
+    "location": { "type": "Point", "coordinates": ["-90.6617", "29.2450"] }
+  },
+  {
+    "state": "louisiana",
+    "name": "E. ISLE DERNIERES, LAKE PELTO",
+    "stationId": "8762888",
+    "location": { "type": "Point", "coordinates": ["-90.6400", "29.0717"] }
+  },
+  {
+    "state": "louisiana",
+    "name": "Texas Gas Platform, Caillou Bay",
+    "stationId": "8763535",
+    "location": { "type": "Point", "coordinates": ["-90.9764", "29.1748"] }
+  },
+  {
+    "state": "louisiana",
+    "name": "Eugene Island, North of, Atchafalaya Bay",
+    "stationId": "8764314",
+    "location": { "type": "Point", "coordinates": ["-91.3839", "29.3675"] }
+  },
+  {
+    "state": "louisiana",
+    "name": "Stouts Pass at Six Mile Lake",
+    "stationId": "8764025",
+    "location": { "type": "Point", "coordinates": ["-91.2300", "29.7433"] }
+  },
+  {
+    "state": "louisiana",
+    "name": "Cypremort Point",
+    "stationId": "8765251",
+    "location": { "type": "Point", "coordinates": ["-91.8800", "29.7134"] }
+  },
+  {
+    "state": "louisiana",
+    "name": "Weeks Bay",
+    "stationId": "8765148",
+    "location": { "type": "Point", "coordinates": ["-91.8375", "29.8372"] }
+  },
+  {
+    "state": "louisiana",
+    "name": "Freshwater Canal Locks",
+    "stationId": "8766072",
+    "location": { "type": "Point", "coordinates": ["-92.3052", "29.5517"] }
+  },
+  {
+    "state": "louisiana",
+    "name": "Calcasieu Pass",
+    "stationId": "8768094",
+    "location": { "type": "Point", "coordinates": ["-93.3429", "29.7682"] }
+  },
+  {
+    "state": "louisiana",
+    "name": "Bulk Terminal",
+    "stationId": "8767961",
+    "location": { "type": "Point", "coordinates": ["-93.3008", "30.1902"] }
+  },
+  {
+    "state": "louisiana",
+    "name": "Lake Charles",
+    "stationId": "8767816",
+    "location": { "type": "Point", "coordinates": ["-93.2217", "30.2236"] }
+  }
+]

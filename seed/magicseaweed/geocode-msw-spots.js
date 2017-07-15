@@ -12,17 +12,16 @@ const options = {
 };
 
 const geocoder = NodeGeocoder(options);
-const data = JSON.parse(fs.readFileSync("./msw-ne-spots.json"));
+const data = JSON.parse(fs.readFileSync("./seed/msw-spots.json"));
 
 var spots = [];
 var counter = 0;
-
+var length = data.length
 async.forEachOf(data, (item, i, callback) => {
   geocoder
     .geocode(item.name)
     .then(function(res) {
       if (res[0]) {
-        console.log("No longitude");
         const spot = {
           name: item.name,
           spotId: item.spot_id,
@@ -34,8 +33,8 @@ async.forEachOf(data, (item, i, callback) => {
 
         spots.push(spot);
         counter++;
-        if (counter === 34) {
-          fs.writeFile("./msw-spots.json", JSON.stringify(spots), function(
+        if (counter === length) {
+          fs.writeFile("./msw-alaska.json", JSON.stringify(spots), function(
             err
           ) {});
         }

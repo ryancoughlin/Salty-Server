@@ -1,0 +1,68 @@
+[
+  {
+    "state": "mississsippi",
+    "name": "Grand Bay NERR, Mississippi Sound",
+    "stationId": "8740166",
+    "location": { "type": "Point", "coordinates": ["-88.4029", "30.4132"] }
+  },
+  {
+    "state": "mississsippi",
+    "name": "Petit Bois Island, Mississippi Sound",
+    "stationId": "8740405",
+    "location": { "type": "Point", "coordinates": ["-88.4417", "30.2033"] }
+  },
+  {
+    "state": "mississsippi",
+    "name": "Ship Island, Mississippi Sound",
+    "stationId": "8744756",
+    "location": { "type": "Point", "coordinates": ["-88.9717", "30.2133"] }
+  },
+  {
+    "state": "mississsippi",
+    "name": "Horn Island, Mississippi Sound",
+    "stationId": "8742221",
+    "location": { "type": "Point", "coordinates": ["-88.6667", "30.2383"] }
+  },
+  {
+    "state": "mississsippi",
+    "name": "Dock E, Port of Pascagoula",
+    "stationId": "8741041",
+    "location": { "type": "Point", "coordinates": ["-88.5058", "30.3478"] }
+  },
+  {
+    "state": "mississsippi",
+    "name": "Pascagoula, Mississippi Sound",
+    "stationId": "8741196",
+    "location": { "type": "Point", "coordinates": ["-88.5333", "30.3400"] }
+  },
+  {
+    "state": "mississsippi",
+    "name": "Graveline Bayou Entrance",
+    "stationId": "8742205",
+    "location": { "type": "Point", "coordinates": ["-88.6633", "30.3617"] }
+  },
+  {
+    "state": "mississsippi",
+    "name": "Gulfport Harbor, Mississippi Sound",
+    "stationId": "8745557",
+    "location": { "type": "Point", "coordinates": ["-89.0817", "30.3600"] }
+  },
+  {
+    "state": "mississsippi",
+    "name": "Handsboro Bridge, Bernard Bayou",
+    "stationId": "8745101",
+    "location": { "type": "Point", "coordinates": ["-89.0267", "30.4067"] }
+  },
+  {
+    "state": "mississsippi",
+    "name": "St. Louis Bay entrance",
+    "stationId": "8747437",
+    "location": { "type": "Point", "coordinates": ["-89.3250", "30.3250"] }
+  },
+  {
+    "state": "mississsippi",
+    "name": "Waveland",
+    "stationId": "8747766",
+    "location": { "type": "Point", "coordinates": ["-89.3667", "30.2817"] }
+  }
+]

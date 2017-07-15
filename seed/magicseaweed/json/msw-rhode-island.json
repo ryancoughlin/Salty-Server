@@ -1,0 +1,94 @@
+[
+  {
+    "name": "Misquamicut",
+    "spotId": 783,
+    "location": { "type": "Point", "coordinates": [-71.8037269, 41.323282] }
+  },
+  {
+    "name": "Weekapaug",
+    "spotId": 4058,
+    "location": { "type": "Point", "coordinates": [-71.75556, 41.33083] }
+  },
+  {
+    "name": "Matunuck",
+    "spotId": 377,
+    "location": { "type": "Point", "coordinates": [-71.5458919, 41.3784352] }
+  },
+  {
+    "name": "South-Shore-Beach",
+    "spotId": 2967,
+    "location": {
+      "type": "Point",
+      "coordinates": [-71.13649629999999, 41.4943255]
+    }
+  },
+  {
+    "name": "Elbow-Ledge",
+    "spotId": 574,
+    "location": {
+      "type": "Point",
+      "coordinates": [-71.25921459999999, 41.463992]
+    }
+  },
+  {
+    "name": "Baileys-Beach",
+    "spotId": 2096,
+    "location": { "type": "Point", "coordinates": [-71.3139612, 41.4566202] }
+  },
+  {
+    "name": "Monahans-Dock",
+    "spotId": 375,
+    "location": { "type": "Point", "coordinates": [-71.4558232, 41.4222396] }
+  },
+  {
+    "name": "1st-Beach-Eastons-Beach",
+    "spotId": 907,
+    "location": { "type": "Point", "coordinates": [-71.292681, 41.4878856] }
+  },
+  {
+    "name": "Lighthouse-Point-Judith",
+    "spotId": 376,
+    "location": { "type": "Point", "coordinates": [-71.4810928, 41.3614384] }
+  },
+  {
+    "name": "Breachway",
+    "spotId": 784,
+    "location": {
+      "type": "Point",
+      "coordinates": [-71.63830050000001, 41.3560536]
+    }
+  },
+  {
+    "name": "Block-Island",
+    "spotId": 4057,
+    "location": { "type": "Point", "coordinates": [-71.5842643, 41.1616556] }
+  },
+  {
+    "name": "East-Beach",
+    "spotId": 4059,
+    "location": { "type": "Point", "coordinates": [-71.6733026, 41.3477725] }
+  },
+  {
+    "name": "Narragansett-Beach",
+    "spotId": 1103,
+    "location": { "type": "Point", "coordinates": [-71.4557706, 41.4354648] }
+  },
+  {
+    "name": "2nd-Beach-Sachuest-Beach",
+    "spotId": 846,
+    "location": { "type": "Point", "coordinates": [-71.2565946, 41.4875239] }
+  },
+  {
+    "name": "Ruggles",
+    "spotId": 374,
+    "location": {
+      "type": "Point",
+      "coordinates": [-95.38805719999999, 29.79061549999999]
+    }
+  },
+  {
+    "name": "K38-39",
+    "spotId": 785,
+    "location": { "type": "Point", "coordinates": [-116.5141018, 33.8167027] }
+  }
+]

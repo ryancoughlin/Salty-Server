@@ -1,0 +1,97 @@
+[
+  {
+    "name": "Rockaway",
+    "spotId": 384,
+    "location": { "type": "Point", "coordinates": [-73.8114993, 40.5867247] }
+  },
+  {
+    "name": "Flies",
+    "spotId": 4225,
+    "location": {
+      "type": "Point",
+      "coordinates": [6.031549999999999, 46.27755699999999]
+    }
+  },
+  {
+    "name": "Tobay-Beach",
+    "spotId": 1240,
+    "location": { "type": "Point", "coordinates": [-73.4320127, 40.6115746] }
+  },
+  {
+    "name": "Georgica-East-Hampton",
+    "spotId": 4226,
+    "location": { "type": "Point", "coordinates": [-72.2450343, 40.9495276] }
+  },
+  {
+    "name": "Fire-Island",
+    "spotId": 380,
+    "location": {
+      "type": "Point",
+      "coordinates": [-73.1459474, 40.64759970000001]
+    }
+  },
+  {
+    "name": "Robert-Moses-State-Park",
+    "spotId": 381,
+    "location": { "type": "Point", "coordinates": [-73.2611703, 40.6233545] }
+  },
+  {
+    "name": "Atlantic-Terrace",
+    "spotId": 2160,
+    "location": { "type": "Point", "coordinates": [-71.937524, 41.034333] }
+  },
+  {
+    "name": "Jones-Beach-State-Park",
+    "spotId": 2162,
+    "location": {
+      "type": "Point",
+      "coordinates": [-73.50808599999999, 40.596327]
+    }
+  },
+  {
+    "name": "Ditch-Plains",
+    "spotId": 2159,
+    "location": { "type": "Point", "coordinates": [-74.003748, 40.729221] }
+  },
+  {
+    "name": "Mastic-Beach",
+    "spotId": 870,
+    "location": {
+      "type": "Point",
+      "coordinates": [-72.85204759999999, 40.7667655]
+    }
+  },
+  {
+    "name": "Cupsogue",
+    "spotId": 4224,
+    "location": {
+      "type": "Point",
+      "coordinates": [-72.73522799999999, 40.7709354]
+    }
+  },
+  {
+    "name": "Turtle-Cove",
+    "spotId": 2161,
+    "location": { "type": "Point", "coordinates": [-83.4329989, 42.2115445] }
+  },
+  {
+    "name": "Lido-Beach",
+    "spotId": 382,
+    "location": { "type": "Point", "coordinates": [-82.5776973, 27.3118963] }
+  },
+  {
+    "name": "Long-Beach",
+    "spotId": 383,
+    "location": { "type": "Point", "coordinates": [-118.1937395, 33.7700504] }
+  },
+  {
+    "name": "North-Bar",
+    "spotId": 378,
+    "location": { "type": "Point", "coordinates": [-87.6691852, 41.9105044] }
+  },
+  {
+    "name": "Fortress",
+    "spotId": 379,
+    "location": { "type": "Point", "coordinates": [-118.417448, 34.057085] }
+  }
+]

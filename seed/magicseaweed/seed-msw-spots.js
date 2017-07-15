@@ -2,19 +2,18 @@ require("dotenv").config();
 const mongoose = require("mongoose");
 const async = require("async");
 const fs = require("fs");
-const Station = require("./models/station");
+const MSWSpot = require("../lib/models/msw-spot");
 
 mongoose.Promise = global.Promise;
 mongoose.connect(process.env.MONGODB_URI, err => {
   if (err) throw err;
 
-  const data = JSON.parse(fs.readFileSync("./enhancedStation.json"));
+  const data = JSON.parse(fs.readFileSync("./msw-spots.json"));
 
   async.each(data, (s, callback) => {
-    const station = new Station({
-      state: s.state,
+    const station = new MSWSpot({
       name: s.name,
-      stationId: s.stationId,
+      spotId: s.spotId,
       location: {
         coordinates: s.location.coordinates,
         type: s.location.type
@@ -26,7 +25,7 @@ mongoose.connect(process.env.MONGODB_URI, err => {
         console.log(error);
       }
 
-      console.log("Station is saved");
+      console.log("Spot saved");
 
       callback();
     });
