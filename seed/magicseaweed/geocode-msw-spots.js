@@ -46,36 +46,3 @@ async.forEachOf(data, (item, i, callback) => {
       console.log(err);
     });
 });
-// fetch(
-//   `http://magicseaweed.com/api/443d9221c0e27b63d74e473d7eb5271b/forecast/?spot_id=`
-// )
-//   .then(response => response.json())
-//   .then(json => {
-//     if (json.metadata) {
-//       const metadata = json.metadata;
-//       const station = {
-//         name: metadata.name,
-//         stationId: metadata.id,
-//         location: {
-//           type: "Point",
-//           coordinates: [metadata.lon, metadata.lat]
-//         }
-//       };
-//
-//       stationInfo.push(station);
-//       counter++;
-//
-//       if (counter == stationInfo.length) {
-//         fs.writeFile(
-//           "./enhancedStation.json",
-//           JSON.stringify(stationInfo),
-//           function(err) {}
-//         );
-//       }
-//     } else {
-//       console.log("Invalid station ID, skipping...", station);
-//     }
-//   })
-//   .catch(error => {
-//     console.log(error);
-//   });
