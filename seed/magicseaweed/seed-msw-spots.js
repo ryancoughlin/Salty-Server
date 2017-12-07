@@ -2,13 +2,13 @@ require("dotenv").config();
 const mongoose = require("mongoose");
 const async = require("async");
 const fs = require("fs");
-const MSWSpot = require("../lib/models/msw-spot");
+const MSWSpot = require("../../lib/models/msw-spot");
 
 mongoose.Promise = global.Promise;
 mongoose.connect(process.env.MONGODB_URI, err => {
   if (err) throw err;
 
-  const data = JSON.parse(fs.readFileSync("./msw-spots.json"));
+  const data = JSON.parse(fs.readFileSync("./seed/magicseaweed/json/msw-washington.json"));
 
   async.each(data, (s, callback) => {
     const station = new MSWSpot({
