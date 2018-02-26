@@ -19,6 +19,8 @@
     "dark-sky": "^1.0.10",
     "dotenv": "^2.0.0",
     "hapi": "^16.0.1",
+    "hapi-cors": "^1.0.1",
+    "hapi-cors-headers": "^1.0.3",
     "lodash": "^4.17.4",
     "lru-cache": "^4.1.1",
     "moment": "^2.15.0",
