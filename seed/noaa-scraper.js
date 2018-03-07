@@ -1,5 +1,4 @@
 const fs = require('fs')
-const cheerio = require('cheerio')
 const fetch = require('node-fetch')
 const _ = require('lodash')
 
@@ -12,7 +11,13 @@ fetch(url).then(res => {
       const data = json.stationList
       const stations = data
         .filter(station => {
-          station.stationId != ''
+          if (station.stationId) {
+            console.log('ID')
+            return true
+          } else {
+            console.log('No ID')
+          }
+          // station.stationId != ''
         })
         .map(station => {
           const { geoGroupName, stationId, lat, lon } = station
@@ -21,7 +26,7 @@ fetch(url).then(res => {
             state: 'massachusetts',
             name: geoGroupName,
             location: {
-              coordinates: { lon, lat },
+              coordinates: [lon, lat],
               type: 'Point'
             }
           }
@@ -38,7 +43,9 @@ const writeFile = data => {
   console.log('Data is: ', data)
 
   if (data) {
-    fs.writeFile('stations.json', JSON.stringify(data), function(err) {
+    fs.writeFile('./seed/stations.json', JSON.stringify(data, 0, 4), function(
+      err
+    ) {
       console.log('Successfully written!')
     })
   } else {
