@@ -1,0 +1,1262 @@
+[
+    {
+        "stationId": "8410834",
+        "state": "maine",
+        "name": "Pettegrove Point, Dochet Island",
+        "location": {
+            "coordinates": [
+                -67.14466666666667,
+                45.12844444444445
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8410140",
+        "state": "maine",
+        "name": "EASTPORT",
+        "location": {
+            "coordinates": [
+                -66.985,
+                44.90330555555556
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8410715",
+        "state": "maine",
+        "name": "Garnet Point, Pennamquan River",
+        "location": {
+            "coordinates": [
+                -67.13,
+                44.9233
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8410714",
+        "state": "maine",
+        "name": "Coffins Point",
+        "location": {
+            "coordinates": [
+                -67.1083,
+                44.87
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8410875",
+        "state": "maine",
+        "name": "Birch Islands",
+        "location": {
+            "coordinates": [
+                -67.1583,
+                44.875
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8410864",
+        "state": "maine",
+        "name": "Gravelly Point, Whiting Bay",
+        "location": {
+            "coordinates": [
+                -67.15166666666667,
+                44.82333333333333
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8411060",
+        "state": "maine",
+        "name": "Cutler, Little River",
+        "location": {
+            "coordinates": [
+                -67.20466613769531,
+                44.65702819824219
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8411250",
+        "state": "maine",
+        "name": "Cutler, Naval Radio Station",
+        "location": {
+            "coordinates": [
+                -67.2967,
+                44.6417
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8411411",
+        "state": "maine",
+        "name": "Stone Island, Machias Bay",
+        "location": {
+            "coordinates": [
+                -67.3683,
+                44.6033
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8411467",
+        "state": "maine",
+        "name": "Machiasport, Machias River",
+        "location": {
+            "coordinates": [
+                -67.3933,
+                44.6983
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8411696",
+        "state": "maine",
+        "name": "Shoppee Point, Englishman Bay",
+        "location": {
+            "coordinates": [
+                -67.4967,
+                44.615
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8411801",
+        "state": "maine",
+        "name": "Steele Harbor Island",
+        "location": {
+            "coordinates": [
+                -67.5433,
+                44.4933
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8412581",
+        "state": "maine",
+        "name": "Millbridge, Narraguagus River, Maine",
+        "location": {
+            "coordinates": [
+                -67.875,
+                44.54
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8412568",
+        "state": "maine",
+        "name": "Green Island, Petit Manan Bar",
+        "location": {
+            "coordinates": [
+                -67.87,
+                44.3717
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8412932",
+        "state": "maine",
+        "name": "Prospect Harbor",
+        "location": {
+            "coordinates": [
+                -68.0217,
+                44.4
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8413320",
+        "state": "maine",
+        "name": "BAR HARBOR",
+        "location": {
+            "coordinates": [
+                -68.20427777777778,
+                44.39219444444444
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8413564",
+        "state": "maine",
+        "name": "Southwest Harbor",
+        "location": {
+            "coordinates": [
+                -68.3133,
+                44.275
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8413651",
+        "state": "maine",
+        "name": "Bass Harbor",
+        "location": {
+            "coordinates": [
+                -68.3533,
+                44.2417
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8413079",
+        "state": "maine",
+        "name": "Winter Harbor, Frenchman Bay",
+        "location": {
+            "coordinates": [
+                -68.0867,
+                44.3883
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8414112",
+        "state": "maine",
+        "name": "Blue Hill Harbor",
+        "location": {
+            "coordinates": [
+                -68.5633,
+                44.4083
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8413825",
+        "state": "maine",
+        "name": "Mackerel Cove",
+        "location": {
+            "coordinates": [
+                -68.435,
+                44.17
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8413801",
+        "state": "maine",
+        "name": "Ellsworth, Union River",
+        "location": {
+            "coordinates": [
+                -68.4217,
+                44.535
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8413857",
+        "state": "maine",
+        "name": "Burnt Coat Harbor, Swans Island",
+        "location": {
+            "coordinates": [
+                -68.45,
+                44.145
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8414168",
+        "state": "maine",
+        "name": "Center Harbor",
+        "location": {
+            "coordinates": [
+                -68.5867,
+                44.2633
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8414424",
+        "state": "maine",
+        "name": "Little Deer Isle",
+        "location": {
+            "coordinates": [
+                -68.6933,
+                44.2917
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8414288",
+        "state": "maine",
+        "name": "Isle Au Haut",
+        "location": {
+            "coordinates": [
+                -68.6367,
+                44.0733
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8414249",
+        "state": "maine",
+        "name": "Oceanville, Deer Isle",
+        "location": {
+            "coordinates": [
+                -68.62093055555556,
+                44.19230555555556
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8414348",
+        "state": "maine",
+        "name": "Stonington, Deer Isle",
+        "location": {
+            "coordinates": [
+                -68.6617,
+                44.1533
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8414876",
+        "state": "maine",
+        "name": "Matinicus Harbor, Wheaton Island",
+        "location": {
+            "coordinates": [
+                -68.8817,
+                43.8617
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8414776",
+        "state": "maine",
+        "name": "Vinalhaven, Vinalhaven Island",
+        "location": {
+            "coordinates": [
+                -68.84,
+                44.0433
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8414856",
+        "state": "maine",
+        "name": "North Haven",
+        "location": {
+            "coordinates": [
+                -68.8733,
+                44.1267
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8414672",
+        "state": "maine",
+        "name": "Castine",
+        "location": {
+            "coordinates": [
+                -68.7967,
+                44.3867
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8414888",
+        "state": "maine",
+        "name": "Pulpit Harbor, North Haven Island",
+        "location": {
+            "coordinates": [
+                -68.8867,
+                44.1567
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8414721",
+        "state": "maine",
+        "name": "Fort Point, Penobscot River",
+        "location": {
+            "coordinates": [
+                -68.8133,
+                44.4717
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8414581",
+        "state": "maine",
+        "name": "Gross Point, Eastern Channel",
+        "location": {
+            "coordinates": [
+                -68.7583,
+                44.5367
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8414684",
+        "state": "maine",
+        "name": "Bucksport",
+        "location": {
+            "coordinates": [
+                -68.8017,
+                44.5717
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8414781",
+        "state": "maine",
+        "name": "Winterport",
+        "location": {
+            "coordinates": [
+                -68.8417,
+                44.6367
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8414692",
+        "state": "maine",
+        "name": "Sandy Point",
+        "location": {
+            "coordinates": [
+                -68.805,
+                44.505
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8414612",
+        "state": "maine",
+        "name": "Bangor",
+        "location": {
+            "coordinates": [
+                -68.7667,
+                44.785
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8415191",
+        "state": "maine",
+        "name": "Belfast",
+        "location": {
+            "coordinates": [
+                -69.005,
+                44.4267
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8415490",
+        "state": "maine",
+        "name": "Rockland",
+        "location": {
+            "coordinates": [
+                -69.1017,
+                44.105
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8415809",
+        "state": "maine",
+        "name": "Tenants Harbor",
+        "location": {
+            "coordinates": [
+                -69.2167,
+                43.965
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8416092",
+        "state": "maine",
+        "name": "Monhegan Island",
+        "location": {
+            "coordinates": [
+                -69.3217,
+                43.765
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8416028",
+        "state": "maine",
+        "name": "Burnt Island, Georges Islands",
+        "location": {
+            "coordinates": [
+                -69.295,
+                43.8717
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8415933",
+        "state": "maine",
+        "name": "Port Clyde",
+        "location": {
+            "coordinates": [
+                -69.26,
+                43.925
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8415867",
+        "state": "maine",
+        "name": "Otis Cove",
+        "location": {
+            "coordinates": [
+                -69.2367,
+                43.9867
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8415709",
+        "state": "maine",
+        "name": "Thomaston",
+        "location": {
+            "coordinates": [
+                -69.1817,
+                44.0717
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8416501",
+        "state": "maine",
+        "name": "New Harbor, Muscongus Bay",
+        "location": {
+            "coordinates": [
+                -69.4917,
+                43.875
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8416381",
+        "state": "maine",
+        "name": "Muscongus Harbor, Muscongus Sound",
+        "location": {
+            "coordinates": [
+                -69.4417,
+                43.9667
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8416141",
+        "state": "maine",
+        "name": "Friendship Harbor",
+        "location": {
+            "coordinates": [
+                -69.3417,
+                43.97
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8416581",
+        "state": "maine",
+        "name": "Pemaquid Harbor, Johns Bay",
+        "location": {
+            "coordinates": [
+                -69.525,
+                43.8767
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8416232",
+        "state": "maine",
+        "name": "Jones Neck",
+        "location": {
+            "coordinates": [
+                -69.38,
+                44.015
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8416224",
+        "state": "maine",
+        "name": "Waldoboro",
+        "location": {
+            "coordinates": [
+                -69.3767,
+                44.0933
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8416721",
+        "state": "maine",
+        "name": "East Boothbay",
+        "location": {
+            "coordinates": [
+                -69.5833,
+                43.865
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8416731",
+        "state": "maine",
+        "name": "Walpole",
+        "location": {
+            "coordinates": [
+                -69.58,
+                43.9333
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8416608",
+        "state": "maine",
+        "name": "Newcastle",
+        "location": {
+            "coordinates": [
+                -69.5367,
+                44.0333
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8416796",
+        "state": "maine",
+        "name": "Damariscove Harbor, Damariscove Island",
+        "location": {
+            "coordinates": [
+                -69.615,
+                43.7583
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8416828",
+        "state": "maine",
+        "name": "Boothbay Harbor",
+        "location": {
+            "coordinates": [
+                -69.6283,
+                43.85
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8416908",
+        "state": "maine",
+        "name": "Southport, Townsend Gut",
+        "location": {
+            "coordinates": [
+                -69.6617,
+                43.8467
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8416968",
+        "state": "maine",
+        "name": "Isle of Springs",
+        "location": {
+            "coordinates": [
+                -69.6867,
+                43.86
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8416928",
+        "state": "maine",
+        "name": "Cross River entrance",
+        "location": {
+            "coordinates": [
+                -69.67,
+                43.925
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8416921",
+        "state": "maine",
+        "name": "Wiscasset",
+        "location": {
+            "coordinates": [
+                -69.6667,
+                44
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8416804",
+        "state": "maine",
+        "name": "Sheepscot (below rapids)",
+        "location": {
+            "coordinates": [
+                -69.6183,
+                44.05
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8416961",
+        "state": "maine",
+        "name": "Back River",
+        "location": {
+            "coordinates": [
+                -69.6833,
+                43.9583
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8417067",
+        "state": "maine",
+        "name": "Robinhood, Sasanoa River",
+        "location": {
+            "coordinates": [
+                -69.7333,
+                43.8533
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8417127",
+        "state": "maine",
+        "name": "Mill Point, Sasanoa River",
+        "location": {
+            "coordinates": [
+                -69.7633,
+                43.8867
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8417177",
+        "state": "maine",
+        "name": "Fort Popham, Hunniwell Point",
+        "location": {
+            "coordinates": [
+                -69.785,
+                43.755
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8417221",
+        "state": "maine",
+        "name": "Phippsburg",
+        "location": {
+            "coordinates": [
+                -69.81,
+                43.8183
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8417227",
+        "state": "maine",
+        "name": "Bath",
+        "location": {
+            "coordinates": [
+                -69.815,
+                43.925
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8417271",
+        "state": "maine",
+        "name": "Sturgeon Island, Merrymeeting Bay",
+        "location": {
+            "coordinates": [
+                -69.835,
+                43.9817
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8417377",
+        "state": "maine",
+        "name": "Androscoggin River entrance",
+        "location": {
+            "coordinates": [
+                -69.8883,
+                43.95
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8417527",
+        "state": "maine",
+        "name": "Brunswick, Androscoggin River",
+        "location": {
+            "coordinates": [
+                -69.9633,
+                43.9217
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8417391",
+        "state": "maine",
+        "name": "Bowdoinham, Cathance River",
+        "location": {
+            "coordinates": [
+                -69.895,
+                44.0083
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8417387",
+        "state": "maine",
+        "name": "Cundy Harbor, New Meadows River",
+        "location": {
+            "coordinates": [
+                -69.8933,
+                43.7883
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8417367",
+        "state": "maine",
+        "name": "Howard Point, New Meadows River",
+        "location": {
+            "coordinates": [
+                -69.8833,
+                43.89
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8417647",
+        "state": "maine",
+        "name": "South Harpswell, Potts Harbor",
+        "location": {
+            "coordinates": [
+                -70.0233,
+                43.7383
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8417553",
+        "state": "maine",
+        "name": "Wilson Cove, Middle Bay",
+        "location": {
+            "coordinates": [
+                -69.9767,
+                43.825
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8417801",
+        "state": "maine",
+        "name": "South Freeport",
+        "location": {
+            "coordinates": [
+                -70.1033,
+                43.82
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8417948",
+        "state": "maine",
+        "name": "Prince Point",
+        "location": {
+            "coordinates": [
+                -70.1733,
+                43.7617
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8417874",
+        "state": "maine",
+        "name": "Doyle Point",
+        "location": {
+            "coordinates": [
+                -70.14,
+                43.7517
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8418015",
+        "state": "maine",
+        "name": "Falmouth Foreside",
+        "location": {
+            "coordinates": [
+                -70.205,
+                43.7317
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8417881",
+        "state": "maine",
+        "name": "Great Chebeague Island",
+        "location": {
+            "coordinates": [
+                -70.1417,
+                43.7217
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8417821",
+        "state": "maine",
+        "name": "Cliff Island, Luckse Sound",
+        "location": {
+            "coordinates": [
+                -70.11,
+                43.695
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8417911",
+        "state": "maine",
+        "name": "Vaill Island",
+        "location": {
+            "coordinates": [
+                -70.155,
+                43.6767
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8417941",
+        "state": "maine",
+        "name": "Long Island",
+        "location": {
+            "coordinates": [
+                -70.17,
+                43.69
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8418009",
+        "state": "maine",
+        "name": "Cow Island",
+        "location": {
+            "coordinates": [
+                -70.19,
+                43.69
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8418137",
+        "state": "maine",
+        "name": "Presumpscot River Bridge",
+        "location": {
+            "coordinates": [
+                -70.2467,
+                43.6867
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8418175",
+        "state": "maine",
+        "name": "Back Cove",
+        "location": {
+            "coordinates": [
+                -70.255,
+                43.6767
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8417988",
+        "state": "maine",
+        "name": "Great Diamond Island",
+        "location": {
+            "coordinates": [
+                -70.2,
+                43.67
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8418001",
+        "state": "maine",
+        "name": "Peak Island",
+        "location": {
+            "coordinates": [
+                -70.2,
+                43.655
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8417997",
+        "state": "maine",
+        "name": "Cushing Island",
+        "location": {
+            "coordinates": [
+                -70.1983,
+                43.645
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8418150",
+        "state": "maine",
+        "name": "PORTLAND",
+        "location": {
+            "coordinates": [
+                -70.2467,
+                43.6567
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8418268",
+        "state": "maine",
+        "name": "Fore River",
+        "location": {
+            "coordinates": [
+                -70.285,
+                43.6417
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8418031",
+        "state": "maine",
+        "name": "Portland Head Light",
+        "location": {
+            "coordinates": [
+                -70.2067,
+                43.6233
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8418445",
+        "state": "maine",
+        "name": "Pine Point, Scarborough River",
+        "location": {
+            "coordinates": [
+                -70.3333,
+                43.545
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8418557",
+        "state": "maine",
+        "name": "Old Orchard Beach",
+        "location": {
+            "coordinates": [
+                -70.3667,
+                43.5167
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8418606",
+        "state": "maine",
+        "name": "Camp Ellis, Saco River Entrance",
+        "location": {
+            "coordinates": [
+                -70.3817,
+                43.4617
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8418828",
+        "state": "maine",
+        "name": "Biddeford, Saco River",
+        "location": {
+            "coordinates": [
+                -70.4467,
+                43.4917
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8418772",
+        "state": "maine",
+        "name": "Cape Porpoise",
+        "location": {
+            "coordinates": [
+                -70.4317,
+                43.3667
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8418911",
+        "state": "maine",
+        "name": "Kennebunkport",
+        "location": {
+            "coordinates": [
+                -70.4767,
+                43.3583
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8419317",
+        "state": "maine",
+        "name": "Wells, Webhannet River",
+        "location": {
+            "coordinates": [
+                -70.56330555555556,
+                43.32
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8419399",
+        "state": "maine",
+        "name": "Cape Neddick",
+        "location": {
+            "coordinates": [
+                -70.5933,
+                43.1667
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8419518",
+        "state": "maine",
+        "name": "York Harbor",
+        "location": {
+            "coordinates": [
+                -70.6417,
+                43.1317
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8419528",
+        "state": "maine",
+        "name": "Fort Point, York Harbor",
+        "location": {
+            "coordinates": [
+                -70.6383,
+                43.13
+            ],
+            "type": "Point"
+        }
+    },
+    {
+        "stationId": "8419590",
+        "state": "maine",
+        "name": "Seapoint, Cutts Island",
+        "location": {
+            "coordinates": [
+                -70.6617,
+                43.085
+            ],
+            "type": "Point"
+        }
+    }
+]

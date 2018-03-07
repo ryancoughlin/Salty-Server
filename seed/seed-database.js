@@ -2,13 +2,15 @@ require('dotenv').config()
 const mongoose = require('mongoose')
 const async = require('async')
 const fs = require('fs')
-const Station = require('../models/station')
+const Station = require('./models/station')
 
 mongoose.Promise = global.Promise
 mongoose.connect(process.env.MONGODB_URI, err => {
   if (err) throw err
 
-  const data = JSON.parse(fs.readFileSync('./stations.json'))
+  const data = JSON.parse(
+    fs.readFileSync('./seed/data/states/massachusetts.json')
+  )
 
   async.each(data, (s, callback) => {
     const station = new Station({
