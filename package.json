@@ -23,7 +23,7 @@
     "hapi": "^17.2.1",
     "lodash": "^4.17.4",
     "lru-cache": "^4.1.1",
-    "moment": "^2.15.0",
+    "moment": "^2.21.0",
     "mongoose": "^5.0.7",
     "node-fetch": "^1.6.1",
     "nodemon": "^1.11.0",
