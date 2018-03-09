@@ -9800,6 +9800,1308 @@
                 "name": "Westport Harbor",
                 "id": "8447975"
             }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -67.1583,
+                    44.875
+                ]
+            },
+            "properties": {
+                "name": "Birch Islands",
+                "id": "8410875"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -67.3683,
+                    44.6033
+                ]
+            },
+            "properties": {
+                "name": "Stone Island, Machias Bay",
+                "id": "8411411"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -67.3933,
+                    44.6983
+                ]
+            },
+            "properties": {
+                "name": "Machiasport, Machias River",
+                "id": "8411467"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -67.4967,
+                    44.615
+                ]
+            },
+            "properties": {
+                "name": "Shoppee Point, Englishman Bay",
+                "id": "8411696"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -67.87,
+                    44.3717
+                ]
+            },
+            "properties": {
+                "name": "Green Island, Petit Manan Bar",
+                "id": "8412568"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -68.3133,
+                    44.275
+                ]
+            },
+            "properties": {
+                "name": "Southwest Harbor",
+                "id": "8413564"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -68.3533,
+                    44.2417
+                ]
+            },
+            "properties": {
+                "name": "Bass Harbor",
+                "id": "8413651"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -68.0217,
+                    44.4
+                ]
+            },
+            "properties": {
+                "name": "Prospect Harbor",
+                "id": "8412932"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -68.45,
+                    44.145
+                ]
+            },
+            "properties": {
+                "name": "Burnt Coat Harbor, Swans Island",
+                "id": "8413857"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -68.5633,
+                    44.4083
+                ]
+            },
+            "properties": {
+                "name": "Blue Hill Harbor",
+                "id": "8414112"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -68.6933,
+                    44.2917
+                ]
+            },
+            "properties": {
+                "name": "Little Deer Isle",
+                "id": "8414424"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -67.5433,
+                    44.4933
+                ]
+            },
+            "properties": {
+                "name": "Steele Harbor Island",
+                "id": "8411801"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -68.84,
+                    44.0433
+                ]
+            },
+            "properties": {
+                "name": "Vinalhaven, Vinalhaven Island",
+                "id": "8414776"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -68.7583,
+                    44.5367
+                ]
+            },
+            "properties": {
+                "name": "Gross Point, Eastern Channel",
+                "id": "8414581"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -68.435,
+                    44.17
+                ]
+            },
+            "properties": {
+                "name": "Mackerel Cove",
+                "id": "8413825"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -68.6367,
+                    44.0733
+                ]
+            },
+            "properties": {
+                "name": "Isle Au Haut",
+                "id": "8414288"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -68.8733,
+                    44.1267
+                ]
+            },
+            "properties": {
+                "name": "North Haven",
+                "id": "8414856"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -68.8017,
+                    44.5717
+                ]
+            },
+            "properties": {
+                "name": "Bucksport",
+                "id": "8414684"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -69.2367,
+                    43.9867
+                ]
+            },
+            "properties": {
+                "name": "Otis Cove",
+                "id": "8415867"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -69.525,
+                    43.8767
+                ]
+            },
+            "properties": {
+                "name": "Pemaquid Harbor, Johns Bay",
+                "id": "8416581"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -68.0867,
+                    44.3883
+                ]
+            },
+            "properties": {
+                "name": "Winter Harbor, Frenchman Bay",
+                "id": "8413079"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -68.5867,
+                    44.2633
+                ]
+            },
+            "properties": {
+                "name": "Center Harbor",
+                "id": "8414168"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -68.8817,
+                    43.8617
+                ]
+            },
+            "properties": {
+                "name": "Matinicus Harbor, Wheaton Island",
+                "id": "8414876"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -69.295,
+                    43.8717
+                ]
+            },
+            "properties": {
+                "name": "Burnt Island, Georges Islands",
+                "id": "8416028"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -68.7967,
+                    44.3867
+                ]
+            },
+            "properties": {
+                "name": "Castine",
+                "id": "8414672"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -68.8417,
+                    44.6367
+                ]
+            },
+            "properties": {
+                "name": "Winterport",
+                "id": "8414781"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -69.4417,
+                    43.9667
+                ]
+            },
+            "properties": {
+                "name": "Muscongus Harbor, Muscongus Sound",
+                "id": "8416381"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -69.2167,
+                    43.965
+                ]
+            },
+            "properties": {
+                "name": "Tenants Harbor",
+                "id": "8415809"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -69.5833,
+                    43.865
+                ]
+            },
+            "properties": {
+                "name": "East Boothbay",
+                "id": "8416721"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -69.6617,
+                    43.8467
+                ]
+            },
+            "properties": {
+                "name": "Southport, Townsend Gut",
+                "id": "8416908"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -69.38,
+                    44.015
+                ]
+            },
+            "properties": {
+                "name": "Jones Neck",
+                "id": "8416232"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -68.6617,
+                    44.1533
+                ]
+            },
+            "properties": {
+                "name": "Stonington, Deer Isle",
+                "id": "8414348"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -69.615,
+                    43.7583
+                ]
+            },
+            "properties": {
+                "name": "Damariscove Harbor, Damariscove Island",
+                "id": "8416796"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -69.6667,
+                    44
+                ]
+            },
+            "properties": {
+                "name": "Wiscasset",
+                "id": "8416921"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -69.9633,
+                    43.9217
+                ]
+            },
+            "properties": {
+                "name": "Brunswick, Androscoggin River",
+                "id": "8417527"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -68.805,
+                    44.505
+                ]
+            },
+            "properties": {
+                "name": "Sandy Point",
+                "id": "8414692"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -69.9767,
+                    43.825
+                ]
+            },
+            "properties": {
+                "name": "Wilson Cove, Middle Bay",
+                "id": "8417553"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -70.1417,
+                    43.7217
+                ]
+            },
+            "properties": {
+                "name": "Great Chebeague Island",
+                "id": "8417881"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -69.3217,
+                    43.765
+                ]
+            },
+            "properties": {
+                "name": "Monhegan Island",
+                "id": "8416092"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -70.2467,
+                    43.6867
+                ]
+            },
+            "properties": {
+                "name": "Presumpscot River Bridge",
+                "id": "8418137"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -69.4917,
+                    43.875
+                ]
+            },
+            "properties": {
+                "name": "New Harbor, Muscongus Bay",
+                "id": "8416501"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -69.3767,
+                    44.0933
+                ]
+            },
+            "properties": {
+                "name": "Waldoboro",
+                "id": "8416224"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -69.005,
+                    44.4267
+                ]
+            },
+            "properties": {
+                "name": "Belfast",
+                "id": "8415191"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -69.6283,
+                    43.85
+                ]
+            },
+            "properties": {
+                "name": "Boothbay Harbor",
+                "id": "8416828"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -69.26,
+                    43.925
+                ]
+            },
+            "properties": {
+                "name": "Port Clyde",
+                "id": "8415933"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -69.6183,
+                    44.05
+                ]
+            },
+            "properties": {
+                "name": "Sheepscot (below rapids)",
+                "id": "8416804"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -69.3417,
+                    43.97
+                ]
+            },
+            "properties": {
+                "name": "Friendship Harbor",
+                "id": "8416141"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -69.81,
+                    43.8183
+                ]
+            },
+            "properties": {
+                "name": "Phippsburg",
+                "id": "8417221"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -69.6867,
+                    43.86
+                ]
+            },
+            "properties": {
+                "name": "Isle of Springs",
+                "id": "8416968"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -69.895,
+                    44.0083
+                ]
+            },
+            "properties": {
+                "name": "Bowdoinham, Cathance River",
+                "id": "8417391"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -69.7333,
+                    43.8533
+                ]
+            },
+            "properties": {
+                "name": "Robinhood, Sasanoa River",
+                "id": "8417067"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -69.835,
+                    43.9817
+                ]
+            },
+            "properties": {
+                "name": "Sturgeon Island, Merrymeeting Bay",
+                "id": "8417271"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -70.1033,
+                    43.82
+                ]
+            },
+            "properties": {
+                "name": "South Freeport",
+                "id": "8417801"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -69.8833,
+                    43.89
+                ]
+            },
+            "properties": {
+                "name": "Howard Point, New Meadows River",
+                "id": "8417367"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -70.14,
+                    43.7517
+                ]
+            },
+            "properties": {
+                "name": "Doyle Point",
+                "id": "8417874"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -70.11,
+                    43.695
+                ]
+            },
+            "properties": {
+                "name": "Cliff Island, Luckse Sound",
+                "id": "8417821"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -70.17,
+                    43.69
+                ]
+            },
+            "properties": {
+                "name": "Long Island",
+                "id": "8417941"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -70.255,
+                    43.6767
+                ]
+            },
+            "properties": {
+                "name": "Back Cove",
+                "id": "8418175"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -70.2,
+                    43.655
+                ]
+            },
+            "properties": {
+                "name": "Peak Island",
+                "id": "8418001"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -70.285,
+                    43.6417
+                ]
+            },
+            "properties": {
+                "name": "Fore River",
+                "id": "8418268"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -70.6617,
+                    43.085
+                ]
+            },
+            "properties": {
+                "name": "Seapoint, Cutts Island",
+                "id": "8419590"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -70.6417,
+                    43.1317
+                ]
+            },
+            "properties": {
+                "name": "York Harbor",
+                "id": "8419518"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -69.5367,
+                    44.0333
+                ]
+            },
+            "properties": {
+                "name": "Newcastle",
+                "id": "8416608"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -69.6833,
+                    43.9583
+                ]
+            },
+            "properties": {
+                "name": "Back River",
+                "id": "8416961"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -69.67,
+                    43.925
+                ]
+            },
+            "properties": {
+                "name": "Cross River entrance",
+                "id": "8416928"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -69.7633,
+                    43.8867
+                ]
+            },
+            "properties": {
+                "name": "Mill Point, Sasanoa River",
+                "id": "8417127"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -69.8933,
+                    43.7883
+                ]
+            },
+            "properties": {
+                "name": "Cundy Harbor, New Meadows River",
+                "id": "8417387"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -69.8883,
+                    43.95
+                ]
+            },
+            "properties": {
+                "name": "Androscoggin River entrance",
+                "id": "8417377"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -70.0233,
+                    43.7383
+                ]
+            },
+            "properties": {
+                "name": "South Harpswell, Potts Harbor",
+                "id": "8417647"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -70.205,
+                    43.7317
+                ]
+            },
+            "properties": {
+                "name": "Falmouth Foreside",
+                "id": "8418015"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -70.19,
+                    43.69
+                ]
+            },
+            "properties": {
+                "name": "Cow Island",
+                "id": "8418009"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -70.1983,
+                    43.645
+                ]
+            },
+            "properties": {
+                "name": "Cushing Island",
+                "id": "8417997"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -70.3667,
+                    43.5167
+                ]
+            },
+            "properties": {
+                "name": "Old Orchard Beach",
+                "id": "8418557"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -70.1733,
+                    43.7617
+                ]
+            },
+            "properties": {
+                "name": "Prince Point",
+                "id": "8417948"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -70.155,
+                    43.6767
+                ]
+            },
+            "properties": {
+                "name": "Vaill Island",
+                "id": "8417911"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -70.2,
+                    43.67
+                ]
+            },
+            "properties": {
+                "name": "Great Diamond Island",
+                "id": "8417988"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -70.2067,
+                    43.6233
+                ]
+            },
+            "properties": {
+                "name": "Portland Head Light",
+                "id": "8418031"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -70.4317,
+                    43.3667
+                ]
+            },
+            "properties": {
+                "name": "Cape Porpoise",
+                "id": "8418772"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -70.5933,
+                    43.1667
+                ]
+            },
+            "properties": {
+                "name": "Cape Neddick",
+                "id": "8419399"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -70.6383,
+                    43.13
+                ]
+            },
+            "properties": {
+                "name": "Fort Point, York Harbor",
+                "id": "8419528"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -70.6967,
+                    43.0667
+                ]
+            },
+            "properties": {
+                "name": "Gerrish Island",
+                "id": "8419688"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -70.7133,
+                    43.0567
+                ]
+            },
+            "properties": {
+                "name": "Jaffrey Point",
+                "id": "8424601"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -70.7417,
+                    43.08
+                ]
+            },
+            "properties": {
+                "name": "Seavey Island",
+                "id": "8419870"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -70.71055603027344,
+                    43.071388244628906
+                ]
+            },
+            "properties": {
+                "name": "Fort Point",
+                "id": "8423898"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -70.7033,
+                    43.0817
+                ]
+            },
+            "properties": {
+                "name": "Kittery Point",
+                "id": "8419807"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -70.7517,
+                    43.0783
+                ]
+            },
+            "properties": {
+                "name": "Portsmouth",
+                "id": "8423745"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -70.8683,
+                    43.1983
+                ]
+            },
+            "properties": {
+                "name": "Dover, Cocheco River",
+                "id": "8420411"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -70.8333,
+                    43.1217
+                ]
+            },
+            "properties": {
+                "name": "Dover Point",
+                "id": "8421897"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -70.7633,
+                    43.09
+                ]
+            },
+            "properties": {
+                "name": "Atlantic Heights",
+                "id": "8423635"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -70.9133,
+                    43.0533
+                ]
+            },
+            "properties": {
+                "name": "Squamscott River RR. Bridge",
+                "id": "8422687"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -70.825,
+                    43.1917
+                ]
+            },
+            "properties": {
+                "name": "Salmon Falls River",
+                "id": "8419997"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -70.615,
+                    42.9783
+                ]
+            },
+            "properties": {
+                "name": "Gosport Harbor, Isles of Shoals",
+                "id": "8427031"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -70.8167,
+                    42.895
+                ]
+            },
+            "properties": {
+                "name": "Hampton Harbor",
+                "id": "8429489"
+            }
         }
     ]
 }
