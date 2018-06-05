@@ -1,0 +1,12 @@
+[
+  {
+    "name": "Fenwick",
+    "spotId": 4117,
+    "location": { "type": "Point", "coordinates": [-87.788652, 41.881168] }
+  },
+  {
+    "name": "Indian-River",
+    "spotId": 394,
+    "location": { "type": "Point", "coordinates": [-84.6125364, 45.4125117] }
+  }
+]

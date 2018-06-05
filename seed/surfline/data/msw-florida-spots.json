@@ -1,0 +1,205 @@
+[
+  {
+    "name": "Clearwater",
+    "spotId": 60,
+    "location": { "type": "Point", "coordinates": [-82.8001026, 27.9658533] }
+  },
+  {
+    "name": "Mayport-Poles",
+    "spotId": 4195,
+    "location": { "type": "Point", "coordinates": [-81.3965886, 30.3817129] }
+  },
+  {
+    "name": "Little-Talbot-Island",
+    "spotId": 3774,
+    "location": { "type": "Point", "coordinates": [-81.4153614, 30.4238215] }
+  },
+  {
+    "name": "Walton-Rocks",
+    "spotId": 1243,
+    "location": {
+      "type": "Point",
+      "coordinates": [-80.23343059999999, 27.3378902]
+    }
+  },
+  {
+    "name": "Coral-Cove-Park",
+    "spotId": 4198,
+    "location": { "type": "Point", "coordinates": [-80.0789106, 26.9636245] }
+  },
+  {
+    "name": "Fort-Pierce-North-Jetty",
+    "spotId": 3775,
+    "location": { "type": "Point", "coordinates": [-80.3016686, 27.4820331] }
+  },
+  {
+    "name": "880",
+    "spotId": 4619,
+    "location": { "type": "Point", "coordinates": [-122.0590317, 37.5962447] }
+  },
+  {
+    "name": "North-Jetty-Florida",
+    "spotId": 3772,
+    "location": {
+      "type": "Point",
+      "coordinates": [-82.46625329999999, 27.1136359]
+    }
+  },
+  {
+    "name": "Palm-Beach-Jetties",
+    "spotId": 3778,
+    "location": { "type": "Point", "coordinates": [-80.037263, 26.772285] }
+  },
+  {
+    "name": "Sebastian-Inlet",
+    "spotId": 352,
+    "location": {
+      "type": "Point",
+      "coordinates": [-80.44794999999999, 27.85221]
+    }
+  },
+  {
+    "name": "Boynton-Inlet",
+    "spotId": 1167,
+    "location": {
+      "type": "Point",
+      "coordinates": [-80.04356500000002, 26.544368]
+    }
+  },
+  {
+    "name": "Juno-Pier",
+    "spotId": 3777,
+    "location": {
+      "type": "Point",
+      "coordinates": [-80.05580119999999, 26.8933068]
+    }
+  },
+  {
+    "name": "Canova-Beach",
+    "spotId": 4197,
+    "location": { "type": "Point", "coordinates": [-80.5802544, 28.13866] }
+  },
+  {
+    "name": "Indian-Rocks",
+    "spotId": 1212,
+    "location": {
+      "type": "Point",
+      "coordinates": [-82.84656100000001, 27.8960019]
+    }
+  },
+  {
+    "name": "Hillsboro-Inlet",
+    "spotId": 4421,
+    "location": { "type": "Point", "coordinates": [-80.0824766, 26.2595292] }
+  },
+  {
+    "name": "Naples",
+    "spotId": 57,
+    "location": { "type": "Point", "coordinates": [14.2681244, 40.8517746] }
+  },
+  {
+    "name": "Lido-Beach",
+    "spotId": 4620,
+    "location": { "type": "Point", "coordinates": [-82.5776973, 27.3118963] }
+  },
+  {
+    "name": "Jetty-Park",
+    "spotId": 1264,
+    "location": { "type": "Point", "coordinates": [-80.5941313, 28.406522] }
+  },
+  {
+    "name": "Commercial-Pier",
+    "spotId": 4420,
+    "location": { "type": "Point", "coordinates": [-80.0946271, 26.1894199] }
+  },
+  {
+    "name": "Stuart-Beach",
+    "spotId": 353,
+    "location": {
+      "type": "Point",
+      "coordinates": [-80.17502139999999, 27.2143933]
+    }
+  },
+  {
+    "name": "Ponte-Vedra",
+    "spotId": 3773,
+    "location": { "type": "Point", "coordinates": [-81.3852595, 30.2400058] }
+  },
+  {
+    "name": "Playa-Linda",
+    "spotId": 349,
+    "location": { "type": "Point", "coordinates": [-80.6318287, 28.6555177] }
+  },
+  {
+    "name": "Spoils",
+    "spotId": 4419,
+    "location": {
+      "type": "Point",
+      "coordinates": [-73.56152159999999, 45.4966461]
+    }
+  },
+  {
+    "name": "Destin",
+    "spotId": 851,
+    "location": { "type": "Point", "coordinates": [-86.4957833, 30.3935337] }
+  },
+  {
+    "name": "Hobe-Sound",
+    "spotId": 3779,
+    "location": { "type": "Point", "coordinates": [-80.1364323, 27.059498] }
+  },
+  {
+    "name": "Pass-A-Grille-Jetty",
+    "spotId": 1221,
+    "location": { "type": "Point", "coordinates": [-82.7360747, 27.6879164] }
+  },
+  {
+    "name": "Spanish-House",
+    "spotId": 4201,
+    "location": { "type": "Point", "coordinates": [-96.7617396, 32.8406207] }
+  },
+  {
+    "name": "Dania-Beach-Pier",
+    "spotId": 4202,
+    "location": { "type": "Point", "coordinates": [-80.1111698, 26.0583566] }
+  },
+  {
+    "name": "Jensen-Beach",
+    "spotId": 3770,
+    "location": {
+      "type": "Point",
+      "coordinates": [-80.22976969999999, 27.2544906]
+    }
+  },
+  {
+    "name": "Vero-Beach",
+    "spotId": 727,
+    "location": {
+      "type": "Point",
+      "coordinates": [-80.39727359999999, 27.6386434]
+    }
+  },
+  {
+    "name": "Dauphin-Island",
+    "spotId": 1125,
+    "location": { "type": "Point", "coordinates": [-88.1124155, 30.2542565] }
+  },
+  {
+    "name": "Juno-Beach",
+    "spotId": 849,
+    "location": { "type": "Point", "coordinates": [-80.0533743, 26.8797819] }
+  },
+  {
+    "name": "Melbourne-Beach",
+    "spotId": 351,
+    "location": {
+      "type": "Point",
+      "coordinates": [-80.56033029999999, 28.0683496]
+    }
+  },
+  {
+    "name": "Alabama-Point",
+    "spotId": 956,
+    "location": { "type": "Point", "coordinates": [-95.0433621, 30.7762045] }
+  }
+]
