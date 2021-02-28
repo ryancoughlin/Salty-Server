@@ -1,0 +1,74 @@
+[
+  {
+    "state": "alabama",
+    "name": "Alabama Point",
+    "stationId": "8730667",
+    "location": { "type": "Point", "coordinates": ["-87.5550", "30.2786"] }
+  },
+  {
+    "state": "alabama",
+    "name": "Gulf Shores, ICWW",
+    "stationId": "8731439",
+    "location": { "type": "Point", "coordinates": ["-87.6843", "30.2799"] }
+  },
+  {
+    "state": "alabama",
+    "name": "DAUPHIN ISLAND",
+    "stationId": "8735180",
+    "location": { "type": "Point", "coordinates": ["-88.0750", "30.2500"] }
+  },
+  {
+    "state": "alabama",
+    "name": "East Fowl River, Hwy 193 Bridge",
+    "stationId": "8735523",
+    "location": { "type": "Point", "coordinates": ["-88.1139", "30.4437"] }
+  },
+  {
+    "state": "alabama",
+    "name": "West Fowl River, Hwy 188 bridge",
+    "stationId": "8738043",
+    "location": { "type": "Point", "coordinates": ["-88.1586", "30.3766"] }
+  },
+  {
+    "state": "alabama",
+    "name": "Point Clear, Mobile Bay",
+    "stationId": "8733821",
+    "location": { "type": "Point", "coordinates": ["-87.9345", "30.4866"] }
+  },
+  {
+    "state": "alabama",
+    "name": "Dog River Bridge",
+    "stationId": "8735391",
+    "location": { "type": "Point", "coordinates": ["-88.0880", "30.5652"] }
+  },
+  {
+    "state": "alabama",
+    "name": "Coast Guard Sector Mobile",
+    "stationId": "8736897",
+    "location": { "type": "Point", "coordinates": ["-88.0583", "30.6483"] }
+  },
+  {
+    "state": "alabama",
+    "name": "Meaher State Park, Mobile Bay",
+    "stationId": "8733839",
+    "location": { "type": "Point", "coordinates": ["-87.9364", "30.6672"] }
+  },
+  {
+    "state": "alabama",
+    "name": "MOBILE, Mobile River (State Dock)",
+    "stationId": "8737048",
+    "location": { "type": "Point", "coordinates": ["-88.0433", "30.7083"] }
+  },
+  {
+    "state": "alabama",
+    "name": "William Brooks Park, Chichasaw Creek",
+    "stationId": "8737138",
+    "location": { "type": "Point", "coordinates": ["-88.0736", "30.7819"] }
+  },
+  {
+    "state": "alabama",
+    "name": "Bayou LaBatre Bridge",
+    "stationId": "8739803",
+    "location": { "type": "Point", "coordinates": ["-88.2478", "30.4063"] }
+  }
+]
