@@ -2,7 +2,6 @@ import moment from "moment";
 import _ from "lodash";
 // import LRU from 'lru-cache'
 import request from "./request";
-const https = require("https");
 // import { checkCache, setCache } from './cache-manager'
 
 const API_DATE_FORMAT = "MM/DD/YYYY";
@@ -45,7 +44,7 @@ class NOAA {
     const url = new URL(
       "https://api.tidesandcurrents.noaa.gov/api/prod/datagetter" + params
     );
-    return this.httpRequest(url)
+    return request(url)
       .then((json) => {
         return json;
       })
@@ -78,7 +77,8 @@ class NOAA {
     const url = new URL(
       "https://api.tidesandcurrents.noaa.gov/api/prod/datagetter" + params
     );
-    return this.httpRequest(url)
+
+    return request(url)
       .then((json) => this.normalizePredictions(json.predictions))
       .then((predictions) => {
         return this.groupByDay(predictions);
@@ -131,41 +131,6 @@ class NOAA {
       return moment(prediction.time, "YYYY-MM-DD hh:mm").format(
         API_DATE_FORMAT
       );
-    });
-  }
-
-  httpRequest(params, postData) {
-    return new Promise(function (resolve, reject) {
-      var req = https.request(params, function (res) {
-        // reject on bad status
-        if (res.statusCode < 200 || res.statusCode >= 300) {
-          return reject(new Error("statusCode=" + res.statusCode));
-        }
-        // cumulate data
-        var body = [];
-        res.on("data", function (chunk) {
-          body.push(chunk);
-        });
-        // resolve on end
-        res.on("end", function () {
-          try {
-            body = JSON.parse(Buffer.concat(body).toString());
-          } catch (e) {
-            reject(e);
-          }
-          resolve(body);
-        });
-      });
-      // reject on request error
-      req.on("error", function (err) {
-        // This is not a "Second reject", just a different sort of failure
-        reject(err);
-      });
-      if (postData) {
-        req.write(postData);
-      }
-      // IMPORTANT
-      req.end();
     });
   }
 }

@@ -1,13 +1,13 @@
+import noaa from "../noaa";
 import { findStation } from "../find-station";
 import { fetchForecast } from "../weather-forecast";
 import WeatherFormatter from "../weather-formatter";
 
-import noaa from "../noaa";
-
 const stationController = () => {
   const getTideTable = async (req, res, next) => {
     try {
-      const station = await findStation(req.query)
+      const { latitude, longitude } = req.query;
+      const station = await findStation(latitude, longitude)
         .then((station) => {
           return noaa.fetchPredictions(station.stationId);
         })
