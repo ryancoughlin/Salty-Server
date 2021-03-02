@@ -328,7 +328,7 @@ const stations = [
   "9446482",
   "9446484",
   "9440910",
-  "9441102"
+  "9441102",
 ];
 
 var stationInfo = [];
@@ -336,21 +336,22 @@ var counter = 0;
 
 _.forEach(stations, (station, index) => {
   fetch(
-    "http://tidesandcurrents.noaa.gov/api/datagetter?station=" +
+    "https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?station=" +
       station +
       "&datum=mllw&format=json&date=today&range=24&time_zone=lst&units=english&product=water_temperature&interval=h"
   )
-    .then(response => response.json())
-    .then(json => {
+    .then((response) => response.json())
+    .then((json) => {
       if (json.metadata) {
+        console.log();
         const metadata = json.metadata;
         const station = {
           name: metadata.name,
           stationId: metadata.id,
           location: {
             type: "Point",
-            coordinates: [metadata.lon, metadata.lat]
-          }
+            coordinates: [metadata.lon, metadata.lat],
+          },
         };
 
         stationInfo.push(station);
@@ -360,14 +361,14 @@ _.forEach(stations, (station, index) => {
           fs.writeFile(
             "./enhancedStation.json",
             JSON.stringify(stationInfo),
-            function(err) {}
+            function (err) {}
           );
         }
       } else {
         console.log("Invalid station ID, skipping...", station);
       }
     })
-    .catch(error => {
+    .catch((error) => {
       console.log(error);
     });
 });

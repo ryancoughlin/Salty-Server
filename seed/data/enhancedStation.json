@@ -1,0 +1,962 @@
+[
+  {
+    "name": "Weeks Bay, Mobile Bay",
+    "stationId": "8732828",
+    "location": { "type": "Point", "coordinates": ["-87.8254", "30.4169"] }
+  },
+  {
+    "name": "Juneau",
+    "stationId": "9452210",
+    "location": { "type": "Point", "coordinates": ["-134.4120", "58.2983"] }
+  },
+  {
+    "name": "Sand Point",
+    "stationId": "9459450",
+    "location": { "type": "Point", "coordinates": ["-160.5020", "55.3367"] }
+  },
+  {
+    "name": "Cordova",
+    "stationId": "9454050",
+    "location": { "type": "Point", "coordinates": ["-145.7550", "60.5583"] }
+  },
+  {
+    "name": "Skagway, Taiya Inlet",
+    "stationId": "9452400",
+    "location": { "type": "Point", "coordinates": ["-135.3270", "59.4500"] }
+  },
+  {
+    "name": "Village Cove, St Paul Island",
+    "stationId": "9464212",
+    "location": { "type": "Point", "coordinates": ["-170.2852", "57.1253"] }
+  },
+  {
+    "name": "Red Dog Dock",
+    "stationId": "9491094",
+    "location": { "type": "Point", "coordinates": ["-164.0644", "67.5758"] }
+  },
+  {
+    "name": "Seward",
+    "stationId": "9455090",
+    "location": { "type": "Point", "coordinates": ["-149.4267", "60.1200"] }
+  },
+  {
+    "name": "Unalaska",
+    "stationId": "9462620",
+    "location": { "type": "Point", "coordinates": ["-166.5403", "53.8792"] }
+  },
+  {
+    "name": "Ketchikan",
+    "stationId": "9450460",
+    "location": { "type": "Point", "coordinates": ["-131.6262", "55.3318"] }
+  },
+  {
+    "name": "Sitka",
+    "stationId": "9451600",
+    "location": { "type": "Point", "coordinates": ["-135.3420", "57.0517"] }
+  },
+  {
+    "name": "Alitak",
+    "stationId": "9457804",
+    "location": { "type": "Point", "coordinates": ["-154.2480", "56.8974"] }
+  },
+  {
+    "name": "Prudhoe Bay",
+    "stationId": "9497645",
+    "location": { "type": "Point", "coordinates": ["-148.5318", "70.4114"] }
+  },
+  {
+    "name": "Crescent City",
+    "stationId": "9419750",
+    "location": { "type": "Point", "coordinates": ["-124.1830", "41.7450"] }
+  },
+  {
+    "name": "La Jolla",
+    "stationId": "9410230",
+    "location": { "type": "Point", "coordinates": ["-117.2571", "32.8669"] }
+  },
+  {
+    "name": "Valdez",
+    "stationId": "9454240",
+    "location": { "type": "Point", "coordinates": ["-146.3631", "61.1242"] }
+  },
+  {
+    "name": "King Cove",
+    "stationId": "9459881",
+    "location": { "type": "Point", "coordinates": ["-162.3261", "55.0599"] }
+  },
+  {
+    "name": "San Francisco",
+    "stationId": "9414290",
+    "location": { "type": "Point", "coordinates": ["-122.4659", "37.8063"] }
+  },
+  {
+    "name": "Grand Isle",
+    "stationId": "8761724",
+    "location": { "type": "Point", "coordinates": ["-89.9567", "29.2633"] }
+  },
+  {
+    "name": "Point Reyes",
+    "stationId": "9415020",
+    "location": { "type": "Point", "coordinates": ["-122.9767", "37.9961"] }
+  },
+  {
+    "name": "Port Alexander",
+    "stationId": "9451054",
+    "location": { "type": "Point", "coordinates": ["-134.6470", "56.2467"] }
+  },
+  {
+    "name": "Cutler Farris Wharf",
+    "stationId": "8411060",
+    "location": { "type": "Point", "coordinates": ["-67.2047", "44.6570"] }
+  },
+  {
+    "name": "Calcasieu Pass",
+    "stationId": "8768094",
+    "location": { "type": "Point", "coordinates": ["-93.3429", "29.7682"] }
+  },
+  {
+    "name": "Lime Tree Bay",
+    "stationId": "9751401",
+    "location": { "type": "Point", "coordinates": ["-64.7538", "17.6947"] }
+  },
+  {
+    "name": "Esperanza, Vieques Island",
+    "stationId": "9752695",
+    "location": { "type": "Point", "coordinates": ["-65.4714", "18.0939"] }
+  },
+  {
+    "name": "Santa Monica",
+    "stationId": "9410840",
+    "location": { "type": "Point", "coordinates": ["-118.5000", "34.0083"] }
+  },
+  {
+    "name": "Mayport (Bar Pilots Dock)",
+    "stationId": "8720218",
+    "location": { "type": "Point", "coordinates": ["-81.4279", "30.3982"] }
+  },
+  {
+    "name": "Anchorage",
+    "stationId": "9455920",
+    "location": { "type": "Point", "coordinates": ["-149.8904", "61.2375"] }
+  },
+  {
+    "name": "Bay Waveland Yacht Club",
+    "stationId": "8747437",
+    "location": { "type": "Point", "coordinates": ["-89.3250", "30.3250"] }
+  },
+  {
+    "name": "Pilots Station East, S.W. Pass",
+    "stationId": "8760922",
+    "location": { "type": "Point", "coordinates": ["-89.4075", "28.9322"] }
+  },
+  {
+    "name": "Apra Harbor, Guam",
+    "stationId": "1630000",
+    "location": { "type": "Point", "coordinates": ["144.6564", "13.4434"] }
+  },
+  {
+    "name": "Burlington, Delaware River",
+    "stationId": "8539094",
+    "location": { "type": "Point", "coordinates": ["-74.8733", "40.0800"] }
+  },
+  {
+    "name": "Bar Harbor",
+    "stationId": "8413320",
+    "location": { "type": "Point", "coordinates": ["-68.2043", "44.3922"] }
+  },
+  {
+    "name": "New Haven",
+    "stationId": "8465705",
+    "location": { "type": "Point", "coordinates": ["-72.9083", "41.2833"] }
+  },
+  {
+    "name": "The Battery",
+    "stationId": "8518750",
+    "location": { "type": "Point", "coordinates": ["-74.0142", "40.7006"] }
+  },
+  {
+    "name": "Apalachicola",
+    "stationId": "8728690",
+    "location": { "type": "Point", "coordinates": ["-84.9817", "29.7267"] }
+  },
+  {
+    "name": "Mayaguez",
+    "stationId": "9759394",
+    "location": { "type": "Point", "coordinates": ["-67.1625", "18.2189"] }
+  },
+  {
+    "name": "Lameshur Bay, St John",
+    "stationId": "9751381",
+    "location": { "type": "Point", "coordinates": ["-64.7242", "18.3182"] }
+  },
+  {
+    "name": "Portland",
+    "stationId": "8418150",
+    "location": { "type": "Point", "coordinates": ["-70.2442", "43.6581"] }
+  },
+  {
+    "name": "Wrightsville Beach",
+    "stationId": "8658163",
+    "location": { "type": "Point", "coordinates": ["-77.7867", "34.2133"] }
+  },
+  {
+    "name": "USCG Station Hatteras",
+    "stationId": "8654467",
+    "location": { "type": "Point", "coordinates": ["-75.7042", "35.2086"] }
+  },
+  {
+    "name": "North Spit",
+    "stationId": "9418767",
+    "location": { "type": "Point", "coordinates": ["-124.2172", "40.7663"] }
+  },
+  {
+    "name": "Nawiliwili",
+    "stationId": "1611400",
+    "location": { "type": "Point", "coordinates": ["-159.3561", "21.9544"] }
+  },
+  {
+    "name": "Cedar Key",
+    "stationId": "8727520",
+    "location": { "type": "Point", "coordinates": ["-83.0317", "29.1350"] }
+  },
+  {
+    "name": "Oregon Inlet Marina",
+    "stationId": "8652587",
+    "location": { "type": "Point", "coordinates": ["-75.5481", "35.7950"] }
+  },
+  {
+    "name": "Wilmington",
+    "stationId": "8658120",
+    "location": { "type": "Point", "coordinates": ["-77.9536", "34.2275"] }
+  },
+  {
+    "name": "Port Aransas",
+    "stationId": "8775237",
+    "location": { "type": "Point", "coordinates": ["-97.0725", "27.8397"] }
+  },
+  {
+    "name": "Key West",
+    "stationId": "8724580",
+    "location": { "type": "Point", "coordinates": ["-81.8081", "24.5508"] }
+  },
+  {
+    "name": "Sargent",
+    "stationId": "8772985",
+    "location": { "type": "Point", "coordinates": ["-95.6172", "28.7714"] }
+  },
+  {
+    "name": "San Juan, La Puntilla, San Juan Bay",
+    "stationId": "9755371",
+    "location": { "type": "Point", "coordinates": ["-66.1164", "18.4592"] }
+  },
+  {
+    "name": "Galveston Railroad Bridge",
+    "stationId": "8771486",
+    "location": { "type": "Point", "coordinates": ["-94.8971", "29.3026"] }
+  },
+  {
+    "name": "Fall River",
+    "stationId": "8447386",
+    "location": { "type": "Point", "coordinates": ["-71.1641", "41.7043"] }
+  },
+  {
+    "name": "Ship John Shoal",
+    "stationId": "8537121",
+    "location": { "type": "Point", "coordinates": ["-75.3767", "39.3054"] }
+  },
+  {
+    "name": "Conimicut Light",
+    "stationId": "8452944",
+    "location": { "type": "Point", "coordinates": ["-71.3433", "41.7167"] }
+  },
+  {
+    "name": "New Canal Station",
+    "stationId": "8761927",
+    "location": { "type": "Point", "coordinates": ["-90.1133", "30.0272"] }
+  },
+  {
+    "name": "Matagorda City",
+    "stationId": "8773146",
+    "location": { "type": "Point", "coordinates": ["-95.9140", "28.7101"] }
+  },
+  {
+    "name": "Trident Pier, Port Canaveral",
+    "stationId": "8721604",
+    "location": { "type": "Point", "coordinates": ["-80.5931", "28.4158"] }
+  },
+  {
+    "name": "South Padre Island CG Station",
+    "stationId": "8779748",
+    "location": { "type": "Point", "coordinates": ["-97.1675", "26.0731"] }
+  },
+  {
+    "name": "Newport",
+    "stationId": "8452660",
+    "location": { "type": "Point", "coordinates": ["-71.3267", "41.5050"] }
+  },
+  {
+    "name": "Panama City Beach",
+    "stationId": "8729210",
+    "location": { "type": "Point", "coordinates": ["-85.8783", "30.2133"] }
+  },
+  {
+    "name": "Port Angeles",
+    "stationId": "9444090",
+    "location": { "type": "Point", "coordinates": ["-123.4400", "48.1250"] }
+  },
+  {
+    "name": "Dahlgren",
+    "stationId": "8635027",
+    "location": { "type": "Point", "coordinates": ["-77.0366", "38.3197"] }
+  },
+  {
+    "name": "Longview",
+    "stationId": "9440422",
+    "location": { "type": "Point", "coordinates": ["-122.9542", "46.1061"] }
+  },
+  {
+    "name": "Westport",
+    "stationId": "9441102",
+    "location": { "type": "Point", "coordinates": ["-124.1051", "46.9043"] }
+  },
+  {
+    "name": "Fort Pulaski",
+    "stationId": "8670870",
+    "location": { "type": "Point", "coordinates": ["-80.9017", "32.0367"] }
+  },
+  {
+    "name": "Elfin Cove",
+    "stationId": "9452634",
+    "location": { "type": "Point", "coordinates": ["-136.3469", "58.1947"] }
+  },
+  {
+    "name": "Coast Guard Sector Mobile",
+    "stationId": "8736897",
+    "location": { "type": "Point", "coordinates": ["-88.0583", "30.6483"] }
+  },
+  {
+    "name": "La Push, Quillayute River",
+    "stationId": "9442396",
+    "location": { "type": "Point", "coordinates": ["-124.6369", "47.9133"] }
+  },
+  {
+    "name": "Friday Harbor",
+    "stationId": "9449880",
+    "location": { "type": "Point", "coordinates": ["-123.0129", "48.5453"] }
+  },
+  {
+    "name": "Yorktown USCG Training Center",
+    "stationId": "8637689",
+    "location": { "type": "Point", "coordinates": ["-76.4788", "37.2265"] }
+  },
+  {
+    "name": "Seldovia",
+    "stationId": "9455500",
+    "location": { "type": "Point", "coordinates": ["-151.7199", "59.4405"] }
+  },
+  {
+    "name": "Washington",
+    "stationId": "8594900",
+    "location": { "type": "Point", "coordinates": ["-77.0217", "38.8733"] }
+  },
+  {
+    "name": "Lake Worth Pier, Atlantic Ocean",
+    "stationId": "8722670",
+    "location": { "type": "Point", "coordinates": ["-80.0342", "26.6128"] }
+  },
+  {
+    "name": "Mobile State Docks",
+    "stationId": "8737048",
+    "location": { "type": "Point", "coordinates": ["-88.0433", "30.7083"] }
+  },
+  {
+    "name": "Reedy Point",
+    "stationId": "8551910",
+    "location": { "type": "Point", "coordinates": ["-75.5733", "39.5583"] }
+  },
+  {
+    "name": "Carrollton",
+    "stationId": "8761955",
+    "location": { "type": "Point", "coordinates": ["-90.1355", "29.9329"] }
+  },
+  {
+    "name": "Clearwater Beach",
+    "stationId": "8726724",
+    "location": { "type": "Point", "coordinates": ["-82.8317", "27.9783"] }
+  },
+  {
+    "name": "San Diego, San Diego Bay",
+    "stationId": "9410170",
+    "location": { "type": "Point", "coordinates": ["-117.1736", "32.7142"] }
+  },
+  {
+    "name": "Cape May",
+    "stationId": "8536110",
+    "location": { "type": "Point", "coordinates": ["-74.9597", "38.9678"] }
+  },
+  {
+    "name": "Fort Gratiot",
+    "stationId": "9014098",
+    "location": { "type": "Point", "coordinates": ["-82.4225", "43.0069"] }
+  },
+  {
+    "name": "Morgans Point, Barbours Cut",
+    "stationId": "8770613",
+    "location": { "type": "Point", "coordinates": ["-94.9850", "29.6817"] }
+  },
+  {
+    "name": "Manchester",
+    "stationId": "8770777",
+    "location": { "type": "Point", "coordinates": ["-95.2658", "29.7262"] }
+  },
+  {
+    "name": "Rockport",
+    "stationId": "8774770",
+    "location": { "type": "Point", "coordinates": ["-97.0467", "28.0217"] }
+  },
+  {
+    "name": "Galveston Bay Entrance, North Jetty",
+    "stationId": "8771341",
+    "location": { "type": "Point", "coordinates": ["-94.7248", "29.3573"] }
+  },
+  {
+    "name": "Kahului, Kahului Harbor",
+    "stationId": "1615680",
+    "location": { "type": "Point", "coordinates": ["-156.4767", "20.8950"] }
+  },
+  {
+    "name": "Pilottown",
+    "stationId": "8760721",
+    "location": { "type": "Point", "coordinates": ["-89.2583", "29.1783"] }
+  },
+  {
+    "name": "Wachapreague",
+    "stationId": "8631044",
+    "location": { "type": "Point", "coordinates": ["-75.6858", "37.6078"] }
+  },
+  {
+    "name": "Seadrift",
+    "stationId": "8773037",
+    "location": { "type": "Point", "coordinates": ["-96.7124", "28.4069"] }
+  },
+  {
+    "name": "Texas Point, Sabine Pass",
+    "stationId": "8770822",
+    "location": { "type": "Point", "coordinates": ["-93.8419", "29.6894"] }
+  },
+  {
+    "name": "S.W. Pier, St. Marys River",
+    "stationId": "9076070",
+    "location": { "type": "Point", "coordinates": ["-84.3726", "46.5011"] }
+  },
+  {
+    "name": "Montauk",
+    "stationId": "8510560",
+    "location": { "type": "Point", "coordinates": ["-71.9594", "41.0483"] }
+  },
+  {
+    "name": "Mokuoloe",
+    "stationId": "1612480",
+    "location": { "type": "Point", "coordinates": ["-157.7900", "21.4331"] }
+  },
+  {
+    "name": "Bergen Point West Reach",
+    "stationId": "8519483",
+    "location": { "type": "Point", "coordinates": ["-74.1417", "40.6367"] }
+  },
+  {
+    "name": "High Island",
+    "stationId": "8770808",
+    "location": { "type": "Point", "coordinates": ["-94.3903", "29.5947"] }
+  },
+  {
+    "name": "LAWMA, Amerada Pass",
+    "stationId": "8764227",
+    "location": { "type": "Point", "coordinates": ["-91.3381", "29.4496"] }
+  },
+  {
+    "name": "Tacoma",
+    "stationId": "9446484",
+    "location": { "type": "Point", "coordinates": ["-122.4133", "47.2667"] }
+  },
+  {
+    "name": "Eugene Island, North of , Gulf of Mexico",
+    "stationId": "8764314",
+    "location": { "type": "Point", "coordinates": ["-91.3839", "29.3731"] }
+  },
+  {
+    "name": "Packery Channel",
+    "stationId": "8775792",
+    "location": { "type": "Point", "coordinates": ["-97.2367", "27.6333"] }
+  },
+  {
+    "name": "Aransas, Aransas Pass",
+    "stationId": "8775241",
+    "location": { "type": "Point", "coordinates": ["-97.0391", "27.8366"] }
+  },
+  {
+    "name": "Algonac",
+    "stationId": "9014070",
+    "location": { "type": "Point", "coordinates": ["-82.5267", "42.6211"] }
+  },
+  {
+    "name": "Fairport",
+    "stationId": "9063053",
+    "location": { "type": "Point", "coordinates": ["-81.2811", "41.7597"] }
+  },
+  {
+    "name": "Harbor Beach",
+    "stationId": "9075014",
+    "location": { "type": "Point", "coordinates": ["-82.6431", "43.8464"] }
+  },
+  {
+    "name": "Charleston, Cooper River Entrance",
+    "stationId": "8665530",
+    "location": { "type": "Point", "coordinates": ["-79.9236", "32.7808"] }
+  },
+  {
+    "name": "Mackinaw City",
+    "stationId": "9075080",
+    "location": { "type": "Point", "coordinates": ["-84.7253", "45.7779"] }
+  },
+  {
+    "name": "Lewes",
+    "stationId": "8557380",
+    "location": { "type": "Point", "coordinates": ["-75.1192", "38.7828"] }
+  },
+  {
+    "name": "S. Bird Island",
+    "stationId": "8776139",
+    "location": { "type": "Point", "coordinates": ["-97.3181", "27.4844"] }
+  },
+  {
+    "name": "Rincon Del San Jose",
+    "stationId": "8777812",
+    "location": { "type": "Point", "coordinates": ["-97.4706", "26.8012"] }
+  },
+  {
+    "name": "St. Petersburg, Tampa Bay",
+    "stationId": "8726520",
+    "location": { "type": "Point", "coordinates": ["-82.6269", "27.7606"] }
+  },
+  {
+    "name": "Nueces Bay",
+    "stationId": "8775244",
+    "location": { "type": "Point", "coordinates": ["-97.4859", "27.8328"] }
+  },
+  {
+    "name": "Dames Point",
+    "stationId": "8720219",
+    "location": { "type": "Point", "coordinates": ["-81.5583", "30.3867"] }
+  },
+  {
+    "name": "Jacksonville University",
+    "stationId": "8720245",
+    "location": { "type": "Point", "coordinates": ["-81.6118", "30.3541"] }
+  },
+  {
+    "name": "Kawaihae",
+    "stationId": "1617433",
+    "location": { "type": "Point", "coordinates": ["-155.8294", "20.0366"] }
+  },
+  {
+    "name": "Providence",
+    "stationId": "8454000",
+    "location": { "type": "Point", "coordinates": ["-71.4012", "41.8071"] }
+  },
+  {
+    "name": "Quonset Point",
+    "stationId": "8454049",
+    "location": { "type": "Point", "coordinates": ["-71.4110", "41.5868"] }
+  },
+  {
+    "name": "SPI Brazos Santiago",
+    "stationId": "8779749",
+    "location": { "type": "Point", "coordinates": ["-97.1548", "26.0674"] }
+  },
+  {
+    "name": "Vaca Key, Florida Bay",
+    "stationId": "8723970",
+    "location": { "type": "Point", "coordinates": ["-81.1065", "24.7110"] }
+  },
+  {
+    "name": "Cleveland",
+    "stationId": "9063063",
+    "location": { "type": "Point", "coordinates": ["-81.6355", "41.5409"] }
+  },
+  {
+    "name": "Shell Beach",
+    "stationId": "8761305",
+    "location": { "type": "Point", "coordinates": ["-89.6732", "29.8681"] }
+  },
+  {
+    "name": "Pascagoula NOAA Lab",
+    "stationId": "8741533",
+    "location": { "type": "Point", "coordinates": ["-88.5631", "30.3678"] }
+  },
+  {
+    "name": "Beaufort, Duke Marine Lab",
+    "stationId": "8656483",
+    "location": { "type": "Point", "coordinates": ["-76.6700", "34.7200"] }
+  },
+  {
+    "name": "Wake Island, Pacific Ocean",
+    "stationId": "1890000",
+    "location": { "type": "Point", "coordinates": ["166.6176", "19.2907"] }
+  },
+  {
+    "name": "Cambridge",
+    "stationId": "8571892",
+    "location": { "type": "Point", "coordinates": ["-76.0722", "38.5742"] }
+  },
+  {
+    "name": "Port Townsend",
+    "stationId": "9444900",
+    "location": { "type": "Point", "coordinates": ["-122.7595", "48.1129"] }
+  },
+  {
+    "name": "Ocean City Inlet",
+    "stationId": "8570283",
+    "location": { "type": "Point", "coordinates": ["-75.0917", "38.3283"] }
+  },
+  {
+    "name": "Pensacola",
+    "stationId": "8729840",
+    "location": { "type": "Point", "coordinates": ["-87.2112", "30.4044"] }
+  },
+  {
+    "name": "Port O'Connor",
+    "stationId": "8773701",
+    "location": { "type": "Point", "coordinates": ["-96.3956", "28.4459"] }
+  },
+  {
+    "name": "Solomons Island",
+    "stationId": "8577330",
+    "location": { "type": "Point", "coordinates": ["-76.4508", "38.3172"] }
+  },
+  {
+    "name": "Port Isabel",
+    "stationId": "8779770",
+    "location": { "type": "Point", "coordinates": ["-97.2155", "26.0612"] }
+  },
+  {
+    "name": "San Luis Pass",
+    "stationId": "8771972",
+    "location": { "type": "Point", "coordinates": ["-95.1313", "29.0810"] }
+  },
+  {
+    "name": "Neah Bay",
+    "stationId": "9443090",
+    "location": { "type": "Point", "coordinates": ["-124.6019", "48.3703"] }
+  },
+  {
+    "name": "Chesapeake City",
+    "stationId": "8573927",
+    "location": { "type": "Point", "coordinates": ["-75.8100", "39.5267"] }
+  },
+  {
+    "name": "De Tour Village",
+    "stationId": "9075099",
+    "location": { "type": "Point", "coordinates": ["-83.8982", "45.9925"] }
+  },
+  {
+    "name": "South Beach",
+    "stationId": "9435380",
+    "location": { "type": "Point", "coordinates": ["-124.0430", "44.6250"] }
+  },
+  {
+    "name": "Menominee",
+    "stationId": "9087088",
+    "location": { "type": "Point", "coordinates": ["-87.5899", "45.0959"] }
+  },
+  {
+    "name": "Yakutat, Yakutat Bay",
+    "stationId": "9453220",
+    "location": { "type": "Point", "coordinates": ["-139.7334", "59.5485"] }
+  },
+  {
+    "name": "Annapolis",
+    "stationId": "8575512",
+    "location": { "type": "Point", "coordinates": ["-76.4816", "38.9833"] }
+  },
+  {
+    "name": "Honolulu",
+    "stationId": "1612340",
+    "location": { "type": "Point", "coordinates": ["-157.8670", "21.3067"] }
+  },
+  {
+    "name": "Naples, Gulf of Mexico",
+    "stationId": "8725110",
+    "location": { "type": "Point", "coordinates": ["-81.8075", "26.1317"] }
+  },
+  {
+    "name": "Los Angeles",
+    "stationId": "9410660",
+    "location": { "type": "Point", "coordinates": ["-118.2729", "33.7199"] }
+  },
+  {
+    "name": "Boston",
+    "stationId": "8443970",
+    "location": { "type": "Point", "coordinates": ["-71.0534", "42.3548"] }
+  },
+  {
+    "name": "Alexandria Bay",
+    "stationId": "8311062",
+    "location": { "type": "Point", "coordinates": ["-75.9345", "44.3311"] }
+  },
+  {
+    "name": "Virginia Key, Biscayne Bay",
+    "stationId": "8723214",
+    "location": { "type": "Point", "coordinates": ["-80.1618", "25.7314"] }
+  },
+  {
+    "name": "Alameda",
+    "stationId": "9414750",
+    "location": { "type": "Point", "coordinates": ["-122.3000", "37.7717"] }
+  },
+  {
+    "name": "Mona Island",
+    "stationId": "9759938",
+    "location": { "type": "Point", "coordinates": ["-67.9385", "18.0899"] }
+  },
+  {
+    "name": "Hilo, Hilo Bay, Kuhio Bay",
+    "stationId": "1617760",
+    "location": { "type": "Point", "coordinates": ["-155.0556", "19.7303"] }
+  },
+  {
+    "name": "Philadelphia",
+    "stationId": "8545240",
+    "location": { "type": "Point", "coordinates": ["-75.1417", "39.9333"] }
+  },
+  {
+    "name": "Baffin Bay",
+    "stationId": "8776604",
+    "location": { "type": "Point", "coordinates": ["-97.4052", "27.2970"] }
+  },
+  {
+    "name": "Eagle Point, Galveston Bay",
+    "stationId": "8771013",
+    "location": { "type": "Point", "coordinates": ["-94.9183", "29.4800"] }
+  },
+  {
+    "name": "Tolchester Beach",
+    "stationId": "8573364",
+    "location": { "type": "Point", "coordinates": ["-76.2445", "39.2134"] }
+  },
+  {
+    "name": "Buffalo",
+    "stationId": "9063020",
+    "location": { "type": "Point", "coordinates": ["-78.8905", "42.8774"] }
+  },
+  {
+    "name": "Realitos Peninsula",
+    "stationId": "8779280",
+    "location": { "type": "Point", "coordinates": ["-97.2853", "26.2624"] }
+  },
+  {
+    "name": "Holland",
+    "stationId": "9087031",
+    "location": { "type": "Point", "coordinates": ["-86.2128", "42.7733"] }
+  },
+  {
+    "name": "Sewells Point",
+    "stationId": "8638610",
+    "location": { "type": "Point", "coordinates": ["-76.3300", "36.9467"] }
+  },
+  {
+    "name": "Money Point",
+    "stationId": "8639348",
+    "location": { "type": "Point", "coordinates": ["-76.3017", "36.7783"] }
+  },
+  {
+    "name": "USS Lexington, Corpus Christi Bay",
+    "stationId": "8775296",
+    "location": { "type": "Point", "coordinates": ["-97.3892", "27.8149"] }
+  },
+  {
+    "name": "Port Chicago",
+    "stationId": "9415144",
+    "location": { "type": "Point", "coordinates": ["-122.0395", "38.0560"] }
+  },
+  {
+    "name": "Kodiak Island",
+    "stationId": "9457292",
+    "location": { "type": "Point", "coordinates": ["-152.5139", "57.7303"] }
+  },
+  {
+    "name": "Lewisetta",
+    "stationId": "8635750",
+    "location": { "type": "Point", "coordinates": ["-76.4646", "37.9954"] }
+  },
+  {
+    "name": "Marblehead",
+    "stationId": "9063079",
+    "location": { "type": "Point", "coordinates": ["-82.7314", "41.5436"] }
+  },
+  {
+    "name": "Nantucket Island",
+    "stationId": "8449130",
+    "location": { "type": "Point", "coordinates": ["-70.0964", "41.2853"] }
+  },
+  {
+    "name": "Nikiski",
+    "stationId": "9455760",
+    "location": { "type": "Point", "coordinates": ["-151.3980", "60.6833"] }
+  },
+  {
+    "name": "Rollover Pass",
+    "stationId": "8770971",
+    "location": { "type": "Point", "coordinates": ["-94.5133", "29.5150"] }
+  },
+  {
+    "name": "Martinez-Amorco Pier",
+    "stationId": "9415102",
+    "location": { "type": "Point", "coordinates": ["-122.1252", "38.0346"] }
+  },
+  {
+    "name": "Berwick, Atchafalaya River",
+    "stationId": "8764044",
+    "location": { "type": "Point", "coordinates": ["-91.2376", "29.6675"] }
+  },
+  {
+    "name": "Redwood City",
+    "stationId": "9414523",
+    "location": { "type": "Point", "coordinates": ["-122.2100", "37.5067"] }
+  },
+  {
+    "name": "Aransas Wildlife Refuge",
+    "stationId": "8774230",
+    "location": { "type": "Point", "coordinates": ["-96.7950", "28.2283"] }
+  },
+  {
+    "name": "Port San Luis",
+    "stationId": "9412110",
+    "location": { "type": "Point", "coordinates": ["-120.7542", "35.1688"] }
+  },
+  {
+    "name": "Fernandina Beach",
+    "stationId": "8720030",
+    "location": { "type": "Point", "coordinates": ["-81.4658", "30.6714"] }
+  },
+  {
+    "name": "Old Port Tampa",
+    "stationId": "8726607",
+    "location": { "type": "Point", "coordinates": ["-82.5528", "27.8578"] }
+  },
+  {
+    "name": "Kiptopeke",
+    "stationId": "8632200",
+    "location": { "type": "Point", "coordinates": ["-75.9884", "37.1652"] }
+  },
+  {
+    "name": "Toke Point",
+    "stationId": "9440910",
+    "location": { "type": "Point", "coordinates": ["-123.9669", "46.7075"] }
+  },
+  {
+    "name": "Wells",
+    "stationId": "8419317",
+    "location": { "type": "Point", "coordinates": ["-70.5633", "43.3200"] }
+  },
+  {
+    "name": "Richmond",
+    "stationId": "9414863",
+    "location": { "type": "Point", "coordinates": ["-122.4096", "37.9230"] }
+  },
+  {
+    "name": "Port Arthur",
+    "stationId": "8770475",
+    "location": { "type": "Point", "coordinates": ["-93.9310", "29.8671"] }
+  },
+  {
+    "name": "Christiansted Harbor, St Croix",
+    "stationId": "9751364",
+    "location": { "type": "Point", "coordinates": ["-64.6984", "17.7477"] }
+  },
+  {
+    "name": "Baltimore, Fort McHenry, Patapsco River",
+    "stationId": "8574680",
+    "location": { "type": "Point", "coordinates": ["-76.5783", "39.2667"] }
+  },
+  {
+    "name": "Bridgeport",
+    "stationId": "8467150",
+    "location": { "type": "Point", "coordinates": ["-73.1817", "41.1733"] }
+  },
+  {
+    "name": "Port Manatee",
+    "stationId": "8726384",
+    "location": { "type": "Point", "coordinates": ["-82.5625", "27.6383"] }
+  },
+  {
+    "name": "Fort Myers",
+    "stationId": "8725520",
+    "location": { "type": "Point", "coordinates": ["-81.8712", "26.6477"] }
+  },
+  {
+    "name": "Culebra",
+    "stationId": "9752235",
+    "location": { "type": "Point", "coordinates": ["-65.3025", "18.3009"] }
+  },
+  {
+    "name": "Bulk Terminal",
+    "stationId": "8767961",
+    "location": { "type": "Point", "coordinates": ["-93.3008", "30.1902"] }
+  },
+  {
+    "name": "Bishops Head",
+    "stationId": "8571421",
+    "location": { "type": "Point", "coordinates": ["-76.0383", "38.2200"] }
+  },
+  {
+    "name": "Atlantic City",
+    "stationId": "8534720",
+    "location": { "type": "Point", "coordinates": ["-74.4183", "39.3550"] }
+  },
+  {
+    "name": "Bridesburg",
+    "stationId": "8546252",
+    "location": { "type": "Point", "coordinates": ["-75.0750", "39.9833"] }
+  },
+  {
+    "name": "Port Orford",
+    "stationId": "9431647",
+    "location": { "type": "Point", "coordinates": ["-124.4983", "42.7390"] }
+  },
+  {
+    "name": "Sand Island, Midway Islands",
+    "stationId": "1619910",
+    "location": { "type": "Point", "coordinates": ["-177.3600", "28.2117"] }
+  },
+  {
+    "name": "Astoria",
+    "stationId": "9439040",
+    "location": { "type": "Point", "coordinates": ["-123.7683", "46.2073"] }
+  },
+  {
+    "name": "Port Lavaca",
+    "stationId": "8773259",
+    "location": { "type": "Point", "coordinates": ["-96.6098", "28.6406"] }
+  },
+  {
+    "name": "Port Mansfield",
+    "stationId": "8778490",
+    "location": { "type": "Point", "coordinates": ["-97.4257", "26.5576"] }
+  },
+  {
+    "name": "Newbold",
+    "stationId": "8548989",
+    "location": { "type": "Point", "coordinates": ["-74.7519", "40.1373"] }
+  },
+  {
+    "name": "Marcus Hook",
+    "stationId": "8540433",
+    "location": { "type": "Point", "coordinates": ["-75.4094", "39.8117"] }
+  },
+  {
+    "name": "Woods Hole",
+    "stationId": "8447930",
+    "location": { "type": "Point", "coordinates": ["-70.6711", "41.5236"] }
+  }
+]

@@ -12,6 +12,11 @@ const routes = function () {
   const swellController = controllers.swellController();
   apiRoute.route("/swell").get(swellController.getSwell);
 
+  const waterTemperatureController = controllers.waterTemperatureController();
+  apiRoute
+    .route("/water-temperature")
+    .get(waterTemperatureController.getWaterTemperature);
+
   return apiRoute;
 };
 

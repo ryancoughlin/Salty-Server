@@ -1,49 +1,48 @@
-require('dotenv').config()
-const mongoose = require('mongoose')
-const async = require('async')
-const fs = require('fs')
-const Station = require('../models/station')
+require("dotenv").config();
+const mongoose = require("mongoose");
+const async = require("async");
+const fs = require("fs");
+const foo = require("../models/enhanced-station");
 
-mongoose 
-.connect(process.env.MONGO_URL, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
-.then(() => {
-  console.log("Database connection Success!");
-  
-  const data = JSON.parse(
-    fs.readFileSync('./seed/data/states/maine.json')
-  )
-  
-  async.each(data, (s, callback) => {
-    const station = new Station({
-      state: s.state,
-      name: s.name,
-      stationId: s.stationId,
-      location: {
-        coordinates: s.location.coordinates,
-        type: s.location.type
-      }
-    })
+mongoose
+  .connect(process.env.MONGO_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    console.log("Database connection Success!");
 
-    station.save(function(error) {
-      if (error) {
-        console.log(error)
-      }
+    const data = JSON.parse(
+      fs.readFileSync("./seed/data/enhancedStation.json")
+    );
 
-      console.log('Station is saved')
+    async.each(data, (s, callback) => {
+      const station = new foo({
+        state: s.state,
+        name: s.name,
+        stationId: s.stationId,
+        location: {
+          coordinates: s.location.coordinates,
+          type: s.location.type,
+        },
+      });
 
-      callback()
-    })
-  }),
-    err => {
-      if (error) {
-        console.log('Asyn error: ', error)
-      }
-    }
-})
-.catch((err) => {
-console.error("Mongo Connection Error", err);
-});
+      station.save(function (error) {
+        if (error) {
+          console.log(error);
+        }
 
+        console.log("Station is saved");
+
+        callback();
+      });
+    }),
+      (err) => {
+        if (error) {
+          console.log("Asyn error: ", error);
+        }
+      };
+  })
+  .catch((err) => {
+    console.error("Mongo Connection Error", err);
+  });

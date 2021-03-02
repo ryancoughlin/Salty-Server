@@ -59,9 +59,18 @@ class NOAA {
       stationId +
       "&start_date=today&range=3&product=water_temperature&interval=h&datum=mllw&units=english&time_zone=lst_ldt&application=web_services&format=json";
 
-    return request(`${process.env.NOAA_URL}`, params).then((json) => {
-      return this.formatWaterTemperature(json.data);
-    });
+    const url = new URL(
+      "https://api.tidesandcurrents.noaa.gov/api/prod/datagetter" + params
+    );
+
+    return request(url)
+      .then((json) => {
+        console.log(json);
+        return this.formatWaterTemperature(json.data);
+      })
+      .catch((error) => {
+        console.log("Error requesting high/low tides", error.message);
+      });
   }
 
   fetchHourlyPredictions(stationId) {

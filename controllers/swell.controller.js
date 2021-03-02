@@ -17,7 +17,6 @@ const swellController = () => {
             return formatSwellData(json);
           })
           .then((predictions) => {
-            console.log(predictions);
             return groupByDay(predictions);
           })
           .catch((error) => {

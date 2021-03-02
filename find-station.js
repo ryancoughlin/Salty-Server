@@ -28,7 +28,8 @@ export function findStation(latitude, longitude) {
     });
 }
 
-const findEnhancedStation = (longitude, latitude) => {
+// Stations that support water temperature
+export function findEnhancedStation(latitude, longitude) {
   return EnhancedStation.findOne({
     location: {
       $nearSphere: {
@@ -41,9 +42,10 @@ const findEnhancedStation = (longitude, latitude) => {
     },
   })
     .then((station) => {
+      console.log(station);
       return station;
     })
     .catch((error) => {
       return error;
     });
-};
+}
