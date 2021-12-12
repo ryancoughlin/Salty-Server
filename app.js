@@ -3,7 +3,6 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const app = express();
-const port = 3000;
 require("dotenv").config();
 
 const defaultRoutes = require("./routes")();
@@ -42,4 +41,4 @@ app.use(
 app.use("/api", defaultRoutes);
 app.get("/", (req, res) => res.send("Hello World!"));
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+app.listen(process.env.MONGO_URL, () => console.log(`Example app listening on port ${process.env.MONGO_URL}!`));

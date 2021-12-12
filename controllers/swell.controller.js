@@ -16,9 +16,6 @@ const swellController = () => {
           .then((json) => {
             return formatSwellData(json);
           })
-          .then((predictions) => {
-            return groupByDay(predictions);
-          })
           .catch((error) => {
             console.log("Error requesting high/low tides", error.message);
           });
