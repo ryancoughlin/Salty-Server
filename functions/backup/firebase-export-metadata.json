@@ -1,0 +1,9 @@
+{
+  "version": "X.X.X",
+  "firestore": 
+  {
+	"version": "X.XX.X",
+	"path": "salty-306220/functions/backup",
+	"metadata_file": "backup.overall_export_metadata"
+  }
+}

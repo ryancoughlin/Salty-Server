@@ -4,7 +4,8 @@
   "description": "Cloud Functions for Firebase",
   "scripts": {
     "lint": "eslint .",
-    "serve": "firebase emulators:start --only functions",
+    "emulate": "firebase emulators:start --import ./backup",
+    "serve": "firebase emulators:start --import ./backup",
     "shell": "firebase functions:shell",
     "start": "npm run shell",
     "deploy": "firebase deploy --only functions",

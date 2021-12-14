@@ -2,7 +2,11 @@
   "apexskier.eslint.config.eslintConfigPath" : "functions\/.eslintrc.cjs",
   "apexskier.eslint.config.eslintPath" : "functions\/node_modules\/eslint\/bin\/eslint.js",
   "apexskier.eslint.config.fixOnSave" : "Enable",
+  "editor.default_syntax" : "javascript",
   "index.ignored_file_patterns" : [
     "node_modules\/"
-  ]
+  ],
+  "workspace.preview_root" : ".",
+  "workspace.preview_type" : "custom",
+  "workspace.preview_url" : "http:\/\/localhost:4000\/functions"
 }

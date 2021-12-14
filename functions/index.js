@@ -4,7 +4,6 @@ import express from 'express';
 import cors from 'cors';
 import {nearbyStations} from './controllers/station.js';
 import {db} from './config/firebase.js';
-// const geo = require("geofirex").init(admin);
 
 const app = express();
 app.use(cors({origin: true}));
