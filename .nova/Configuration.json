@@ -1,4 +1,7 @@
 {
+  "apexskier.eslint.config.eslintConfigPath" : "functions\/.eslintrc.js",
+  "apexskier.eslint.config.eslintPath" : "functions\/node_modules\/eslint\/bin\/eslint.js",
+  "apexskier.eslint.config.fixOnSave" : "Enable",
   "index.ignored_file_patterns" : [
     "node_modules\/"
   ]
