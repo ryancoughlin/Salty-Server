@@ -7,12 +7,11 @@ require("dotenv").config();
 
 const defaultRoutes = require("./routes")();
 
-const uri =
-  "mongodb+srv://ryancoughlin:LP17i48lB2c7P1FK@cluster0.2qnfz.mongodb.net/salty_prod?w=majority";
-const client = new MongoClient(uri, {
+const client = new MongoClient(process.env.MONGO_URL, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
+
 client.connect((err) => {
   const collection = client.db("salty_prod").collection("stations");
   // perform actions on the collection object
@@ -23,6 +22,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 const allowedOrigins = ["http://localhost:5000"];
+
 app.use(
   cors({
     origin: function (origin, callback) {
@@ -39,6 +39,8 @@ app.use(
 );
 
 app.use("/api", defaultRoutes);
-app.get("/", (req, res) => res.send("Hello World!"));
+app.get("/", (req, res) =>
+  res.send("Salty server – get tide information from NOAA")
+);
 
 app.listen(process.env.PORT, () => console.log("Server is running"));

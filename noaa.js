@@ -13,6 +13,7 @@ const endDate = moment(beginDate, API_DATE_FORMAT)
 class NOAA {
   fetchPredictions(stationId) {
     return this.fetchHighLowTides(stationId).then((json) => {
+      console.log(stationId);
       return this.formatTides(json.predictions).then((predictions) => {
         return this.groupByDay(predictions);
       });
@@ -49,7 +50,7 @@ class NOAA {
         return json;
       })
       .catch((error) => {
-        console.log("Error requesting high/low tides", error.message);
+        console.error("Error requesting high/low tides", error.message);
       });
   }
 
