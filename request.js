@@ -1,6 +1,5 @@
 const fetch = require("node-fetch");
 const moment = require("moment");
-const _ = require("lodash");
 const https = require("https");
 
 export default function (params, postData) {

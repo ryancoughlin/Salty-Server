@@ -1,23 +1,23 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const mongoose = require("mongoose");
+const MongoClient = require("mongodb").MongoClient;
 const app = express();
 require("dotenv").config();
 
 const defaultRoutes = require("./routes")();
 
-mongoose
-  .connect(process.env.MONGO_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => {
-    console.log("Database connection Success!");
-  })
-  .catch((err) => {
-    console.error("Mongo Connection Error", err);
-  });
+const uri =
+  "mongodb+srv://ryancoughlin:LP17i48lB2c7P1FK@cluster0.2qnfz.mongodb.net/salty_prod?w=majority";
+const client = new MongoClient(uri, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+client.connect((err) => {
+  const collection = client.db("salty_prod").collection("stations");
+  // perform actions on the collection object
+  client.close();
+});
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -41,6 +41,4 @@ app.use(
 app.use("/api", defaultRoutes);
 app.get("/", (req, res) => res.send("Hello World!"));
 
-app.listen(process.env.MONGO_URL, () =>
-  console.log(`Example app listening on port ${process.env.MONGO_URL}!`)
-);
+app.listen(process.env.PORT, () => console.log("Server is running"));
