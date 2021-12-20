@@ -41,4 +41,6 @@ app.use(
 app.use("/api", defaultRoutes);
 app.get("/", (req, res) => res.send("Hello World!"));
 
-app.listen(process.env.MONGO_URL, () => console.log(`Example app listening on port ${process.env.MONGO_URL}!`));
+app.listen(process.env.MONGO_URL, () =>
+  console.log(`Example app listening on port ${process.env.MONGO_URL}!`)
+);

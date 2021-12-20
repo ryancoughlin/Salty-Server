@@ -1,0 +1,19 @@
+ref
+.doc(station.id)
+.set({
+  id: station.id,
+  name: station.name,
+  position: {
+	geohash: hash,
+	location: new admin.firestore.GeoPoint(
+	  station.location.latitude,
+	  station.location.longitude
+	),
+  }
+})
+.then(() => {
+  console.log("Station added.");
+})
+.catch((error) => {
+  console.error("Error writing document: ", error);
+});

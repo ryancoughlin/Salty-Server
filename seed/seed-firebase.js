@@ -1,10 +1,9 @@
 // Import Admin SDK
+const firebase = require("firebase/app");
 const admin = require("firebase-admin");
-const geofire = require("geofire-common");
-
+const geofirestore = require("geofirestore");
 const fs = require("fs");
-
-var serviceAccount = require("./serviceAccountKey.json");
+const serviceAccount = require("./serviceAccountKey.json");
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
@@ -12,32 +11,25 @@ admin.initializeApp({
 });
 
 const db = admin.firestore();
-const batch = db.batch();
-const ref = db.collection("stations");
+const geoRef = geofirestore.initializeApp(db);
+const stationsRef = geoRef.collection("stations");
+const stationsJSON = JSON.parse(
+  fs.readFileSync("./seed/noaa/data/stations.json")
+);
 
-const stations = JSON.parse(fs.readFileSync("./seed/noaa/data/stations.json"));
-
-stations.stations.forEach((station) => {
-  const hash = geofire.geohashForLocation([
+stationsJSON.stations.forEach((station) => {
+  const coordinates = new admin.firestore.GeoPoint(
     station.location.latitude,
-    station.location.longitude,
-  ]);
-
-  ref
-    .doc(station.id)
-    .set({
-      id: station.id,
+    station.location.longitude
+  );
+  stationsRef
+    .add({
       name: station.name,
-      location: new admin.firestore.GeoPoint(
-        station.location.latitude,
-        station.location.longitude
-      ),
-      latitude: station.location.latitude,
-      longitude: station.location.longitude,
-      geohash: hash,
+      id: station.id,
+      coordinates: coordinates,
     })
     .then(() => {
-      console.log("Station added.");
+      console.log("Added station: ", station.name);
     })
     .catch((error) => {
       console.error("Error writing document: ", error);
