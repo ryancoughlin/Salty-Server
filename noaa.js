@@ -3,6 +3,7 @@ import _ from "lodash";
 // import LRU from 'lru-cache'
 import request from "./request";
 // import { checkCache, setCache } from './cache-manager'
+import axios from "axios";
 
 const API_DATE_FORMAT = "MM/DD/YYYY";
 const beginDate = moment().add(-1, "days").format(API_DATE_FORMAT);
@@ -13,45 +14,33 @@ const endDate = moment(beginDate, API_DATE_FORMAT)
 class NOAA {
   fetchPredictions(stationId) {
     return this.fetchHighLowTides(stationId).then((json) => {
-      console.log(stationId);
-      return this.formatTides(json.predictions).then((predictions) => {
+      return this.formatTides(json).then((predictions) => {
         return this.groupByDay(predictions);
       });
     });
   }
 
-  fetchHighLowTides(stationId) {
-    const params =
-      "?begin_date=" +
-      beginDate +
-      "&end_date=" +
-      endDate +
-      "&station=" +
-      stationId +
-      "&interval=hilo&product=predictions&datum=mllw&units=english&time_zone=lst_ldt&application=web_services&format=json";
+  async fetchHighLowTides(stationId) {
+    const params = {
+      station: stationId,
+      begin_date: beginDate,
+      end_date: endDate,
+      product: "predictions",
+      interval: "hilo",
+      datum: "mllw",
+      format: "json",
+      datum: "mllw",
+      time_zone: "lst_ldt",
+      units: "english",
+    };
 
-    // return checkCache(stationId).catch(() => {
-    //   return request(`${process.env.NOAA_URL}`, params)
-    // 	.then(json => {
-    // 	  setCache(stationId, json)
-    // 	  return json
-    // 	})
-    // 	.catch(error => {
-    // 	  console.log('error', JSON.stringify(error, null, 2))
-    // 	  return error
-    // 	})
-    // })
+    try {
+      const response = await axios.get(process.env.NOAA_URL, { params });
 
-    const url = new URL(
-      "https://api.tidesandcurrents.noaa.gov/api/prod/datagetter" + params
-    );
-    return request(url)
-      .then((json) => {
-        return json;
-      })
-      .catch((error) => {
-        console.error("Error requesting high/low tides", error.message);
-      });
+      return response.data;
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   fetchWaterTemperature(stationId) {
@@ -66,7 +55,6 @@ class NOAA {
 
     return request(url)
       .then((json) => {
-        console.log(json);
         return this.formatWaterTemperature(json.data);
       })
       .catch((error) => {
@@ -115,7 +103,7 @@ class NOAA {
   formatTides(tides) {
     return new Promise(function (resolve, reject) {
       resolve(
-        _.map(tides, (tide) => {
+        _.map(tides.predictions, (tide) => {
           return {
             time: tide.t,
             height: Math.round(tide.v * 10) / 10,

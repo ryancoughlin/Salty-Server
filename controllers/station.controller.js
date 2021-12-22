@@ -12,6 +12,7 @@ const stationController = () => {
           return noaa.fetchPredictions(station.stationId);
         })
         .catch((error) => console.error(error));
+      console.log(station);
       return res.status(200).json(station);
     } catch (error) {
       return res.status(500).json({ message: `${JSON.stringify(error)}` });

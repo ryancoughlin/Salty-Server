@@ -14,26 +14,25 @@ const client = new MongoClient(process.env.MONGO_URL, {
   useUnifiedTopology: true,
 });
 
-export function findStation(latitude, longitude) {
-  client.connect((err) => {
-    const collection = client.db("salty_prod").collection("stations");
-    collection
-      .find({
-        location: {
-          $near: {
-            $geometry: {
-              type: "Point",
-              coordinates: [Number(longitude), Number(latitude)],
-            },
-            $maxDistance: 1000,
+export async function findStation(latitude, longitude) {
+  const db = await client.connect();
+  const collection = client.db("salty_prod").collection("stations");
+  return await collection
+    .findOne({
+      location: {
+        $near: {
+          $geometry: {
+            type: "Point",
+            coordinates: [Number(longitude), Number(latitude)],
           },
+          $minDistance: 0,
+          $maxDistance: 10000,
         },
-      })
-      .toArray((err, items) => {
-        console.log(items);
-      });
-    // client.close();
-  });
+      },
+    })
+    .then((station) => {
+      return station;
+    });
 }
 
 // Stations that support water temperature

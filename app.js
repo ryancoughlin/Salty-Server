@@ -1,22 +1,10 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const MongoClient = require("mongodb").MongoClient;
 const app = express();
 require("dotenv").config();
 
 const defaultRoutes = require("./routes")();
-
-const client = new MongoClient(process.env.MONGO_URL, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
-
-client.connect((err) => {
-  const collection = client.db("salty_prod").collection("stations");
-  // perform actions on the collection object
-  client.close();
-});
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
