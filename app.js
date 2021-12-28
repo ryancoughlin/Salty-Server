@@ -31,4 +31,4 @@ app.get("/", (req, res) =>
   res.send("Salty server – get tide information from NOAA")
 );
 
-app.listen(process.env.PORT, () => console.log("Server is running"));
+app.listen(process.env.PORT || PORT, () => console.log("Server is running"));

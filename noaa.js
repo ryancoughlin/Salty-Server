@@ -36,6 +36,7 @@ class NOAA {
 
     try {
       const response = await axios.get(process.env.NOAA_URL, { params });
+      console.log(response);
       return response.data;
     } catch (error) {
       console.error(error);
