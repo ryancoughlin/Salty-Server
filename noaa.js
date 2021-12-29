@@ -106,7 +106,7 @@ class NOAA {
         _.map(tides.predictions, (tide) => {
           return {
             time: tide.t,
-            height: Math.round(tide.v * 10) / 10,
+            height: Number(Math.round(tide.v * 10) / 10),
             type: tide.type == "H" ? "high" : "low",
           };
         })
