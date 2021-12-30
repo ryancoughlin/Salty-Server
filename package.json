@@ -22,7 +22,8 @@
     "mongodb": "^3.7.3",
     "mongoose": "^6.1.2",
     "node-fetch": "^2.6.1",
-    "suncalc": "^1.8.0"
+    "suncalc": "^1.8.0",
+    "tidesandcurrents": "^1.6.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.13.0",
