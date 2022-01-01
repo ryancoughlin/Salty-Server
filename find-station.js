@@ -46,7 +46,6 @@ export function findEnhancedStation(latitude, longitude) {
     },
   })
     .then((station) => {
-      console.log(station);
       return station;
     })
     .catch((error) => {

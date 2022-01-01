@@ -49,7 +49,6 @@ class NOAA {
     };
 
     const stationDataPromise = noaaService(stationData).then((json) => {
-      console.log(json.metadata);
       if (json.hasOwnProperty("metadata")) {
         return { metadata: json.metadata };
       } else {
