@@ -14,6 +14,16 @@ const endDate = moment(beginDate, API_DATE_FORMAT)
 
 class NOAA {
   fetchPredictions(stationId) {
+    const stationData = {
+      station: stationId,
+      date: "today",
+      product: "water_level",
+      datum: "mllw",
+      format: "json",
+      time_zone: "lst_ldt",
+      units: "english",
+    };
+
     const highLowParams = {
       station: stationId,
       begin_date: beginDate,
@@ -38,6 +48,15 @@ class NOAA {
       units: "english",
     };
 
+    const stationDataPromise = noaaService(stationData).then((json) => {
+      console.log(json.metadata);
+      if (json.hasOwnProperty("metadata")) {
+        return { metadata: json.metadata };
+      } else {
+        return "No station data found";
+      }
+    });
+
     const dailyTidePromise = noaaService(highLowParams).then((json) => {
       return { ...this.formatTides(json), ...this.findNextTide(json) };
     });
@@ -46,8 +65,12 @@ class NOAA {
       return json;
     });
 
-    return Promise.all([dailyTidePromise, predictionPromise]).then((data) => {
-      return { ...data[0], ...data[1] };
+    return Promise.all([
+      dailyTidePromise,
+      predictionPromise,
+      stationDataPromise,
+    ]).then((data) => {
+      return { ...data[0], ...data[1], ...data[2] };
     });
   }
 
@@ -96,7 +119,7 @@ class NOAA {
     const nextTide = {
       time: flattenedTides[nextTideIndex].t,
       type: flattenedTides[nextTideIndex].type == "H" ? "high" : "low",
-      height: flattenedTides[nextTideIndex].v,
+      height: Number(flattenedTides[nextTideIndex].v),
     };
 
     return { nextTide: nextTide };

@@ -4,8 +4,6 @@ const MongoClient = require("mongodb").MongoClient;
 const Station = require("./models/station");
 const EnhancedStation = require("./models/enhanced-station");
 
-const MIN_DISTANCE = 0;
-const MAX_DISTANCE = 50000;
 const MAX_ENHANCED_STATION_DISTANCE = 75000;
 const MAX_DISTANCE_NEARBY_STATIONS = 14000;
 
@@ -17,22 +15,21 @@ const client = new MongoClient(process.env.MONGO_URL, {
 export async function findStation(latitude, longitude) {
   const db = await client.connect();
   const collection = client.db("salty_prod").collection("stations");
-  return await collection
-    .findOne({
-      location: {
-        $near: {
-          $geometry: {
-            type: "Point",
-            coordinates: [Number(longitude), Number(latitude)],
-          },
-          $minDistance: 0,
-          $maxDistance: 10000,
+  const query = {
+    location: {
+      $near: {
+        $geometry: {
+          type: "Point",
+          coordinates: [Number(longitude), Number(latitude)],
         },
+        $minDistance: 0,
+        $maxDistance: 50000,
       },
-    })
-    .then((station) => {
-      return station;
-    });
+    },
+  };
+
+  const nearbyStations = await collection.find(query).toArray();
+  return nearbyStations[0];
 }
 
 // Stations that support water temperature

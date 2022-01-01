@@ -2,7 +2,7 @@ require("dotenv").config();
 const mongoose = require("mongoose");
 const async = require("async");
 const fs = require("fs");
-const foo = require("../models/enhanced-station");
+const Station = require("../models/station");
 
 mongoose
   .connect(process.env.MONGO_URL, {
@@ -17,7 +17,7 @@ mongoose
     );
 
     async.each(data, (s, callback) => {
-      const station = new foo({
+      const station = new Station({
         state: s.state,
         name: s.name,
         stationId: s.stationId,
