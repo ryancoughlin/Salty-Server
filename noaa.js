@@ -50,7 +50,7 @@ class NOAA {
 
     const stationDataPromise = noaaService(stationData).then((json) => {
       if (json.hasOwnProperty("metadata")) {
-        return { metadata: json.metadata };
+        return { ...json.metadata };
       } else {
         return "No station data found";
       }
@@ -65,9 +65,9 @@ class NOAA {
     });
 
     return Promise.all([
+      stationDataPromise,
       dailyTidePromise,
       predictionPromise,
-      stationDataPromise,
     ]).then((data) => {
       return { ...data[0], ...data[1], ...data[2] };
     });

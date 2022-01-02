@@ -31,5 +31,4 @@ app.use("/api", defaultRoutes);
 app.get("/", (req, res) =>
   res.send("Salty server – get tide information from NOAA")
 );
-
 app.listen(port, () => console.log("Server is running on port", port));

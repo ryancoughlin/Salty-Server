@@ -9,7 +9,6 @@ const stationController = () => {
       const { latitude, longitude } = req.query;
       const station = await findStation(latitude, longitude)
         .then((station) => {
-          console.log("Station: ", station);
           return noaa.fetchPredictions(station.stationId);
         })
         .catch((error) => console.error(error));
