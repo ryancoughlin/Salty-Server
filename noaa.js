@@ -58,7 +58,11 @@ class NOAA {
     });
 
     const dailyTidePromise = noaaService(highLowParams).then((json) => {
-      return { ...this.formatTides(json), ...this.findNextTide(json) };
+      return {
+        ...this.formatTides(json),
+        ...this.findNextTide(json),
+        ...this.findTodaysTides(json),
+      };
     });
 
     const predictionPromise = noaaService(predictionsParam).then((json) => {
@@ -104,6 +108,25 @@ class NOAA {
     });
 
     return { tides: grouped };
+  }
+
+  findTodaysTides(data) {
+    const todaysTides = Object.values(data.predictions)
+      .filter((tide) => {
+        const tideTime = new Date(tide.t);
+        new Date(2010, 9, 20).valueOf() === new Date(2010, 9, 20).valueOf();
+
+        return new Date().getDate().valueOf() === tideTime.getDate();
+      })
+      .map((tide) => {
+        return {
+          time: tide.t,
+          type: tide.type == "H" ? "high" : "low",
+          height: Number(tide.v),
+        };
+      });
+
+    return { todaysTides: todaysTides };
   }
 
   findNextTide(data) {
