@@ -19,7 +19,7 @@
     "lodash": "^4.17.21",
     "lru-cache": "^6.0.0",
     "moment": "^2.29.1",
-    "mongodb": "^3.7.3",
+    "mongodb": "3.6",
     "mongoose": "^6.1.2",
     "node-fetch": "^2.6.1",
     "suncalc": "^1.8.0",
