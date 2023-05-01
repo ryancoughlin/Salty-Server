@@ -1,20 +1,10 @@
-require("dotenv").config();
+// Add this line at the beginning of your file
+const { ObjectId } = require("mongodb");
 
-const MongoClient = require("mongodb").MongoClient;
-const Station = require("./models/station");
-const EnhancedStation = require("./models/enhanced-station");
+async function findStation(db, latitude, longitude) {
+  console.log("In findStation function"); // Add this line
 
-const MAX_ENHANCED_STATION_DISTANCE = 75000;
-const MAX_DISTANCE_NEARBY_STATIONS = 14000;
-
-const client = new MongoClient(process.env.MONGO_URL, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
-
-export async function findStation(latitude, longitude) {
-  const db = await client.connect();
-  const collection = client.db("salty_prod").collection("stations");
+  const collection = db.collection("stations");
   const query = {
     location: {
       $near: {
@@ -28,27 +18,12 @@ export async function findStation(latitude, longitude) {
     },
   };
 
+  console.log("Query:", query); // Add this line
+
   const nearbyStations = await collection.find(query).toArray();
   return nearbyStations[0];
 }
 
-// Stations that support water temperature
-export function findEnhancedStation(latitude, longitude) {
-  return EnhancedStation.findOne({
-    location: {
-      $nearSphere: {
-        $geometry: {
-          type: "Point",
-          coordinates: [longitude, latitude],
-        },
-        $maxDistance: MAX_ENHANCED_STATION_DISTANCE,
-      },
-    },
-  })
-    .then((station) => {
-      return station;
-    })
-    .catch((error) => {
-      return error;
-    });
-}
+module.exports = {
+  findStation,
+};

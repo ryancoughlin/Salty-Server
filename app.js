@@ -1,34 +1,24 @@
 const express = require("express");
-const bodyParser = require("body-parser");
-const cors = require("cors");
+const connectDB = require("./database");
+const dotenv = require("dotenv");
+const routes = require("./routes");
+
+dotenv.config();
+
 const app = express();
-const defaultRoutes = require("./routes")();
+const PORT = process.env.PORT || 3000;
 
-require("dotenv").config();
+connectDB(() => {
+  // Middleware
+  app.use(express.json());
+  app.use("/api", routes());
 
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+  // Routes
+  app.get("/", (req, res) => {
+    res.send("Welcome to the Express server!");
+  });
 
-const allowedOrigins = ["http://localhost:5000"];
-const port = process.env.PORT || 5000;
-
-app.use(
-  cors({
-    origin: function (origin, callback) {
-      if (!origin) return callback(null, true);
-      if (allowedOrigins.indexOf(origin) === -1) {
-        const msg =
-          "The CORS policy for this site does not allow access from the specified Origin.";
-        return callback(new Error(msg), false);
-      }
-      return callback(null, true);
-    },
-    credentials: true,
-  })
-);
-
-app.use("/api", defaultRoutes);
-app.get("/", (req, res) =>
-  res.send("Salty server – get tide information from NOAA")
-);
-app.listen(port, () => console.log("Server is running on port", port));
+  app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+  });
+});

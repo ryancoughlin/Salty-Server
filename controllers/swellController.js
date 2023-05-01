@@ -7,6 +7,7 @@ const swellController = () => {
     try {
       const { latitude, longitude } = req.query;
       const swells = await findMSWSpot(latitude, longitude).then((spot) => {
+        console.log(spot);
         const spotId = spot.spotId;
         const url = new URL(
           `https://magicseaweed.com/api/${process.env.MSW_KEY}/forecast?spot_id=${spotId}&fields=timestamp,swell.*,wind.*`

@@ -1,5 +1,5 @@
 import request from "../request";
-import noaa from "../noaa";
+import noaa from "../TideData";
 import { findEnhancedStation } from "../find-station";
 
 const waterTemperatureController = () => {

@@ -1,9 +1,7 @@
-const stationController = require("./station.controller");
-const swellController = require("./swell.controller");
-const waterTemperatureController = require("./water-temperature.controller");
+const stationController = require("./stationController");
+const swellController = require("./swellController");
 
 module.exports = {
   stationController,
   swellController,
-  waterTemperatureController,
 };

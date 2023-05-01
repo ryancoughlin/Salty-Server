@@ -1,23 +1,15 @@
 const express = require("express");
-const controllers = require("../controllers");
+const { stationController, swellController } = require("../controllers");
+const router = express.Router();
 
-const routes = function () {
-  const apiRoute = express.Router();
+const routes = () => {
+  const tideCtrl = stationController;
+  const swellCtrl = swellController();
 
-  const stationController = controllers.stationController();
-  apiRoute.route("/tide-table").get(stationController.getTideTable);
-  apiRoute.route("/tide-chart").get(stationController.getTideChart);
-  apiRoute.route("/weather-forecast").get(stationController.getWeatherForecast);
+  router.route("/tides").get(tideCtrl.getClosestStation);
+  router.route("/swells").get(swellCtrl.getSwell);
 
-  const swellController = controllers.swellController();
-  apiRoute.route("/swell").get(swellController.getSwell);
-
-  const waterTemperatureController = controllers.waterTemperatureController();
-  apiRoute
-    .route("/water-temperature")
-    .get(waterTemperatureController.getWaterTemperature);
-
-  return apiRoute;
+  return router;
 };
 
 module.exports = routes;
