@@ -2,7 +2,19 @@ const axios = require("axios");
 
 class TideData {
   constructor(stationId) {
-    this.apiUrl = `https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?station=${stationId}&date=today&range=24&product=predictions&interval=h&datum=mllw&units=english&time_zone=gmt&application=web_services&format=json`;
+    const today = new Date();
+    const weekAway = new Date(today);
+    weekAway.setDate(weekAway.getDate() + 6);
+    const formatDate = (date) =>
+      `${(date.getMonth() + 1).toString().padStart(2, "0")}/${date
+        .getDate()
+        .toString()
+        .padStart(2, "0")}/${date.getFullYear()}`;
+    this.apiUrl = `https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?station=${stationId}&begin_date=${formatDate(
+      today
+    )}&end_date=${formatDate(
+      weekAway
+    )}&product=predictions&interval=h&datum=mllw&units=english&time_zone=gmt&application=web_services&format=json`;
     console.log(this.apiUrl);
   }
 
@@ -18,35 +30,43 @@ class TideData {
   }
 
   processData(predictions) {
-    const dailyTides = {};
+    const dailyTides = predictions.reduce((accumulator, prediction, index) => {
+      if (index === 0 || index === predictions.length - 1) {
+        return accumulator;
+      }
 
-    predictions.forEach((prediction) => {
-      const date = prediction.t.split(" ")[0];
-      const time = prediction.t.split(" ")[1];
+      const prevValue = parseFloat(predictions[index - 1].v);
       const value = parseFloat(prediction.v);
+      const nextValue = parseFloat(predictions[index + 1].v);
 
-      if (!dailyTides[date]) {
-        dailyTides[date] = {
-          highestTide: value,
-          lowestTide: value,
-          highestTideTime: time,
-          lowestTideTime: time,
-        };
-      } else {
-        if (value > dailyTides[date].highestTide) {
-          dailyTides[date].highestTide = value;
-          dailyTides[date].highestTideTime = time;
+      const dateTime = new Date(prediction.t);
+      const isoDateTime = dateTime.toISOString();
+      const date = isoDateTime.split("T")[0];
+
+      if (value > prevValue && value > nextValue) {
+        // High tide
+        const tide = { type: "high", tide: value, timestamp: isoDateTime };
+        if (!accumulator[date]) {
+          accumulator[date] = { tides: [tide] };
+        } else {
+          accumulator[date].tides.push(tide);
         }
-        if (value < dailyTides[date].lowestTide) {
-          dailyTides[date].lowestTide = value;
-          dailyTides[date].lowestTideTime = time;
+      } else if (value < prevValue && value < nextValue) {
+        // Low tide
+        const tide = { type: "low", tide: value, timestamp: isoDateTime };
+        if (!accumulator[date]) {
+          accumulator[date] = { tides: [tide] };
+        } else {
+          accumulator[date].tides.push(tide);
         }
       }
-    });
+
+      return accumulator;
+    }, {});
 
     return Object.entries(dailyTides).map(([date, tideInfo]) => ({
       date,
-      ...tideInfo,
+      tides: tideInfo.tides,
     }));
   }
 }
