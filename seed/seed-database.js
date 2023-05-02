@@ -2,7 +2,7 @@ require("dotenv").config();
 const mongoose = require("mongoose");
 const async = require("async");
 const fs = require("fs");
-const Station = require("../models/station");
+const NDBCBuoy = require("../models/ndbc-buoy.model.js");
 
 mongoose
   .connect(process.env.MONGO_URL, {
@@ -12,18 +12,15 @@ mongoose
   .then(() => {
     console.log("Database connection Success!");
 
-    const data = JSON.parse(
-      fs.readFileSync("./seed/data/enhancedStation.json")
-    );
+    const data = JSON.parse(fs.readFileSync("./seed/data/NDBCBuoyData.json"));
 
     async.each(data, (s, callback) => {
-      const station = new Station({
-        state: s.state,
+      const station = new NDBCBuoy({
         name: s.name,
-        stationId: s.stationId,
+        id: s.id,
         location: {
-          coordinates: s.location.coordinates,
-          type: s.location.type,
+          coordinates: [s.lon, s.lat],
+          type: "Point",
         },
       });
 
@@ -32,7 +29,7 @@ mongoose
           console.log(error);
         }
 
-        console.log("Station is saved");
+        console.log("NDBCBuoy is saved");
 
         callback();
       });

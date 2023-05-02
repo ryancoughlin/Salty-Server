@@ -1,13 +1,11 @@
 const express = require("express");
-const { stationController, swellController } = require("../controllers");
+const stationController = require("../controllers/station.controller");
+const buoyController = require("../controllers/buoy.controller");
 const router = express.Router();
 
 const routes = () => {
-  const tideCtrl = stationController;
-  const swellCtrl = swellController();
-
-  router.route("/tides").get(tideCtrl.getClosestStation);
-  router.route("/swells").get(swellCtrl.getSwell);
+  router.route("/tides").get(stationController.getClosestStation);
+  router.route("/buoy").get(buoyController.getClosestBuoy);
 
   return router;
 };

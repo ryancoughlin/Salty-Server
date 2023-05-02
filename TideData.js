@@ -45,7 +45,7 @@ class TideData {
 
       if (value > prevValue && value > nextValue) {
         // High tide
-        const tide = { type: "high", tide: value, timestamp: isoDateTime };
+        const tide = { type: "high", height: value, timestamp: isoDateTime };
         if (!accumulator[date]) {
           accumulator[date] = { tides: [tide] };
         } else {
@@ -53,7 +53,7 @@ class TideData {
         }
       } else if (value < prevValue && value < nextValue) {
         // Low tide
-        const tide = { type: "low", tide: value, timestamp: isoDateTime };
+        const tide = { type: "low", height: value, timestamp: isoDateTime };
         if (!accumulator[date]) {
           accumulator[date] = { tides: [tide] };
         } else {

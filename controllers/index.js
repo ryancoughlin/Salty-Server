@@ -1,7 +1,7 @@
-const stationController = require("./stationController");
-const swellController = require("./swellController");
+const stationController = require("./station.controller");
+const buoyController = require("./buoy.controller");
 
 module.exports = {
   stationController,
-  swellController,
+  buoyController,
 };
