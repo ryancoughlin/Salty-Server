@@ -35,6 +35,7 @@
     "async": "^3.2.0",
     "fs": "^0.0.1-security",
     "node-geocoder": "^3.28.0",
-    "nodemon": "^2.0.15"
+    "nodemon": "^2.0.15",
+    "prettier": "2.8.8"
   }
 }
