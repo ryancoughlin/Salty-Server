@@ -1,9 +1,6 @@
-// Add this line at the beginning of your file
 const { ObjectId } = require('mongodb')
 
 async function findStation(db, latitude, longitude) {
-  console.log('In findStation function') // Add this line
-
   const collection = db.collection('stations')
   const query = {
     location: {
@@ -17,8 +14,6 @@ async function findStation(db, latitude, longitude) {
       }
     }
   }
-
-  console.log('Query:', query) // Add this line
 
   const nearbyStations = await collection.find(query).toArray()
   return nearbyStations[0]

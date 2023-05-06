@@ -15,12 +15,10 @@ class TideData {
     )}&end_date=${formatDate(
       weekAway
     )}&product=predictions&interval=h&datum=mllw&units=english&time_zone=gmt&application=web_services&format=json`
-    console.log(this.apiUrl)
   }
 
   async fetchData() {
     try {
-      console.log(this.apiUrl)
       const response = await axios.get(this.apiUrl)
       return this.processData(response.data.predictions)
     } catch (error) {

@@ -1,29 +1,13 @@
-import { formatSwellData, groupByDay } from '../swells'
-import request from '../request'
-import { findMSWSpot } from '../find-msw-spot'
+//swell.controller.js
+import { getSwellForecast } from '../services/swellForecast'
 
-const getSwell = async (req, res, next) => {
+export const getSwell = async (req, res) => {
   try {
     const { latitude, longitude } = req.query
-    const swells = await findMSWSpot(latitude, longitude).then((spot) => {
-      console.log(spot)
-      const spotId = spot.spotId
-      const url = new URL(
-        `https://magicseaweed.com/api/${process.env.MSW_KEY}/forecast?spot_id=${spotId}&fields=timestamp,swell.*,wind.*`
-      )
-
-      return request(url)
-        .then((json) => {
-          return formatSwellData(json)
-        })
-        .catch((error) => {
-          console.log('Error requesting high/low tides', error.message)
-        })
-    })
-    return res.status(200).json(swells)
+    const swellForecast = await getSwellForecast(latitude, longitude)
+    return res.status(200).json(swellForecast)
   } catch (error) {
-    return res.status(500).json({ message: `${JSON.stringify(error)}` })
+    console.error(error)
+    return res.status(500).json({ message: 'Internal Server Error' })
   }
 }
-
-export { getSwell }
