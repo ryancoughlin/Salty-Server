@@ -1,27 +1,27 @@
-import axios from "axios";
+import axios from 'axios'
 
-const baseURL = "https://www.ndbc.noaa.gov/data/realtime2/";
+const baseURL = 'https://www.ndbc.noaa.gov/data/realtime2/'
 
 const getBuoyData = async (buoyID) => {
-  const dataURL = `${baseURL}${buoyID}.txt`;
+  const dataURL = `${baseURL}${buoyID}.txt`
   try {
-    const response = await axios.get(dataURL);
-    const lines = response.data.split("\n");
+    const response = await axios.get(dataURL)
+    const lines = response.data.split('\n')
 
     if (lines.length < 3) {
-      return null;
+      return null
     }
 
-    const headers = lines[0].trim().split(/\s+/);
-    const data = lines.slice(2);
+    const headers = lines[0].trim().split(/\s+/)
+    const data = lines.slice(2)
 
     const allData = data.map((line) => {
-      const values = line.trim().split(/\s+/);
-      const conditions = {};
+      const values = line.trim().split(/\s+/)
+      const conditions = {}
 
       headers.forEach((header, index) => {
-        conditions[header] = values[index];
-      });
+        conditions[header] = values[index]
+      })
 
       return {
         waveHeight: parseFloat(conditions.WVHT) || null,
@@ -32,23 +32,23 @@ const getBuoyData = async (buoyID) => {
         airTemperature: parseFloat(conditions.ATMP) || null,
         timestamp:
           conditions.YY +
-          "-" +
+          '-' +
           conditions.MM +
-          "-" +
+          '-' +
           conditions.DD +
-          " " +
+          ' ' +
           conditions.hh +
-          ":" +
+          ':' +
           conditions.mm +
-          " UTC",
-      };
-    });
+          ' UTC'
+      }
+    })
 
-    return allData;
+    return allData
   } catch (error) {
-    console.error(`Error fetching buoy data: ${error}`);
-    return null;
+    console.error(`Error fetching buoy data: ${error}`)
+    return null
   }
-};
+}
 
-export { getBuoyData };
+export { getBuoyData }

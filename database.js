@@ -1,29 +1,29 @@
 // db.js
-const mongoose = require("mongoose");
-const dotenv = require("dotenv");
+const mongoose = require('mongoose')
+const dotenv = require('dotenv')
 
-dotenv.config();
+dotenv.config()
 
 const connectDB = (callback) => {
   // Set strictQuery option
-  mongoose.set("strictQuery", true);
+  mongoose.set('strictQuery', true)
 
   mongoose.connect(process.env.MONGO_URL, {
     useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
+    useUnifiedTopology: true
+  })
 
-  const db = mongoose.connection;
+  const db = mongoose.connection
 
-  db.on("error", (err) => {
-    console.error(err.message);
-    process.exit(1);
-  });
+  db.on('error', (err) => {
+    console.error(err.message)
+    process.exit(1)
+  })
 
-  db.once("open", () => {
-    console.log("Connected to MongoDB");
-    callback();
-  });
-};
+  db.once('open', () => {
+    console.log('Connected to MongoDB')
+    callback()
+  })
+}
 
-module.exports = connectDB;
+module.exports = connectDB
