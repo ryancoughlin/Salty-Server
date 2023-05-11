@@ -15,7 +15,7 @@ class TideData {
       station.stationId
     }&begin_date=${formatDate(today)}&end_date=${formatDate(
       weekAway
-    )}&product=predictions&interval=h&datum=mllw&units=english&time_zone=gmt&application=web_services&format=json`
+    )}&product=predictions&datum=mllw&units=english&time_zone=gmt&application=web_services&format=json`
   }
 
   async fetchData() {
@@ -39,7 +39,6 @@ class TideData {
 
       if (!dailyTides[date]) {
         dailyTides[date] = {
-          date,
           tides: []
         }
       }
