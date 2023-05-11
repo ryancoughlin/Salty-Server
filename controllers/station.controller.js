@@ -11,7 +11,7 @@ const getClosestStation = async (req, res) => {
         .status(400)
         .json({ error: 'Missing latitude or longitude query parameters' })
     }
-    // hwll
+    // dd
     const query = {
       location: {
         $near: {
