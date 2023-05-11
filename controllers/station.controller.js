@@ -2,6 +2,7 @@ const Station = require('../models/station.model')
 const TideData = require('../TideData')
 
 const getClosestStation = async (req, res) => {
+  console.log('request!!!!!')
   try {
     const { latitude, longitude } = req.query
 
@@ -28,8 +29,10 @@ const getClosestStation = async (req, res) => {
       return res.status(404).json({ error: 'No nearby stations found' })
     }
 
-    const tideData = new TideData(station.stationId)
+    const tideData = new TideData(station)
     const data = await tideData.fetchData()
+    console.log({ ...data })
+
     res.json(data)
   } catch (error) {
     console.error(`Error in getClosestStation: ${error}`)
