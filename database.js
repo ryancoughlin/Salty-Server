@@ -1,29 +1,25 @@
-// db.js
-const mongoose = require('mongoose')
-const dotenv = require('dotenv')
+const mongoose = require('mongoose');
+const dotenv = require('dotenv');
 
-dotenv.config()
+dotenv.config();
 
-const connectDB = (callback) => {
-  // Set strictQuery option
-  mongoose.set('strictQuery', true)
 
-  mongoose.connect(process.env.MONGO_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  })
+/**
+ * Connects to the MongoDB database using Mongoose.
+ */
+const connectDB = async () => {
+  mongoose.set('strictQuery', true);
 
-  const db = mongoose.connection
+  try {
+    await mongoose.connect(process.env.MONGO_URL, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    console.log('Connected to MongoDB');
+  } catch (err) {
+    console.error('Failed to connect to MongoDB', err);
+    process.exit(1);
+  }
+};
 
-  db.on('error', (err) => {
-    console.error(err.message)
-    process.exit(1)
-  })
-
-  db.once('open', () => {
-    console.log('Connected to MongoDB')
-    callback()
-  })
-}
-
-module.exports = connectDB
+module.exports = connectDB;

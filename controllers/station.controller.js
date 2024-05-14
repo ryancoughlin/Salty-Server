@@ -1,5 +1,6 @@
+//controllers/station.controller.js
 const Station = require('../models/station.model')
-const TideData = require('../TideData')
+const createTideFetcher = require('../TideData')
 
 const getClosestStation = async (req, res) => {
   console.log('request!!!!!')
@@ -29,7 +30,7 @@ const getClosestStation = async (req, res) => {
       return res.status(404).json({ error: 'No nearby stations found' })
     }
 
-    const tideData = new TideData(station)
+    const tideData = createTideFetcher(station)
     const data = await tideData.fetchData()
     console.log({ ...data })
 

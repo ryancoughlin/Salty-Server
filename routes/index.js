@@ -1,3 +1,4 @@
+// routes/routes.js
 const express = require('express')
 const stationController = require('../controllers/station.controller')
 const buoyController = require('../controllers/buoy.controller')
