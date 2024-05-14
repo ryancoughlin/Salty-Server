@@ -28,9 +28,10 @@ Before setting up the project, ensure you have the following installed:
 ### Installation
 
 1. Clone the repository:
-   ```bash
-   git clone https://yourrepositoryurl.com/salty-server.git
-   cd salty-server
+```bash
+git clone https://yourrepositoryurl.com/salty-server.git
+cd salty-server
+```
 
 2. Install dependencies:
 ```
