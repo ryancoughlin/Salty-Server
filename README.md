@@ -29,7 +29,7 @@ Before setting up the project, ensure you have the following installed:
 
 1. Clone the repository:
 ```bash
-git clone https://yourrepositoryurl.com/salty-server.git
+git clone git@github.com:ryancoughlin/Salty-Server.git
 cd salty-server
 ```
 
