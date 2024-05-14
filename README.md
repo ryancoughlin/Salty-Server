@@ -1,4 +1,4 @@
-# 🐟 Salty Server - Tide Data API
+# 🐟 Salty Server
 
 ## Overview
 
