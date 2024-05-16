@@ -1,5 +1,5 @@
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
 
 const Surfline = new Schema({
   name: String,
@@ -8,7 +8,7 @@ const Surfline = new Schema({
     index: { unique: true }
   },
   location: { type: { type: String }, coordinates: [Number] }
-});
+})
 
-Surfline.index({ "location.coordinates": "2dsphere" });
-module.exports = mongoose.model("Surfline", Surfline);
+Surfline.index({ 'location.coordinates': '2dsphere' })
+module.exports = mongoose.model('Surfline', Surfline)

@@ -1,35 +1,35 @@
 // noaa-service.js
-import axios from "axios";
+import axios from 'axios'
 
 export default async function (params) {
   try {
-    const response = await axios.get(process.env.NOAA_URL, { params });
-    const errorKey = response.data.error;
+    const response = await axios.get(process.env.NOAA_URL, { params })
+    const errorKey = response.data.error
     if (errorKey === undefined) {
-      return response.data;
+      return response.data
     } else {
-      return {};
+      return {}
     }
   } catch (error) {
-    console.error(error);
+    console.error(error)
   }
 }
 
 function fetchWaterTemperature(stationId) {
   const params =
-    "?station=" +
+    '?station=' +
     stationId +
-    "&start_date=today&range=3&product=water_temperature&interval=h&datum=mllw&units=english&time_zone=lst_ldt&application=web_services&format=json";
+    '&start_date=today&range=3&product=water_temperature&interval=h&datum=mllw&units=english&time_zone=lst_ldt&application=web_services&format=json'
 
   const url = new URL(
-    "https://api.tidesandcurrents.noaa.gov/api/prod/datagetter" + params
-  );
+    'https://api.tidesandcurrents.noaa.gov/api/prod/datagetter' + params
+  )
 
   return request(url)
     .then((json) => {
-      return this.formatWaterTemperature(json.data);
+      return this.formatWaterTemperature(json.data)
     })
     .catch((error) => {
-      console.error("Error requesting high/low tides", error.message);
-    });
+      console.error('Error requesting high/low tides', error.message)
+    })
 }

@@ -1,4 +1,4 @@
-# 🐟 Salty Server - Tide Data API
+# 🐟 Salty Server
 
 ## Overview
 
@@ -21,6 +21,7 @@ Salty Server is a Node.js API designed to deliver real-time tide information. Ut
 ### Prerequisites
 
 Before setting up the project, ensure you have the following installed:
+
 - Node.js (at least v12.x)
 - npm (comes with Node.js)
 - MongoDB (local or remote instance)
@@ -28,22 +29,27 @@ Before setting up the project, ensure you have the following installed:
 ### Installation
 
 1. Clone the repository:
-   ```bash
-   git clone https://yourrepositoryurl.com/salty-server.git
-   cd salty-server
+
+```bash
+git clone git@github.com:ryancoughlin/Salty-Server.git
+cd salty-server
+```
 
 2. Install dependencies:
+
 ```
 npm install
 ```
 
 3. Create a .env file in the root directory of the project and add the following environment variables:
+
 ```
 MONGO_URL=mongodb+srv://yourMongoDBUrlHere
 PORT=3000  # or any port you prefer
 ```
 
 4. Run the server:
+
 ```
 npm start
 ```
@@ -59,11 +65,13 @@ npm start
 ### Example Queries
 
 #### Fetch tide predictions
+
 Tide predictions by station, grouped by day and defined by high/low
+
 ```
 http://localhost:3000/api/tides?latitude=36.8508&longitude=-75.9779
 ```
 
 ## Contributing
-Contributions are welcome! For major changes, please open an issue first to discuss what you would like to change.
 
+Contributions are welcome! For major changes, please open an issue first to discuss what you would like to change.

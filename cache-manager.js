@@ -1,24 +1,24 @@
-import LRU from "lru-cache";
+import LRU from 'lru-cache'
 
 const options = {
   max: 40000,
-  maxAge: 8000 * 60 * 60,
-};
+  maxAge: 8000 * 60 * 60
+}
 
-const cache = new LRU(options);
+const cache = new LRU(options)
 
 export function checkCache(key) {
-  const cachedData = cache.get(key);
+  const cachedData = cache.get(key)
 
   return new Promise(function (resolve, reject) {
     if (cachedData !== undefined) {
-      return resolve(cachedData);
+      return resolve(cachedData)
     } else {
-      reject();
+      reject()
     }
-  });
+  })
 }
 
 export function setCache(key, data) {
-  cache.set(key, data);
+  cache.set(key, data)
 }
