@@ -60,15 +60,50 @@ npm start
 
 TBD
 
+### Get wave forecast
+
+Returns wave forecast based. Pulls from WaveWatch III (NOAA)
+
+#### API
+
+--------------------------------------------------------------- |
+| **Endpoint** | `/api/wave-forecast` |
+| **Method** | `GET` |
+| **Query Parameters:** | `latitude` (required): Latitude of the location. |
+| **null** | `longitude` (required): Longitude of the location. |
+
+#### Sample Response
+
+```json
+{
+  "waveHeight": 2.34,
+  "waveDirection": 120,
+  "time": "2024-05-16T12:00:00Z"
+}
+```
+
 ### Get closest wave buoy
 
-|                       |                                                                 |
-| --------------------- | --------------------------------------------------------------- |
-| **Endpoint**          | `/api/buoys/closest`                                            |
-| **Method**            | `GET`                                                           |
-| **Description**       | Retrieves the closest buoy to the given latitude and longitude. |
-| **Query Parameters:** | `latitude` (required): Latitude of the location.                |
-| **null**              | `longitude` (required): Longitude of the location.              |
+Returns historical and current data, no future models.
+
+#### API
+
+--------------------------------------------------------------- |
+| **Endpoint** | `/api/buoys/closest` |
+| **Method** | `GET` |
+| **Description** | Retrieves the closest buoy to the given latitude and longitude. |
+| **Query Parameters:** | `latitude` (required): Latitude of the location. |
+| **null** | `longitude` (required): Longitude of the location. |
+
+#### Sample Response
+
+```json
+{
+  "waveHeight": 2.34,
+  "waveDirection": 120,
+  "time": "2024-05-16T12:00:00Z"
+}
+```
 
 - GET `/api/tides`: Returns tide predictions for the closest station based on query parameters.
 - GET `/api/buoy`: Retrieves buoy data near the requested location.
