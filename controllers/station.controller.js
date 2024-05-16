@@ -1,7 +1,20 @@
-const { getClosestStation } = require('../services/stationService')
-const createTideFetcher = require('../TideData')
+//controllers/station.controller.js
+const {
+  fetchClosestStation,
+  fetchAllStations
+} = require('../services/stationService')
 
-const getStation = async (req, res) => {
+const getAllStations = async (req, res) => {
+  try {
+    const stations = await fetchAllStations()
+    res.json(stations)
+  } catch (error) {
+    console.error(`Error in getAllStations: ${error}`)
+    res.status(500).json({ error: 'Internal server error' })
+  }
+}
+
+const getClosestStation = async (req, res) => {
   try {
     const { latitude, longitude } = req.query
 
@@ -11,7 +24,7 @@ const getStation = async (req, res) => {
         .json({ error: 'Missing latitude or longitude query parameters' })
     }
 
-    const station = await getClosestStation(
+    const station = await fetchClosestStation(
       parseFloat(latitude),
       parseFloat(longitude)
     )
@@ -20,15 +33,11 @@ const getStation = async (req, res) => {
       return res.status(404).json({ error: 'No nearby stations found' })
     }
 
-    const tideData = createTideFetcher(station)
-    const data = await tideData.fetchData()
-    console.log({ ...data })
-
-    res.json(data)
+    res.json(station)
   } catch (error) {
-    console.error(`Error in getStation: ${error}`)
+    console.error(`Error in getClosestStation: ${error}`)
     res.status(500).json({ error: 'Internal server error' })
   }
 }
 
-module.exports = { getStation }
+module.exports = { getAllStations, getClosestStation }

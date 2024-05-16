@@ -7,7 +7,8 @@ const waveController = require('../controllers/wave.controller')
 const router = express.Router()
 
 const routes = () => {
-  router.get('/stations/closest', stationController.getStation)
+  router.get('/stations', stationController.getAllStations)
+  router.get('/stations/closest', stationController.getClosestStation)
   router.get('/buoys/closest', buoyController.getClosestBuoy)
   router.get('/wave-forecast', waveController.getWaveForecast)
 

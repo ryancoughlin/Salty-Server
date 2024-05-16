@@ -2,7 +2,7 @@
 const connectDB = require('../database')
 const Station = require('../models/station.model')
 
-const getClosestStation = async (lat, lon) => {
+const fetchClosestStation = async (lat, lon) => {
   const db = await connectDB()
   const query = {
     location: {
@@ -18,4 +18,8 @@ const getClosestStation = async (lat, lon) => {
   return await Station.findOne(query)
 }
 
-module.exports = { getClosestStation }
+const fetchAllStations = async () => {
+  return await Station.find({})
+}
+
+module.exports = { fetchClosestStation, fetchAllStations }
