@@ -56,7 +56,19 @@ npm start
 
 ## Usage
 
-### API Endpoints
+### Get closest tide station
+
+TBD
+
+### Get closest wave buoy
+
+|                       |                                                                 |
+| --------------------- | --------------------------------------------------------------- |
+| **Endpoint**          | `/api/buoys/closest`                                            |
+| **Method**            | `GET`                                                           |
+| **Description**       | Retrieves the closest buoy to the given latitude and longitude. |
+| **Query Parameters:** | `latitude` (required): Latitude of the location.                |
+| **null**              | `longitude` (required): Longitude of the location.              |
 
 - GET `/api/tides`: Returns tide predictions for the closest station based on query parameters.
 - GET `/api/buoy`: Retrieves buoy data near the requested location.
@@ -68,8 +80,35 @@ npm start
 
 Tide predictions by station, grouped by day and defined by high/low
 
+Request
+
 ```
 http://localhost:3000/api/tides?latitude=36.8508&longitude=-75.9779
+```
+
+Sample Response
+
+```json
+{
+  "name": "Station Name",
+  "id": "123456",
+  "latitude": 40.7128,
+  "longitude": -74.006,
+  "tides": [
+    {
+      "date": "2024-05-16",
+      "time": "2024-05-16T06:00:00Z",
+      "height": 1.23,
+      "type": "high"
+    },
+    {
+      "date": "2024-05-16",
+      "time": "2024-05-16T12:00:00Z",
+      "height": -0.45,
+      "type": "low"
+    }
+  ]
+}
 ```
 
 ## Contributing
