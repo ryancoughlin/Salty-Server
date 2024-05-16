@@ -1,6 +1,6 @@
 // TideData.js
 const axios = require('axios')
-const { formatDate, getApiUrl } = require('./utils') // Utility functions need to be implemented
+const { formatDate, getApiUrl } = require('./utils')
 
 const createTideFetcher = (station) => ({
   fetchData: async () => {
@@ -20,7 +20,6 @@ const createTideFetcher = (station) => ({
 })
 
 const processData = (predictions, station) => {
-  // Implement the processData function similarly to how you had it, focusing on functional transformations
   const dailyTides = predictions.reduce((acc, prediction) => {
     const dateTime = new Date(prediction.t)
     const isoDateTime = dateTime.toISOString()
@@ -75,7 +74,6 @@ const formatData = (dailyTides, station) => {
     ]
   }
 
-  // Return structured data with additional station info
   return {
     name: station.name,
     id: station.stationId,

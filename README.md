@@ -66,7 +66,7 @@ Returns wave forecast based. Pulls from WaveWatch III (NOAA)
 
 #### API
 
---------------------------------------------------------------- |
+|--------------------------------------------------------------- |
 | **Endpoint** | `/api/wave-forecast` |
 | **Method** | `GET` |
 | **Query Parameters:** | `latitude` (required): Latitude of the location. |

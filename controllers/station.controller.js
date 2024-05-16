@@ -1,9 +1,7 @@
-//controllers/station.controller.js
-const Station = require('../models/station.model')
+const { getClosestStation } = require('../services/stationService')
 const createTideFetcher = require('../TideData')
 
-const getClosestStation = async (req, res) => {
-  console.log('request!!!!!')
+const getStation = async (req, res) => {
   try {
     const { latitude, longitude } = req.query
 
@@ -12,19 +10,11 @@ const getClosestStation = async (req, res) => {
         .status(400)
         .json({ error: 'Missing latitude or longitude query parameters' })
     }
-    // dd
-    const query = {
-      location: {
-        $near: {
-          $geometry: {
-            type: 'Point',
-            coordinates: [parseFloat(longitude), parseFloat(latitude)]
-          }
-        }
-      }
-    }
 
-    const station = await Station.findOne(query)
+    const station = await getClosestStation(
+      parseFloat(latitude),
+      parseFloat(longitude)
+    )
 
     if (!station) {
       return res.status(404).json({ error: 'No nearby stations found' })
@@ -36,9 +26,9 @@ const getClosestStation = async (req, res) => {
 
     res.json(data)
   } catch (error) {
-    console.error(`Error in getClosestStation: ${error}`)
+    console.error(`Error in getStation: ${error}`)
     res.status(500).json({ error: 'Internal server error' })
   }
 }
 
-exports.getClosestStation = getClosestStation
+module.exports = { getStation }
