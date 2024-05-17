@@ -1,4 +1,4 @@
-//services/stationService.js
+// services/stationService.js
 const connectDB = require('../database')
 const Station = require('../models/station.model')
 
@@ -19,7 +19,9 @@ const fetchClosestStation = async (lat, lon) => {
 }
 
 const fetchAllStations = async () => {
-  return await Station.find({})
+  const db = await connectDB()
+  const stations = await Station.find({})
+  return stations
 }
 
 module.exports = { fetchClosestStation, fetchAllStations }

@@ -1,16 +1,18 @@
-//controllers/station.controller.js
+// controllers/station.controller.js
 const {
   fetchClosestStation,
   fetchAllStations
 } = require('../services/stationService')
+const createTideFetcher = require('../TideData')
+const { formatStation, handleError } = require('../utils')
 
 const getAllStations = async (req, res) => {
   try {
     const stations = await fetchAllStations()
-    res.json(stations)
+    const formattedStations = stations.map(formatStation)
+    res.json(formattedStations)
   } catch (error) {
-    console.error(`Error in getAllStations: ${error}`)
-    res.status(500).json({ error: 'Internal server error' })
+    handleError(error, res, 'Error fetching all stations')
   }
 }
 
@@ -33,10 +35,17 @@ const getClosestStation = async (req, res) => {
       return res.status(404).json({ error: 'No nearby stations found' })
     }
 
-    res.json(station)
+    const tideDataFetcher = createTideFetcher(station)
+    const tideData = await tideDataFetcher.fetchData()
+
+    const response = {
+      ...formatStation(station),
+      tides: tideData.tides
+    }
+
+    res.json(response)
   } catch (error) {
-    console.error(`Error in getClosestStation: ${error}`)
-    res.status(500).json({ error: 'Internal server error' })
+    handleError(error, res, 'Error fetching closest station')
   }
 }
 
