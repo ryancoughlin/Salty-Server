@@ -38,9 +38,11 @@ const getClosestStation = async (req, res) => {
     const tideDataFetcher = createTideFetcher(station)
     const tideData = await tideDataFetcher.fetchData()
 
+    console.log(tideData)
+
     const response = {
       ...formatStation(station),
-      tides: tideData.tides
+      tides: tideData
     }
 
     res.json(response)
