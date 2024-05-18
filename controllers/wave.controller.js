@@ -1,4 +1,11 @@
 const { getNearestWaveData } = require('../services/waveService')
+const {
+  processWaveForecast,
+  filterNext24Hours,
+  evaluateConditions,
+  analyzeTrends,
+  generateOneLiner
+} = require('../utils/waveProcessing')
 
 const getWaveForecast = async (req, res) => {
   try {
@@ -12,13 +19,20 @@ const getWaveForecast = async (req, res) => {
     const lat = parseFloat(latitude)
     const lon = parseFloat(longitude)
 
-    const data = await getNearestWaveData(lat, lon)
+    const rawForecast = await getNearestWaveData(lat, lon)
+    console.log('Raw Forecast:', rawForecast) // Debug log
+    const processedForecast = processWaveForecast(rawForecast)
+    console.log('Processed Forecast:', processedForecast) // Debug log
+    const next24HoursForecast = filterNext24Hours(processedForecast)
+    console.log('Next 24 Hours Forecast:', next24HoursForecast) // Debug log
+    const evaluatedForecast = evaluateConditions(next24HoursForecast)
+    console.log('Evaluated Forecast:', evaluatedForecast) // Debug log
+    const trends = analyzeTrends(evaluatedForecast)
+    console.log('Trends:', trends) // Debug log
+    const oneLiner = generateOneLiner(trends)
+    console.log('One Liner:', oneLiner) // Debug log
 
-    if (data.length) {
-      res.json(data)
-    } else {
-      res.status(404).json({ error: 'No data found for the given location' })
-    }
+    res.json({ summary: oneLiner, forecast: evaluatedForecast })
   } catch (error) {
     console.error(`Error in getWaveForecast: ${error}`)
     res.status(500).json({ error: 'Internal server error' })

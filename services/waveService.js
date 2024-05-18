@@ -1,3 +1,4 @@
+//services/waveServices.js
 const WaveForecast = require('../models/waveForecast.model')
 
 const getNearestWaveData = async (lat, lon, radius = 50000) => {

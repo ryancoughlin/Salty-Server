@@ -27,10 +27,11 @@ const getApiUrl = (station) => {
  */
 const formatStation = (station) => ({
   name: station.name,
-  stationId: station.stationId,
+  type: station.type,
+  id: station.id,
   state: station.state,
-  latitude: station.location.coordinates[1], // Latitude is the second element
-  longitude: station.location.coordinates[0] // Longitude is the first element
+  latitude: station.location.coordinates[1],
+  longitude: station.location.coordinates[0]
 })
 
 /**
