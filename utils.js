@@ -28,7 +28,7 @@ const getApiUrl = (station) => {
 const formatStation = (station) => ({
   name: station.name,
   type: station.type,
-  id: station.id,
+  spotId: station.id,
   state: station.state,
   latitude: station.location.coordinates[1],
   longitude: station.location.coordinates[0]

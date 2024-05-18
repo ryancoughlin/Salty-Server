@@ -1,39 +1,50 @@
-//services/waveServices.js
+// services/waveServices.js
+const mongoose = require('mongoose')
 const WaveForecast = require('../models/waveForecast.model')
 
-const getNearestWaveData = async (lat, lon, radius = 50000) => {
-  return await WaveForecast.aggregate([
+const queryWaveForecast = async (lat, lon, distanceInMeters = 321869 / 2) => {
+  const today = new Date().toISOString().substr(0, 10) // Get today's date in YYYY-MM-DD format
+
+  const relevantPoints = await WaveForecast.aggregate([
     {
       $geoNear: {
         near: { type: 'Point', coordinates: [lon, lat] },
         distanceField: 'dist.calculated',
-        maxDistance: radius,
+        maxDistance: distanceInMeters, // Use distance in meters
         spherical: true
       }
     },
     {
-      $sort: { time: 1 } // Sort by time in ascending order
+      $match: {
+        time: {
+          $gte: new Date(today),
+          $lt: new Date(today + 'T23:59:59Z')
+        }
+      }
     },
     {
-      $project: {
-        _id: 0, // Exclude the _id field from the output
-        time: 1,
-        depth: 1,
-        latitude: 1,
-        longitude: 1,
-        Tdir: 1,
-        Tper: 1,
-        Thgt: 1,
-        sdir: 1,
-        sper: 1,
-        shgt: 1,
-        wdir: 1,
-        wper: 1,
-        whgt: 1,
-        location: 1
-      }
+      $sort: { 'dist.calculated': 1, time: -1 } // Sort by distance and time
     }
   ])
+
+  console.log('Relevant Point for today:', relevantPoints)
+
+  if (relevantPoints.length === 0) {
+    console.log('No relevant points found for today.')
+    return []
+  }
+  return relevantPoints
 }
 
-module.exports = { getNearestWaveData }
+const getNearestWaveData = async (lat, lon) => {
+  try {
+    return await queryWaveForecast(lat, lon)
+  } catch (error) {
+    console.error(`Error in getNearestWaveData: ${error}`)
+    throw error
+  }
+}
+
+module.exports = {
+  getNearestWaveData
+}

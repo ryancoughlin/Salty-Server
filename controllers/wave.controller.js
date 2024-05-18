@@ -1,9 +1,7 @@
+//wave.controller.js
 const { getNearestWaveData } = require('../services/waveService')
 const {
-  processWaveForecast,
-  filterNext24Hours,
   evaluateConditions,
-  analyzeTrends,
   generateOneLiner
 } = require('../utils/waveProcessing')
 
@@ -21,15 +19,11 @@ const getWaveForecast = async (req, res) => {
 
     const rawForecast = await getNearestWaveData(lat, lon)
     console.log('Raw Forecast:', rawForecast) // Debug log
-    const processedForecast = processWaveForecast(rawForecast)
-    console.log('Processed Forecast:', processedForecast) // Debug log
-    const next24HoursForecast = filterNext24Hours(processedForecast)
-    console.log('Next 24 Hours Forecast:', next24HoursForecast) // Debug log
-    const evaluatedForecast = evaluateConditions(next24HoursForecast)
+
+    const evaluatedForecast = evaluateConditions(rawForecast)
     console.log('Evaluated Forecast:', evaluatedForecast) // Debug log
-    const trends = analyzeTrends(evaluatedForecast)
-    console.log('Trends:', trends) // Debug log
-    const oneLiner = generateOneLiner(trends)
+
+    const oneLiner = generateOneLiner(evaluatedForecast)
     console.log('One Liner:', oneLiner) // Debug log
 
     res.json({ summary: oneLiner, forecast: evaluatedForecast })
