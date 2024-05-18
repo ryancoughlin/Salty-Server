@@ -1,10 +1,12 @@
 // controllers/station.controller.js
 const {
   fetchClosestStation,
-  fetchAllStations
+  fetchAllStations,
+  fetchStationById
 } = require('../services/stationService')
 const createTideFetcher = require('../TideData')
 const { formatStation, handleError } = require('../utils')
+const { query, param, validationResult } = require('express-validator')
 
 const getAllStations = async (req, res) => {
   try {
@@ -16,39 +18,72 @@ const getAllStations = async (req, res) => {
   }
 }
 
-const getClosestStation = async (req, res) => {
-  try {
-    const { latitude, longitude } = req.query
-
-    if (!latitude || !longitude) {
-      return res
-        .status(400)
-        .json({ error: 'Missing latitude or longitude query parameters' })
+const getClosestStation = [
+  query('latitude').isFloat().withMessage('Latitude must be a number'),
+  query('longitude').isFloat().withMessage('Longitude must be a number'),
+  async (req, res) => {
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() })
     }
 
-    const station = await fetchClosestStation(
-      parseFloat(latitude),
-      parseFloat(longitude)
-    )
+    try {
+      const { latitude, longitude } = req.query
+      const station = await fetchClosestStation(
+        parseFloat(latitude),
+        parseFloat(longitude)
+      )
 
-    if (!station) {
-      return res.status(404).json({ error: 'No nearby stations found' })
+      if (!station) {
+        return res.status(404).json({ error: 'No nearby stations found' })
+      }
+
+      const tideDataFetcher = createTideFetcher(station)
+      const tideData = await tideDataFetcher.fetchData()
+
+      const response = {
+        ...formatStation(station),
+        tides: tideData
+      }
+
+      res.json(response)
+    } catch (error) {
+      handleError(error, res, 'Error fetching closest station')
     }
-
-    const tideDataFetcher = createTideFetcher(station)
-    const tideData = await tideDataFetcher.fetchData()
-
-    console.log(tideData)
-
-    const response = {
-      ...formatStation(station),
-      tides: tideData
-    }
-
-    res.json(response)
-  } catch (error) {
-    handleError(error, res, 'Error fetching closest station')
   }
-}
+]
 
-module.exports = { getAllStations, getClosestStation }
+const getStationData = [
+  param('stationId').isString().withMessage('Station ID must be a string'),
+  async (req, res) => {
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() })
+    }
+
+    try {
+      const { stationId } = req.params
+      const station = await fetchStationById(stationId)
+
+      if (!station) {
+        return res.status(404).json({ error: 'Station not found' })
+      }
+
+      const tideDataFetcher = createTideFetcher(station)
+      const tideData = await tideDataFetcher.fetchData()
+
+      console.log(station)
+
+      const response = {
+        ...formatStation(station),
+        tides: tideData
+      }
+
+      res.json(response)
+    } catch (error) {
+      handleError(error, res, 'Error fetching tide data for station')
+    }
+  }
+]
+
+module.exports = { getAllStations, getClosestStation, getStationData }

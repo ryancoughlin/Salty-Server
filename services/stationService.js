@@ -1,6 +1,7 @@
 // services/stationService.js
 const connectDB = require('../database')
 const Station = require('../models/station.model')
+const sanitize = require('mongo-sanitize')
 
 const fetchClosestStation = async (lat, lon) => {
   const db = await connectDB()
@@ -9,7 +10,7 @@ const fetchClosestStation = async (lat, lon) => {
       $near: {
         $geometry: {
           type: 'Point',
-          coordinates: [parseFloat(lon), parseFloat(lat)]
+          coordinates: [sanitize(lon), sanitize(lat)]
         }
       }
     }
@@ -24,4 +25,11 @@ const fetchAllStations = async () => {
   return stations
 }
 
-module.exports = { fetchClosestStation, fetchAllStations }
+const fetchStationById = async (stationId) => {
+  const db = await connectDB()
+  const query = { stationId: sanitize(stationId) }
+  console.log('Executing fetchStationById query:', query)
+  return await Station.findOne(query)
+}
+
+module.exports = { fetchClosestStation, fetchAllStations, fetchStationById }
