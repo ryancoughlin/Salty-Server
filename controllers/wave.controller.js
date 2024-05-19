@@ -1,9 +1,6 @@
 //wave.controller.js
 const { getNearestWaveData } = require('../services/waveService')
-const {
-  evaluateConditions,
-  generateOneLiner
-} = require('../utils/waveProcessing')
+const { formatConditions } = require('../utils/waveProcessing')
 
 const getWaveForecast = async (req, res) => {
   try {
@@ -18,15 +15,9 @@ const getWaveForecast = async (req, res) => {
     const lon = parseFloat(longitude)
 
     const rawForecast = await getNearestWaveData(lat, lon)
-    console.log('Raw Forecast:', rawForecast) // Debug log
+    const formattedConditions = formatConditions(rawForecast)
 
-    const evaluatedForecast = evaluateConditions(rawForecast)
-    console.log('Evaluated Forecast:', evaluatedForecast) // Debug log
-
-    const oneLiner = generateOneLiner(evaluatedForecast)
-    console.log('One Liner:', oneLiner) // Debug log
-
-    res.json({ summary: oneLiner, forecast: evaluatedForecast })
+    res.json(formattedConditions)
   } catch (error) {
     console.error(`Error in getWaveForecast: ${error}`)
     res.status(500).json({ error: 'Internal server error' })

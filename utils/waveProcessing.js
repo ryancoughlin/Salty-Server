@@ -21,7 +21,11 @@ const windSpeedToBeaufort = (speedMph) => {
   return 12
 }
 
-const evaluateConditions = (data) => {
+const toIsoString = (date) => {
+  return new Date(date)
+}
+
+const formatConditions = (data) => {
   return data.map((row) => {
     const waveHeightFt = convertMetersToFeet(row.Thgt)
     const swellHeightFt = convertMetersToFeet(row.shgt)
@@ -57,22 +61,18 @@ const evaluateConditions = (data) => {
       }
     }
 
-    // Convert UTC time to local time (Eastern Time)
-    const localTime = moment.tz(row.time, 'UTC').tz('America/New_York').format()
-
     return {
-      time: row.time,
-      localTime,
+      time: toIsoString(row.time),
       location: {
         latitude: row.latitude,
         longitude: row.longitude
       },
-      waveHeight: waveHeightFt.toFixed(2) + ' ft',
-      swellHeight: swellHeightFt.toFixed(2) + ' ft',
-      windSpeed: windSpeedMph.toFixed(2) + ' mph',
-      windDirection: row.wdir + '°',
-      wavePeriod: row.Tper + ' s',
-      swellPeriod: row.sper + ' s',
+      waveHeight: parseFloat(waveHeightFt.toFixed(2)),
+      swellHeight: parseFloat(swellHeightFt.toFixed(2)),
+      windSpeed: parseFloat(windSpeedMph.toFixed(2)),
+      windDirection: row.wdir,
+      wavePeriod: row.Tper,
+      swellPeriod: row.sper,
       windBeaufort,
       overallCondition
     }
@@ -94,6 +94,5 @@ const generateOneLiner = (data) => {
 }
 
 module.exports = {
-  evaluateConditions,
-  generateOneLiner
+  formatConditions
 }
