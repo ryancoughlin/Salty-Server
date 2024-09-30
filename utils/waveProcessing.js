@@ -31,66 +31,24 @@ const formatConditions = (data) => {
     const swellHeightFt = convertMetersToFeet(row.shgt)
     const windSpeedMph = convertMpsToMph(row.whgt)
     const windBeaufort = windSpeedToBeaufort(windSpeedMph)
-    let overallCondition = 'Good'
-
-    if (waveHeightFt > 4.92 || swellHeightFt > 3.28) {
-      overallCondition = 'Poor'
-    } else if (waveHeightFt > 1.64 || swellHeightFt > 1.64) {
-      overallCondition = 'Fair'
-    }
-
-    if (windBeaufort >= 6) {
-      overallCondition = 'Poor'
-    } else if (windBeaufort >= 4) {
-      overallCondition = 'Fair'
-    }
-
-    if (row.wdir >= 45 && row.wdir <= 135 && windSpeedMph > 15) {
-      overallCondition = 'Poor'
-    } else if (row.wdir >= 225 && row.wdir <= 315) {
-      if (overallCondition !== 'Poor') {
-        overallCondition = 'Good'
-      }
-    }
-
-    if (row.Tper < 5) {
-      overallCondition = 'Poor'
-    } else if (row.Tper < 8) {
-      if (overallCondition === 'Good') {
-        overallCondition = 'Fair'
-      }
-    }
+    
+    const latitude = row.location.coordinates[1]
+    const longitude = row.location.coordinates[0]
 
     return {
       time: toIsoString(row.time),
       location: {
-        latitude: row.latitude,
-        longitude: row.longitude
+        latitude: latitude,
+        longitude: longitude
       },
       waveHeight: parseFloat(waveHeightFt.toFixed(2)),
-      swellHeight: parseFloat(swellHeightFt.toFixed(2)),
-      windSpeed: parseFloat(windSpeedMph.toFixed(2)),
-      windDirection: row.wdir,
       wavePeriod: row.Tper,
+      waveDirection: row.Tdir,
+      swellHeight: parseFloat(swellHeightFt.toFixed(2)),
       swellPeriod: row.sper,
-      windBeaufort,
-      overallCondition
+      swellDirection: row.sdir
     }
   })
-}
-
-const generateOneLiner = (data) => {
-  const goodCount = data.filter((d) => d.overallCondition === 'Good').length
-  const fairCount = data.filter((d) => d.overallCondition === 'Fair').length
-  const poorCount = data.filter((d) => d.overallCondition === 'Poor').length
-
-  if (goodCount > fairCount && goodCount > poorCount) {
-    return "It's a good day to go out on the water."
-  } else if (fairCount > goodCount && fairCount > poorCount) {
-    return 'Conditions are fair. Exercise caution.'
-  } else {
-    return "It's not a good day to go out on the water."
-  }
 }
 
 module.exports = {

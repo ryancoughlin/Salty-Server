@@ -1,5 +1,8 @@
 //wave.controller.js
-const { getNearestWaveData } = require('../services/waveService')
+const {
+  getNearestWaveData,
+  getNearestWaveDataWithGaps
+} = require('../services/waveService')
 const { formatConditions } = require('../utils/waveProcessing')
 
 const getWaveForecast = async (req, res) => {
@@ -11,10 +14,7 @@ const getWaveForecast = async (req, res) => {
         .json({ error: 'Missing latitude or longitude query parameters' })
     }
 
-    const lat = parseFloat(latitude)
-    const lon = parseFloat(longitude)
-
-    const rawForecast = await getNearestWaveData(lat, lon)
+    const rawForecast = await getNearestWaveData(latitude, longitude)
     const formattedConditions = formatConditions(rawForecast)
 
     res.json(formattedConditions)
