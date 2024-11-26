@@ -7,7 +7,7 @@ const router = express.Router();
 
 /**
  * @swagger
- * /api/v1/tides/stations:
+ * /api/tides/stations:
  *   get:
  *     summary: Get all tide stations
  *     tags: [Tides]
@@ -19,7 +19,7 @@ router.get('/stations', tideController.getAllStations);
 
 /**
  * @swagger
- * /api/v1/tides/stations/closest:
+ * /api/tides/stations/closest:
  *   get:
  *     summary: Get closest tide station
  *     tags: [Tides]
@@ -47,7 +47,7 @@ router.get(
 
 /**
  * @swagger
- * /api/v1/tides/stations/{stationId}/predictions:
+ * /api/tides/stations/{stationId}/predictions:
  *   get:
  *     summary: Get tide predictions for a station
  *     tags: [Tides]

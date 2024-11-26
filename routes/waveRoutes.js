@@ -7,7 +7,7 @@ const router = express.Router();
 
 /**
  * @swagger
- * /api/v1/waves/forecast:
+ * /api/waves/forecast:
  *   get:
  *     summary: Get 7-day wave and wind forecast
  *     tags: [Waves]
@@ -40,7 +40,7 @@ router.get(
 
 /**
  * @swagger
- * /api/v1/waves/historical:
+ * /api/waves/historical:
  *   get:
  *     summary: Get historical wave data
  *     tags: [Waves]

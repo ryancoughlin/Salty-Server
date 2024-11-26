@@ -2,7 +2,14 @@
 const mongoose = require('mongoose')
 const { logger } = require('./utils/logger')
 
+let cachedConnection = null;
+
 const connectDB = async () => {
+  if (cachedConnection) {
+    logger.info('Using cached database connection');
+    return cachedConnection;
+  }
+
   try {
     const mongoUrl = process.env.MONGO_URL
     if (!mongoUrl) {
@@ -10,12 +17,16 @@ const connectDB = async () => {
     }
 
     const conn = await mongoose.connect(mongoUrl, {
-      // These options are no longer needed in Mongoose 8
-      // useNewUrlParser: true,
-      // useUnifiedTopology: true,
+      bufferCommands: false,
+      maxPoolSize: 10,
+      serverSelectionTimeoutMS: 5000,
+      socketTimeoutMS: 45000,
     })
 
     logger.info(`MongoDB Connected: ${conn.connection.host}`)
+    
+    // Cache the connection
+    cachedConnection = conn;
     return conn
   } catch (error) {
     logger.error('MongoDB connection error:', error)

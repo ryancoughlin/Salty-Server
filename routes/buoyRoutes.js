@@ -7,7 +7,7 @@ const router = express.Router();
 
 /**
  * @swagger
- * /api/v1/buoys/closest:
+ * /api/buoys/closest:
  *   get:
  *     summary: Get closest buoy data
  *     tags: [Buoys]
@@ -35,7 +35,7 @@ router.get(
 
 /**
  * @swagger
- * /api/v1/buoys/{buoyId}:
+ * /api/buoys/{buoyId}:
  *   get:
  *     summary: Get buoy details, current conditions, and forecast
  *     tags: [Buoys]
@@ -58,7 +58,7 @@ router.get(
 
 /**
  * @swagger
- * /api/v1/buoys/{buoyId}/data:
+ * /api/buoys/{buoyId}/data:
  *   get:
  *     summary: Get historical data for a specific buoy
  *     tags: [Buoys]
