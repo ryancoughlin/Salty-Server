@@ -9,7 +9,7 @@ const router = express.Router();
  * @swagger
  * /api/v1/waves/forecast:
  *   get:
- *     summary: Get wave forecast
+ *     summary: Get 7-day wave and wind forecast
  *     tags: [Waves]
  *     parameters:
  *       - in: query
@@ -17,11 +17,16 @@ const router = express.Router();
  *         required: true
  *         schema:
  *           type: number
+ *         description: Latitude of the location
  *       - in: query
  *         name: lon
  *         required: true
  *         schema:
  *           type: number
+ *         description: Longitude of the location
+ *     responses:
+ *       200:
+ *         description: 7-day forecast including wave height, period, direction, and wind conditions
  */
 router.get(
   '/forecast',

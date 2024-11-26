@@ -1,5 +1,5 @@
 const express = require('express');
-const { query } = require('express-validator');
+const { query, param } = require('express-validator');
 const { validate } = require('../middlewares/validator');
 const buoyController = require('../controllers/buoyController');
 
@@ -35,6 +35,29 @@ router.get(
 
 /**
  * @swagger
+ * /api/v1/buoys/{buoyId}:
+ *   get:
+ *     summary: Get buoy details, current conditions, and forecast
+ *     tags: [Buoys]
+ *     parameters:
+ *       - in: path
+ *         name: buoyId
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: NDBC buoy ID (e.g., 44098)
+ */
+router.get(
+  '/:buoyId',
+  [
+    param('buoyId').isString().withMessage('Buoy ID is required'),
+    validate
+  ],
+  buoyController.getBuoyDetails
+);
+
+/**
+ * @swagger
  * /api/v1/buoys/{buoyId}/data:
  *   get:
  *     summary: Get historical data for a specific buoy
@@ -49,6 +72,7 @@ router.get(
 router.get(
   '/:buoyId/data',
   [
+    param('buoyId').isString().withMessage('Buoy ID is required'),
     query('startDate').optional().isISO8601().withMessage('Start date must be valid ISO date'),
     query('endDate').optional().isISO8601().withMessage('End date must be valid ISO date'),
     validate

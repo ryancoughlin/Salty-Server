@@ -1,6 +1,7 @@
 const { AppError } = require('../middlewares/errorHandler');
 const { logger } = require('../utils/logger');
-const { getActiveBuoys } = require('../services/ndbcService');
+const { getActiveBuoys, fetchBuoyData } = require('../services/ndbcService');
+const { getSevenDayForecast } = require('../services/forecastService');
 const WaveForecast = require('../models/waveForecast.model');
 
 /**
@@ -51,6 +52,78 @@ const getClosestBuoy = async (req, res, next) => {
     });
   } catch (error) {
     logger.error('Error in getClosestBuoy:', error);
+    next(error);
+  }
+};
+
+/**
+ * Get detailed buoy information including current conditions and forecast
+ */
+const getBuoyDetails = async (req, res, next) => {
+  try {
+    const { buoyId } = req.params;
+    logger.info(`Getting details for buoy: ${buoyId}`);
+
+    // Get buoy metadata
+    const buoys = await getActiveBuoys();
+    const buoy = buoys.find(b => b.id === buoyId);
+    
+    if (!buoy) {
+      throw new AppError(404, 'Buoy not found');
+    }
+
+    // Get current conditions
+    const currentConditions = await fetchBuoyData(buoyId);
+
+    // Get 7-day forecast for buoy location
+    const forecast = await getSevenDayForecast(buoy.lat, buoy.lon);
+
+    // Adjust first forecast point to match current conditions
+    if (currentConditions) {
+      forecast.forecast[0] = {
+        ...forecast.forecast[0],
+        waveHeight: currentConditions.waveHeight,
+        wavePeriod: currentConditions.wavePeriod,
+        waveDirection: currentConditions.waveDirection,
+        windSpeed: currentConditions.windSpeed,
+        windDirection: currentConditions.windDirection,
+        source: 'NDBC'
+      };
+    }
+
+    // Get recent historical data
+    const recentData = await WaveForecast.find({
+      location: {
+        $near: {
+          $geometry: {
+            type: 'Point',
+            coordinates: [buoy.lon, buoy.lat]
+          },
+          $maxDistance: 1000 // 1km
+        }
+      }
+    })
+      .sort({ time: -1 })
+      .limit(24); // Last 24 hours
+
+    res.status(200).json({
+      status: 'success',
+      data: {
+        buoy: {
+          id: buoy.id,
+          name: buoy.name,
+          location: {
+            latitude: buoy.lat,
+            longitude: buoy.lon
+          }
+        },
+        currentConditions,
+        recentHistory: recentData,
+        forecast: forecast.forecast
+      }
+    });
+  } catch (error) {
+    logger.error('Error in getBuoyDetails:', error);
     next(error);
   }
 };
@@ -110,5 +183,6 @@ const getBuoyData = async (req, res, next) => {
 
 module.exports = {
   getClosestBuoy,
+  getBuoyDetails,
   getBuoyData
 }; 
