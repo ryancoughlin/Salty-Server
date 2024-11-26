@@ -40,12 +40,12 @@ async function getSevenDayForecast(lat, lon) {
       
       forecast.push({
         time: forecastTime.toISOString(),
-        waveHeight: Math.max(0, baseWaveHeight + Math.random() * 0.5),
-        wavePeriod: 8 + Math.random() * 4,
-        waveDirection: 180 + Math.sin(hour / 48) * 45,
-        windSpeed: Math.max(0, baseWindSpeed + Math.random() * 2),
-        windDirection: 200 + Math.sin(hour / 24) * 30,
-        confidence: Math.max(0.4, 1 - (hour / 168)) // Confidence decreases over time
+        waveHeight: parseFloat((Math.max(0, baseWaveHeight + Math.random() * 0.5)).toFixed(2)),
+        wavePeriod: parseFloat((8 + Math.random() * 4).toFixed(2)),
+        waveDirection: parseFloat((180 + Math.sin(hour / 48) * 45).toFixed(2)),
+        windSpeed: parseFloat((Math.max(0, baseWindSpeed + Math.random() * 2)).toFixed(2)),
+        windDirection: parseFloat((200 + Math.sin(hour / 24) * 30).toFixed(2)),
+        confidence: parseFloat((Math.max(0.4, 1 - (hour / 168))).toFixed(2))
       });
     }
 

@@ -23,13 +23,15 @@ const getBuoyData = async (buoyID) => {
         conditions[header] = values[index]
       })
 
+      console.log(conditions.WVHT)
+
       return {
-        waveHeight: parseFloat(conditions.WVHT) || null,
-        dominantWavePeriod: parseFloat(conditions.DPD) || null,
-        windSpeed: parseFloat(conditions.WSPD) || null,
-        windDirection: parseFloat(conditions.WDIR) || null,
-        atmosphericPressure: parseFloat(conditions.PRES) || null,
-        airTemperature: parseFloat(conditions.ATMP) || null,
+        waveHeight: parseFloat(conditions.WVHT) ? parseFloat(parseFloat(conditions.WVHT).toFixed(2)) : null,
+        dominantWavePeriod: parseFloat(conditions.DPD) ? parseFloat(parseFloat(conditions.DPD).toFixed(2)) : null,
+        windSpeed: parseFloat(conditions.WSPD) ? parseFloat(parseFloat(conditions.WSPD).toFixed(2)) : null,
+        windDirection: parseFloat(conditions.WDIR) ? parseFloat(parseFloat(conditions.WDIR).toFixed(2)) : null,
+        atmosphericPressure: parseFloat(conditions.PRES) ? parseFloat(parseFloat(conditions.PRES).toFixed(2)) : null,
+        airTemperature: parseFloat(conditions.ATMP) ? parseFloat(parseFloat(conditions.ATMP).toFixed(2)) : null,
         timestamp:
           conditions.YY +
           '-' +
