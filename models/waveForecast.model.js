@@ -2,26 +2,90 @@ const mongoose = require('mongoose')
 
 const waveForecastSchema = new mongoose.Schema(
   {
-    time: { type: Date, required: true },
-    Tdir: { type: Number, required: true },
-    Tper: { type: Number, required: true },
-    Thgt: { type: Number, required: true },
-    sdir: { type: Number, required: true },
-    sper: { type: Number, required: true },
-    shgt: { type: Number, required: true },
-    wdir: { type: Number, required: false },
-    wper: { type: Number, required: false },
-    whgt: { type: Number, required: false },
     location: {
-      type: { type: String, enum: ['Point'], required: true },
-      coordinates: { type: [Number], required: true }
+      type: {
+        type: String,
+        enum: ['Point'],
+        required: true
+      },
+      coordinates: {
+        type: [Number],
+        required: true
+      }
+    },
+    time: {
+      type: Date,
+      required: true,
+      index: true
+    },
+    waveHeight: {
+      type: Number,
+      required: true,
+      min: 0,
+      default: 0
+    },
+    wavePeriod: {
+      type: Number,
+      required: true,
+      min: 0,
+      default: 0
+    },
+    waveDirection: {
+      type: Number,
+      required: true,
+      min: 0,
+      max: 360,
+      default: 0
+    },
+    windSpeed: {
+      type: Number,
+      required: true,
+      min: 0,
+      default: 0
+    },
+    windDirection: {
+      type: Number,
+      required: true,
+      min: 0,
+      max: 360,
+      default: 0
+    },
+    source: {
+      type: String,
+      required: true,
+      enum: ['NOAA', 'NDBC']
     }
   },
-  { collection: 'waveforecasts' }
+  {
+    timestamps: true
+  }
 )
 
-// Create the geospatial index
+// Create compound index for location and time
 waveForecastSchema.index({ location: '2dsphere' })
+waveForecastSchema.index({ time: 1 })
+waveForecastSchema.index({ location: '2dsphere', time: 1 })
+
+// Add method to format data for API response
+waveForecastSchema.methods.toAPI = function() {
+  return {
+    id: this._id,
+    time: this.time,
+    location: {
+      type: this.location.type,
+      coordinates: this.location.coordinates
+    },
+    measurements: {
+      waveHeight: this.waveHeight,
+      wavePeriod: this.wavePeriod,
+      waveDirection: this.waveDirection,
+      windSpeed: this.windSpeed,
+      windDirection: this.windDirection
+    },
+    source: this.source,
+    updatedAt: this.updatedAt
+  };
+};
 
 const WaveForecast = mongoose.model('WaveForecast', waveForecastSchema)
 

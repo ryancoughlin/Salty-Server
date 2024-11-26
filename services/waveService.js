@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const WaveForecast = require("../models/waveForecast.model");
+const { logger } = require('../utils/logger');
 
 // Function to generate time slots for every 3 hours in ISO format for the next 7 days
 const generateTimeSlots = (days = 7) => {
@@ -18,8 +19,11 @@ const generateTimeSlots = (days = 7) => {
 
 const getNearestWaveData = async (lat, lon, maxDistanceInMeters = 500000) => {
   try {
+    logger.info(`Getting nearest wave data for lat: ${lat}, lon: ${lon}`);
+    
     // Generate time slots for every 3 hours within the next 7 days
     const timeSlots = generateTimeSlots();
+    logger.debug(`Generated ${timeSlots.length} time slots`);
 
     // Find the nearest points and their data using a single query
     const nearestPoints = await WaveForecast.find({
@@ -39,7 +43,7 @@ const getNearestWaveData = async (lat, lon, maxDistanceInMeters = 500000) => {
     }).sort({ "dist.calculated": 1, time: -1 });
 
     if (!nearestPoints || nearestPoints.length === 0) {
-      console.log("No wave data found.");
+      logger.warn('No wave data found for the specified location');
       return [];
     }
 
@@ -52,10 +56,10 @@ const getNearestWaveData = async (lat, lon, maxDistanceInMeters = 500000) => {
       })
       .filter((dataPoint) => dataPoint !== null);
 
-    console.log("Found wave data:", results.length);
+    logger.info(`Found ${results.length} wave data points`);
     return results;
   } catch (error) {
-    console.error(`Error in getNearestWaveData: ${error}`);
+    logger.error('Error in getNearestWaveData:', error);
     throw error;
   }
 };

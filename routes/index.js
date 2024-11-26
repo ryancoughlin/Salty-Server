@@ -1,18 +1,23 @@
-// routes/routes.js
-const express = require("express");
-const stationController = require("../controllers/station.controller");
-const buoyController = require("../controllers/buoy.controller");
-const waveController = require("../controllers/wave.controller");
+// routes/index.js
+const express = require('express');
+const { validate } = require('../middlewares/validator');
+const tideRoutes = require('./tideRoutes');
+const buoyRoutes = require('./buoyRoutes');
+const waveRoutes = require('./waveRoutes');
+
 const router = express.Router();
 
-const routes = () => {
-  router.get("/stations", stationController.getAllStations);
-  router.get("/stations/closest", stationController.getClosestStation);
-  router.get("/stations/:stationId/tides", stationController.getStationData);
-  router.get("/buoys/closest", buoyController.getClosestBuoy);
-  router.get("/wave-forecast", waveController.getWaveForecast);
+// API Routes
+router.use('/tides', tideRoutes);
+router.use('/buoys', buoyRoutes);
+router.use('/waves', waveRoutes);
 
-  return router;
-};
+// Catch all 404 errors
+router.use('*', (req, res) => {
+  res.status(404).json({
+    status: 'fail',
+    message: `Can't find ${req.originalUrl} on this server`
+  });
+});
 
-module.exports = routes;
+module.exports = router;

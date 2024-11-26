@@ -1,33 +1,43 @@
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+const mongoose = require('mongoose');
 
-const LocationSchema = new Schema({
-  type: { type: String, enum: ["Point"], required: true },
-  coordinates: { type: [Number], required: true },
+const spotSchema = new mongoose.Schema({
+  stationId: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  name: {
+    type: String,
+    required: true
+  },
+  location: {
+    type: {
+      type: String,
+      enum: ['Point'],
+      required: true
+    },
+    coordinates: {
+      type: [Number],
+      required: true
+    }
+  },
+  state: String,
+  type: {
+    type: String,
+    enum: ['tide', 'current'],
+    required: true
+  },
+  timezone: String,
+  datumMHHW: Number,
+  datumMSL: Number,
+  datumMLLW: Number
+}, {
+  timestamps: true
 });
 
-const SpotSchema = new Schema(
-  {
-    type: { type: String, enum: ["station", "buoy", "spot"], required: true },
-    state: String,
-    name: String,
-    id: {
-      type: String,
-      index: { unique: true },
-    },
-    location: { type: LocationSchema, required: true },
-    station_type: {
-      type: String,
-      enum: ["harmonic", "subordinate", null],
-      default: null,
-    },
-    referenceId: { type: String, default: null },
-  },
-  {
-    collection: "spots",
-  }
-);
+// Create a 2dsphere index for geospatial queries
+spotSchema.index({ location: '2dsphere' });
 
-SpotSchema.index({ location: "2dsphere" });
+const Spot = mongoose.model('Spot', spotSchema);
 
-module.exports = mongoose.model("Spot", SpotSchema);
+module.exports = Spot;
