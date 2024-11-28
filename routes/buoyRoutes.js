@@ -56,28 +56,4 @@ router.get(
   buoyController.getBuoyDetails
 );
 
-/**
- * @swagger
- * /api/buoys/{buoyId}/data:
- *   get:
- *     summary: Get historical data for a specific buoy
- *     tags: [Buoys]
- *     parameters:
- *       - in: path
- *         name: buoyId
- *         required: true
- *         schema:
- *           type: string
- */
-router.get(
-  '/:buoyId/data',
-  [
-    param('buoyId').isString().withMessage('Buoy ID is required'),
-    query('startDate').optional().isISO8601().withMessage('Start date must be valid ISO date'),
-    query('endDate').optional().isISO8601().withMessage('End date must be valid ISO date'),
-    validate
-  ],
-  buoyController.getBuoyData
-);
-
 module.exports = router; 

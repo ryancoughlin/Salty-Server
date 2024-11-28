@@ -1,188 +1,115 @@
 const { AppError } = require('../middlewares/errorHandler');
 const { logger } = require('../utils/logger');
-const { getActiveBuoys, fetchBuoyData } = require('../services/ndbcService');
-const { getSevenDayForecast } = require('../services/forecastService');
-const WaveForecast = require('../models/waveForecast.model');
+const ndbcService = require('../services/ndbcService');
+const { getSevenDayForecast, generateSummaries } = require('../services/forecastService');
 
 /**
  * Get closest buoy to provided coordinates
  */
 const getClosestBuoy = async (req, res, next) => {
-  try {
-    const { lat, lon } = req.query;
-    logger.info(`Finding closest buoy to lat: ${lat}, lon: ${lon}`);
+    try {
+        const { lat, lon } = req.query;
+        logger.info(`Finding closest buoy to lat: ${lat}, lon: ${lon}`);
 
-    // Get the latest wave data for this location
-    const latestData = await WaveForecast.findOne({
-      location: {
-        $near: {
-          $geometry: {
-            type: 'Point',
-            coordinates: [parseFloat(lon), parseFloat(lat)]
-          },
-          $maxDistance: 100000 // 100km
+        // Find closest buoy using haversine distance
+        const { station: nearestBuoy, distance } = await ndbcService.findClosestStation(
+            parseFloat(lat), 
+            parseFloat(lon)
+        );
+
+        if (!nearestBuoy) {
+            throw new AppError(404, 'No buoy found near this location');
         }
-      }
-    }).sort({ time: -1 });
 
-    if (!latestData) {
-      throw new AppError(404, 'No buoy data found near this location');
+        // Get current conditions
+        const currentConditions = await ndbcService.fetchBuoyData(nearestBuoy.id);
+
+        // Get forecast
+        const forecast = await getSevenDayForecast(lat, lon);
+
+        // Generate summaries using the same format as forecast service
+        const summaries = generateSummaries(forecast);
+
+        res.status(200).json({
+            status: 'success',
+            data: {
+                buoy: nearestBuoy,
+                currentConditions,
+                forecast: forecast.forecast,
+                summaries,
+                distance: Math.round(distance) // distance in km
+            }
+        });
+    } catch (error) {
+        logger.error('Error in getClosestBuoy:', error);
+        next(error);
     }
-
-    // Find the actual buoy this data came from
-    const buoys = await getActiveBuoys();
-    const nearestBuoy = buoys.find(buoy => 
-      Math.abs(buoy.lat - latestData.location.coordinates[1]) < 0.01 &&
-      Math.abs(buoy.lon - latestData.location.coordinates[0]) < 0.01
-    );
-
-    res.status(200).json({
-      status: 'success',
-      data: {
-        buoy: nearestBuoy,
-        currentConditions: {
-          time: latestData.time,
-          waveHeight: latestData.waveHeight,
-          wavePeriod: latestData.wavePeriod,
-          waveDirection: latestData.waveDirection,
-          windSpeed: latestData.windSpeed,
-          windDirection: latestData.windDirection
-        }
-      }
-    });
-  } catch (error) {
-    logger.error('Error in getClosestBuoy:', error);
-    next(error);
-  }
 };
 
 /**
  * Get detailed buoy information including current conditions and forecast
  */
 const getBuoyDetails = async (req, res, next) => {
-  try {
-    const { buoyId } = req.params;
-    logger.info(`Getting details for buoy: ${buoyId}`);
+    try {
+        const { buoyId } = req.params;
+        logger.info(`Getting details for buoy: ${buoyId}`);
 
-    // Get buoy metadata
-    const buoys = await getActiveBuoys();
-    const buoy = buoys.find(b => b.id === buoyId);
-    
-    if (!buoy) {
-      throw new AppError(404, 'Buoy not found');
-    }
-
-    // Get current conditions
-    const currentConditions = await fetchBuoyData(buoyId);
-
-    // Get 7-day forecast for buoy location
-    const forecast = await getSevenDayForecast(buoy.lat, buoy.lon);
-
-    // Adjust first forecast point to match current conditions
-    if (currentConditions) {
-      forecast.forecast[0] = {
-        ...forecast.forecast[0],
-        waveHeight: currentConditions.waveHeight,
-        wavePeriod: currentConditions.wavePeriod,
-        waveDirection: currentConditions.waveDirection,
-        windSpeed: currentConditions.windSpeed,
-        windDirection: currentConditions.windDirection,
-        source: 'NDBC'
-      };
-    }
-
-    // Get recent historical data
-    const recentData = await WaveForecast.find({
-      location: {
-        $near: {
-          $geometry: {
-            type: 'Point',
-            coordinates: [buoy.lon, buoy.lat]
-          },
-          $maxDistance: 1000 // 1km
+        // Get buoy metadata
+        const station = await ndbcService.getStationById(buoyId);
+        
+        if (!station) {
+            throw new AppError(404, 'Buoy not found');
         }
-      }
-    })
-      .sort({ time: -1 })
-      .limit(24); // Last 24 hours
 
-    res.status(200).json({
-      status: 'success',
-      data: {
-        buoy: {
-          id: buoy.id,
-          name: buoy.name,
-          location: {
-            latitude: buoy.lat,
-            longitude: buoy.lon
-          }
-        },
-        currentConditions,
-        recentHistory: recentData,
-        forecast: forecast.forecast
-      }
-    });
-  } catch (error) {
-    logger.error('Error in getBuoyDetails:', error);
-    next(error);
-  }
-};
+        // Get current conditions
+        const currentConditions = await ndbcService.fetchBuoyData(buoyId);
+        logger.info(`Current conditions: ${JSON.stringify(currentConditions)}`);
 
-/**
- * Get historical data for a specific buoy
- */
-const getBuoyData = async (req, res, next) => {
-  try {
-    const { buoyId } = req.params;
-    const { startDate, endDate } = req.query;
-    
-    // Find the buoy
-    const buoys = await getActiveBuoys();
-    const buoy = buoys.find(b => b.id === buoyId);
-    
-    if (!buoy) {
-      throw new AppError(404, 'Buoy not found');
-    }
+        // Get 7-day forecast for buoy location
+        const [lon, lat] = station.location.coordinates;
+        logger.info(`Fetching forecast for lat: ${lat}, lon: ${lon}`);
+        const forecast = await getSevenDayForecast(lat, lon);
 
-    // Query conditions
-    const query = {
-      location: {
-        $near: {
-          $geometry: {
-            type: 'Point',
-            coordinates: [buoy.lon, buoy.lat]
-          },
-          $maxDistance: 1000 // 1km - very close to the buoy location
+        // Only adjust first period if we have valid current conditions
+        if (currentConditions && 
+            currentConditions.waveHeight && 
+            currentConditions.dominantWavePeriod && 
+            currentConditions.meanWaveDirection) {
+            
+            if (forecast.days && forecast.days[0] && forecast.days[0].periods) {
+                forecast.days[0].periods[0] = {
+                    ...forecast.days[0].periods[0],
+                    waveHeight: currentConditions.waveHeight,
+                    wavePeriod: currentConditions.dominantWavePeriod,
+                    waveDirection: currentConditions.meanWaveDirection,
+                    windSpeed: currentConditions.windSpeed || forecast.days[0].periods[0].windSpeed,
+                    windDirection: currentConditions.windDirection || forecast.days[0].periods[0].windDirection,
+                    source: 'NDBC'
+                };
+            }
         }
-      }
-    };
 
-    // Add date range if provided
-    if (startDate || endDate) {
-      query.time = {};
-      if (startDate) query.time.$gte = new Date(startDate);
-      if (endDate) query.time.$lte = new Date(endDate);
+        res.status(200).json({
+            status: 'success',
+            data: {
+                buoy: {
+                    id: station.id,
+                    name: station.name,
+                    location: station.location
+                },
+                currentConditions,
+                forecast: forecast.days,
+                summaries: forecast.summaries,
+                units: forecast.units
+            }
+        });
+    } catch (error) {
+        logger.error('Error in getBuoyDetails:', error);
+        next(error);
     }
-
-    const data = await WaveForecast.find(query)
-      .sort({ time: -1 })
-      .limit(24); // Last 24 readings
-
-    res.status(200).json({
-      status: 'success',
-      data: {
-        buoy,
-        measurements: data
-      }
-    });
-  } catch (error) {
-    logger.error('Error in getBuoyData:', error);
-    next(error);
-  }
 };
 
 module.exports = {
-  getClosestBuoy,
-  getBuoyDetails,
-  getBuoyData
+    getClosestBuoy,
+    getBuoyDetails
 }; 

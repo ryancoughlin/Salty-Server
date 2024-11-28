@@ -1,6 +1,7 @@
 const { AppError } = require('../middlewares/errorHandler');
 const { logger } = require('../utils/logger');
 const { fetchClosestStation, fetchAllStations, fetchStationById } = require('../services/stationService');
+const createTideFetcher = require('../TideData');
 
 /**
  * Get all tide stations
@@ -57,14 +58,26 @@ const getStationPredictions = async (req, res, next) => {
       throw new AppError(404, 'Station not found');
     }
 
-    // TODO: Implement tide prediction logic using NOAA API
-    const predictions = []; // This should be replaced with actual tide prediction data
+    const tideFetcher = createTideFetcher(stationId);
+    const predictions = await tideFetcher.fetchData();
+
+    // Filter predictions by date range if provided
+    let filteredPredictions = predictions;
+    if (startDate || endDate) {
+      const start = startDate ? new Date(startDate) : new Date(0);
+      const end = endDate ? new Date(endDate) : new Date(8640000000000000);
+      
+      filteredPredictions = predictions.filter(pred => {
+        const predDate = new Date(pred.time);
+        return predDate >= start && predDate <= end;
+      });
+    }
 
     res.status(200).json({
       status: 'success',
       data: {
         station,
-        predictions
+        predictions: filteredPredictions
       }
     });
   } catch (error) {

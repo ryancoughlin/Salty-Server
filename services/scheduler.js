@@ -1,27 +1,22 @@
 const schedule = require('node-schedule');
 const { logger } = require('../utils/logger');
-const { updateAllBuoys } = require('./ndbcService');
+const { getCache, clearExpiredCache } = require('../utils/cache');
 
-// Update buoy data every hour
-const scheduleBuoyUpdates = () => {
-  logger.info('Scheduling buoy data updates');
-  
-  // Run immediately on startup
-  updateAllBuoys().catch(error => {
-    logger.error('Failed initial buoy update:', error);
-  });
-
-  // Then schedule hourly updates
-  schedule.scheduleJob('0 * * * *', async () => {
-    try {
-      await updateAllBuoys();
-      logger.info('Completed scheduled buoy update');
-    } catch (error) {
-      logger.error('Failed scheduled buoy update:', error);
-    }
-  });
+// Clean expired cache entries periodically
+const scheduleCacheCleanup = () => {
+    logger.info('Scheduling cache cleanup');
+    
+    // Run cache cleanup every hour
+    schedule.scheduleJob('0 * * * *', async () => {
+        try {
+            await clearExpiredCache();
+            logger.info('Completed scheduled cache cleanup');
+        } catch (error) {
+            logger.error('Failed scheduled cache cleanup:', error);
+        }
+    });
 };
 
 module.exports = {
-  scheduleBuoyUpdates
+    scheduleCacheCleanup
 }; 
