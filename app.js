@@ -1,6 +1,5 @@
 // app.js
 const express = require('express')
-const connectDB = require('./database')
 const dotenv = require('dotenv')
 const routes = require('./routes')
 const helmet = require('helmet')
@@ -9,7 +8,8 @@ const rateLimit = require('express-rate-limit')
 const morgan = require('morgan')
 const { errorHandler } = require('./middlewares/errorHandler')
 const { logger } = require('./utils/logger')
-const { scheduleBuoyUpdates } = require('./services/scheduler')
+const { scheduleCacheCleanup } = require('./services/scheduler')
+const restrictOrigin = require('./middlewares/restrictOrigin')
 
 dotenv.config()
 
@@ -19,6 +19,9 @@ const PORT = process.env.PORT || 3000
 // Security middleware
 app.use(helmet())
 app.use(compression())
+
+// CORS middleware
+app.use(restrictOrigin)
 
 // Rate limiting
 const limiter = rateLimit({
@@ -50,20 +53,13 @@ app.get('/', (req, res) => {
 // Error handling
 app.use(errorHandler)
 
-// Connect to database and start server
-connectDB()
-  .then(() => {
-    // Start the scheduler after database connection
-    scheduleBuoyUpdates()
-    
-    app.listen(PORT, () => {
-      logger.info(`Server is running on port ${PORT}`)
-    })
-  })
-  .catch((err) => {
-    logger.error('Database connection failed:', err)
-    process.exit(1)
-  })
+// Start cache cleanup scheduler
+scheduleCacheCleanup()
+
+// Start server
+app.listen(PORT, () => {
+  logger.info(`Server is running on port ${PORT}`)
+})
 
 // Handle unhandled promise rejections
 process.on('unhandledRejection', (err) => {

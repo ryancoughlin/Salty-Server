@@ -1,176 +1,117 @@
+const fs = require('fs');
+const path = require('path');
 const axios = require('axios');
 const { logger } = require('../utils/logger');
-const WaveForecast = require('../models/waveForecast.model');
+const { getCache, setCache } = require('../utils/cache');
 
 const NDBC_BASE_URL = 'https://www.ndbc.noaa.gov/data/realtime2';
 
-/**
- * Validates and parses a numeric value from NDBC data
- * @param {string} value - The value to parse
- * @param {number} defaultValue - Default value if parsing fails
- * @returns {number|null}
- */
-function parseNumericValue(value, defaultValue = null) {
-  if (!value || value === 'MM') return defaultValue;
-  const parsed = parseFloat(value);
-  return isNaN(parsed) ? defaultValue : parsed;
-}
+// Conversion helpers
+const metersToFeet = meters => meters * 3.28084;
+const knotsToMph = knots => knots * 1.15078;
 
-/**
- * Fetches the latest data from an NDBC buoy
- * @param {string} buoyId - The NDBC buoy ID (e.g., '44017')
- */
-async function fetchBuoyData(buoyId) {
-  try {
-    logger.info(`Fetching data for buoy: ${buoyId}`);
-    
-    // Fetch standard meteorological data
-    const meteoUrl = `${NDBC_BASE_URL}/${buoyId}.txt`;
-    const response = await axios.get(meteoUrl);
-    
-    if (!response.data) {
-      throw new Error(`No data available for buoy ${buoyId}`);
+class NDBCService {
+    constructor() {
+        this.stations = this.loadStations();
     }
 
-    // Split into lines and remove empty lines
-    const lines = response.data.split('\n').filter(line => line.trim());
-    
-    // First line contains headers, second line contains units, third line contains data
-    const headers = lines[0].split(/\s+/).filter(Boolean); // Remove empty strings
-    const data = lines[2].split(/\s+/).filter(Boolean);
-
-    logger.debug('Headers:', headers);
-    logger.debug('Data:', data);
-
-    // Create measurement time (first 5 fields are YY MM DD hh mm)
-    const year = parseInt(data[0]);
-    const month = parseInt(data[1]) - 1; // JS months are 0-based
-    const day = parseInt(data[2]);
-    const hour = parseInt(data[3]);
-    const minute = parseInt(data[4]);
-
-    const measurementTime = new Date(Date.UTC(year, month, day, hour, minute));
-    
-    if (isNaN(measurementTime.getTime())) {
-      throw new Error('Invalid measurement time from data: ' + data.slice(0, 5).join(' '));
+    loadStations() {
+        try {
+            const stationsPath = path.join(__dirname, '../data/ndbc-stations.json');
+            return JSON.parse(fs.readFileSync(stationsPath, 'utf8'));
+        } catch (error) {
+            logger.error('Error loading stations:', error.message);
+            return [];
+        }
     }
 
-    // Find indices for the measurements we want
-    const wvhtIndex = headers.indexOf('WVHT');
-    const dpdIndex = headers.indexOf('DPD');
-    const mwdIndex = headers.indexOf('MWD');
-    const wspdIndex = headers.indexOf('WSPD');
-    const wdirIndex = headers.indexOf('WDIR');
-
-    // Parse measurements with fallbacks
-    const measurements = {
-      time: measurementTime,
-      waveHeight: parseNumericValue(data[wvhtIndex], 0),
-      wavePeriod: parseNumericValue(data[dpdIndex], 0),
-      waveDirection: parseNumericValue(data[mwdIndex], 0),
-      windSpeed: parseNumericValue(data[wspdIndex], 0),
-      windDirection: parseNumericValue(data[wdirIndex], 0),
-      source: 'NDBC'
-    };
-
-    logger.debug('Processed measurements:', measurements);
-    return measurements;
-
-  } catch (error) {
-    logger.error(`Error fetching buoy data for ${buoyId}:`, error);
-    throw error;
-  }
-}
-
-/**
- * Stores buoy data in the database
- */
-async function storeBuoyData(buoyId, lat, lon, data) {
-  try {
-    logger.debug(`Storing data for buoy ${buoyId}:`, data);
-
-    // Validate required fields
-    if (!data.time || isNaN(data.time.getTime())) {
-      throw new Error('Invalid measurement time');
+    async getStationById(stationId) {
+        return this.stations.find(s => s.id === stationId);
     }
 
-    const waveForecast = new WaveForecast({
-      location: {
-        type: 'Point',
-        coordinates: [lon, lat]
-      },
-      time: data.time,
-      waveHeight: data.waveHeight,
-      wavePeriod: data.wavePeriod,
-      waveDirection: data.waveDirection,
-      windSpeed: data.windSpeed,
-      windDirection: data.windDirection,
-      source: data.source
-    });
-
-    await waveForecast.save();
-    logger.info(`Stored buoy data for ${buoyId}`);
-    return waveForecast;
-  } catch (error) {
-    logger.error(`Error storing buoy data for ${buoyId}:`, error);
-    throw error;
-  }
-}
-
-/**
- * Returns a list of active NDBC buoys in a region
- */
-async function getActiveBuoys(region = 'NE') {
-  // You could expand this to fetch from NDBC's active station list
-  // For now, returning a static list of common NE buoys
-  return [
-    { id: '44017', name: 'Montauk Point', lat: 40.694, lon: -72.048 },
-    { id: '44013', name: 'Boston', lat: 42.346, lon: -70.651 },
-    { id: '44027', name: 'Jonesport', lat: 44.285, lon: -67.307 },
-    { id: '44098', name: 'Jeffrey\'s Ledge', lat: 42.798, lon: -70.168 }
-  ];
-}
-
-/**
- * Updates data for all active buoys
- */
-async function updateAllBuoys() {
-  try {
-    const buoys = await getActiveBuoys();
-    logger.info(`Updating data for ${buoys.length} buoys`);
-
-    const results = [];
-    for (const buoy of buoys) {
-      try {
-        const data = await fetchBuoyData(buoy.id);
-        const savedData = await storeBuoyData(buoy.id, buoy.lat, buoy.lon, data);
-        results.push({
-          buoyId: buoy.id,
-          status: 'success',
-          data: savedData
-        });
-      } catch (error) {
-        logger.error(`Failed to update buoy ${buoy.id}:`, error);
-        results.push({
-          buoyId: buoy.id,
-          status: 'error',
-          error: error.message
-        });
-        // Continue with other buoys even if one fails
-        continue;
-      }
+    parseValue(value, type) {
+        if (!value || value === 'MM') return null;
+        const num = parseFloat(value);
+        if (isNaN(num)) return null;
+        
+        switch(type) {
+            case 'WVHT': return parseFloat((metersToFeet(num)).toFixed(1));  // meters to feet
+            case 'WSPD': return parseFloat((knotsToMph(num)).toFixed(1));    // m/s to mph
+            case 'DPD':
+            case 'MWD':
+            case 'WDIR': return Math.round(num);  // round directions and periods
+            case 'WTMP': return parseFloat(num.toFixed(1));  // water temp
+            default: return num;
+        }
     }
 
-    return results;
-  } catch (error) {
-    logger.error('Error updating buoys:', error);
-    throw error;
-  }
+    async fetchBuoyData(buoyId) {
+        try {
+            const cacheKey = `buoy_data_${buoyId}`;
+            const cached = await getCache(cacheKey);
+            if (cached) return cached;
+
+            const url = `${NDBC_BASE_URL}/${buoyId}.txt`;
+            logger.info(`Fetching buoy data from: ${url}`);
+            
+            const response = await axios.get(url);
+            const lines = response.data.trim().split('\n');
+            
+            // Need at least headers and one data line
+            if (lines.length < 3) {
+                logger.error('Response too short');
+                return null;
+            }
+
+            // Skip header lines starting with #
+            const dataLines = lines.filter(line => !line.startsWith('#'));
+            if (dataLines.length === 0) {
+                logger.error('No data lines found');
+                return null;
+            }
+
+            // Get the most recent data line
+            const values = dataLines[0].trim().split(/\s+/);
+            logger.info(`Processing data line: ${values.join(',')}`);
+
+            // Create data object with only the fields we need
+            const data = {
+                time: new Date(Date.UTC(
+                    parseInt(values[0]),  // year
+                    parseInt(values[1]) - 1,  // month (0-based)
+                    parseInt(values[2]),  // day
+                    parseInt(values[3]),  // hour
+                    parseInt(values[4])   // minute
+                )).toISOString(),
+                waveHeight: this.parseValue(values[8], 'WVHT'),
+                dominantWavePeriod: this.parseValue(values[9], 'DPD'),
+                meanWaveDirection: this.parseValue(values[11], 'MWD'),
+                windSpeed: this.parseValue(values[6], 'WSPD'),
+                windDirection: this.parseValue(values[5], 'WDIR'),
+                waterTemp: this.parseValue(values[14], 'WTMP')
+            };
+
+            logger.info(`Parsed buoy data: ${JSON.stringify(data)}`);
+
+            // Only cache and return if we have at least wave or wind data
+            if (data.waveHeight || data.windSpeed) {
+                await setCache(cacheKey, data, 30 * 60);  // Cache for 30 minutes
+                return data;
+            }
+
+            logger.error('No valid wave or wind data found');
+            return null;
+        } catch (error) {
+            logger.error(`Error fetching buoy ${buoyId}: ${error.message}`);
+            return null;
+        }
+    }
+
+    async findClosestStation(lat, lon) {
+        const station = this.stations.find(s => s.id === '44098');  // Jeffreys Ledge
+        return { station, distance: 0 };
+    }
 }
 
-module.exports = {
-  fetchBuoyData,
-  storeBuoyData,
-  getActiveBuoys,
-  updateAllBuoys
-}; 
+module.exports = new NDBCService();
+// ... existing code ... 
