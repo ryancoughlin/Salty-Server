@@ -45,35 +45,100 @@ const findPeakConditions = (days) => {
   return peak;
 };
 
-const findBestDay = (days) => {
-  for (const day of days) {
-    // Check if any period during the day has good conditions
-    const hasGoodConditions = day.periods.some(period => {
-      const isGoodWaves = parseFloat(period.waveHeight) >= 2.0 && parseFloat(period.waveHeight) <= 5.0;
-      const isGoodWind = parseFloat(period.windSpeed) < 15;
-      return isGoodWaves && isGoodWind;
-    });
-
-    if (hasGoodConditions) {
-      // Use the daily summary for the best day
-      return {
-        date: day.date,
-        waveHeight: day.summary.waveHeight.avg,
-        windSpeed: day.summary.windSpeed.avg,
-        windDirection: day.periods[0].windDirection  // Use morning direction
-      };
+// Add new helper functions for wind impact
+const getWindImpact = (windDirection, windSpeed, location) => {
+  // Default to East Coast configurations
+  // Each coast has different favorable/unfavorable wind directions
+  const coastConfigs = {
+    EAST_COAST: {
+      // Offshore winds (favorable)
+      favorable: ['W', 'NW', 'SW'],
+      // Onshore winds (unfavorable)
+      unfavorable: ['E', 'NE', 'SE'],
+      // Cross-shore winds (neutral)
+      neutral: ['N', 'S']
+    },
+    WEST_COAST: {
+      favorable: ['E', 'SE', 'NE'],
+      unfavorable: ['W', 'SW', 'NW'],
+      neutral: ['N', 'S']
     }
+  };
+
+  const windDir = getWindDirectionText(windDirection);
+  const config = coastConfigs.EAST_COAST; // TODO: Determine coast based on longitude
+
+  if (config.unfavorable.includes(windDir)) {
+    if (windSpeed > 15) return 'poor-choppy';
+    if (windSpeed > 10) return 'poor';
+    return 'fair';
+  }
+  
+  if (config.favorable.includes(windDir)) {
+    if (windSpeed > 25) return 'fair-strong';
+    if (windSpeed > 15) return 'good-breezy';
+    return 'excellent';
   }
 
-  // If no "good" days found, find the most manageable day
-  return days.reduce((best, current) => {
-    const currentScore = (current.summary.waveHeight.avg * 2) + (current.summary.windSpeed.avg / 5);
-    const bestScore = (best.summary.waveHeight.avg * 2) + (best.summary.windSpeed.avg / 5);
-    return currentScore < bestScore ? current : best;
-  });
+  // Neutral directions
+  if (windSpeed > 20) return 'poor-choppy';
+  if (windSpeed > 15) return 'fair';
+  return 'good';
 };
 
-const generateSummaries = (modelData) => {
+// Update the findBestDay function to consider wind direction impact
+const findBestDay = (days, location) => {
+  return days.reduce((best, current) => {
+    const periods = current.periods.map(period => {
+      const windImpact = getWindImpact(period.windDirection, period.windSpeed, location);
+      const waveScore = parseFloat(period.waveHeight);
+      
+      // Score calculation factors in:
+      // 1. Wave height (2-5ft ideal)
+      // 2. Wind direction and speed impact
+      // 3. Wind speed (lighter generally better)
+      let score = 0;
+      
+      // Wave height scoring
+      if (waveScore >= 2 && waveScore <= 5) {
+        score += 50;
+      } else if (waveScore > 5) {
+        score += 30;
+      } else {
+        score += 10;
+      }
+
+      // Wind impact scoring
+      switch (windImpact) {
+        case 'excellent': score += 50; break;
+        case 'good': score += 40; break;
+        case 'good-breezy': score += 30; break;
+        case 'fair': score += 20; break;
+        case 'fair-strong': score += 10; break;
+        case 'poor': score += 5; break;
+        case 'poor-choppy': score += 0; break;
+      }
+
+      return { period, score };
+    });
+
+    // Get the best period score for the day
+    const bestPeriodScore = Math.max(...periods.map(p => p.score));
+    
+    if (!best || bestPeriodScore > best.score) {
+      return {
+        date: current.date,
+        score: bestPeriodScore,
+        summary: current.summary,
+        periods: current.periods
+      };
+    }
+    return best;
+  }, null);
+};
+
+// Update generateSummaries to include wind impact
+const generateSummaries = (modelData, location) => {
     const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     
     // Validate modelData structure
@@ -89,7 +154,9 @@ const generateSummaries = (modelData) => {
             throw new Error('Missing current conditions data');
         }
         
-        const currentSummary = `${getWaveDescription(current.waveHeight)} ${current.waveHeight}ft waves, ${getWindDescription(current.windSpeed)} ${current.windSpeed}mph ${getWindDirectionText(current.windDirection)} winds`;
+        const windImpact = getWindImpact(current.windDirection, current.windSpeed, location);
+        
+        const currentSummary = `${getWaveDescription(current.waveHeight)} ${current.waveHeight}ft waves, ${getWindDescription(current.windSpeed)} ${current.windSpeed}mph ${getWindDirectionText(current.windDirection)} winds (${windImpact} conditions)`;
 
         // Find peak conditions for the week
         const peakConditions = findPeakConditions(modelData.days);
@@ -102,24 +169,23 @@ const generateSummaries = (modelData) => {
         const weekSummary = `Building to ${peakConditions.waveHeight}ft waves and ${peakConditions.windSpeed}mph winds by ${peakDay}`;
 
         // Find best day
-        const bestDay = findBestDay(modelData.days);
+        const bestDay = findBestDay(modelData.days, location);
         if (!bestDay) {
             throw new Error('Unable to determine best day');
         }
         
+        // Update best day summary to include wind impact
         const bestDate = new Date(bestDay.date);
-        let bestDaySummary;
+        const bestPeriod = bestDay.periods[0];
+        const bestWindImpact = getWindImpact(bestPeriod.windDirection, bestPeriod.windSpeed, location);
         
-        if (bestDay.periods && bestDay.summary) {
-            bestDaySummary = `Best on ${days[bestDate.getDay()]}: ${bestDay.summary.waveHeight.avg}ft waves, ${bestDay.summary.windSpeed.avg}mph ${getWindDirectionText(bestDay.periods[0].windDirection)} winds`;
-        } else {
-            bestDaySummary = 'Unable to determine best conditions';
-        }
+        const bestDaySummary = `Best on ${days[bestDate.getDay()]}: ${bestDay.summary.waveHeight.avg}ft waves, ${bestDay.summary.windSpeed.avg}mph ${getWindDirectionText(bestPeriod.windDirection)} winds (${bestWindImpact} conditions)`;
 
         return {
             current: currentSummary,
             week: weekSummary,
-            bestDay: bestDaySummary
+            bestDay: bestDaySummary,
+            conditions: windImpact
         };
     } catch (error) {
         logger.error('Error generating summaries:', error);
@@ -138,20 +204,21 @@ async function getSevenDayForecast(lat, lon) {
     try {
         logger.info(`Fetching forecast for lat: ${lat}, lon: ${lon}`);
         
-        // Get forecast from wave model
+        // Determine if east or west coast based on longitude
+        const location = lon < -100 ? 'WEST_COAST' : 'EAST_COAST';
+        
         const modelData = await getPointForecast(lat, lon);
         
-        // Validate model data
         if (!modelData || !modelData.days) {
             throw new Error('Invalid forecast data received');
         }
 
-        // Generate summaries
-        const summaries = generateSummaries(modelData);
+        const summaries = generateSummaries(modelData, location);
 
         return {
             ...modelData,
-            summaries
+            summaries,
+            location
         };
     } catch (error) {
         logger.error('Error fetching forecast:', error);

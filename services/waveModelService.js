@@ -27,21 +27,34 @@ const CONFIG = {
 // Pure function to get latest available model run
 const getModelRun = (now = new Date()) => {
     const hour = now.getUTCHours();
-    const adjustedHour = hour - 5; // Account for ~5 hour processing delay
     
-    const runHour = adjustedHour < 0
-        ? { hour: 18, dayOffset: -1 }
-        : {
-            hour: CONFIG.modelRuns.reduce((acc, run) => adjustedHour >= run ? run : acc),
-            dayOffset: 0
-          };
+    // Find the most recent available model run
+    // Model runs are at 00Z, 06Z, 12Z, and 18Z
+    // We need to account for processing delay and availability
+    let runHour;
+    let dayOffset = 0;
+
+    if (hour >= 0 && hour < 6) {
+        // Between 00:00 and 05:59 UTC, use previous day's 18Z run
+        runHour = 18;
+        dayOffset = -1;
+    } else if (hour >= 6 && hour < 12) {
+        // Between 06:00 and 11:59 UTC, use today's 00Z run
+        runHour = 0;
+    } else if (hour >= 12 && hour < 18) {
+        // Between 12:00 and 17:59 UTC, use today's 06Z run
+        runHour = 6;
+    } else {
+        // Between 18:00 and 23:59 UTC, use today's 12Z run
+        runHour = 12;
+    }
     
     const date = new Date(now);
-    date.setUTCDate(date.getUTCDate() + runHour.dayOffset);
+    date.setUTCDate(date.getUTCDate() + dayOffset);
     
     return {
         date: date.toISOString().split('T')[0].replace(/-/g, ''),
-        hour: runHour.hour.toString().padStart(2, '0')
+        hour: runHour.toString().padStart(2, '0')
     };
 };
 
