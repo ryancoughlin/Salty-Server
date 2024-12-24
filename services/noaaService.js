@@ -1,64 +1,81 @@
 const axios = require('axios');
 const { logger } = require('../utils/logger');
 
-async function findLatestData(baseUrl, maxAttempts = 7) {
-  const today = new Date();
-  for (let i = 0; i < maxAttempts; i++) {
-    const date = new Date(today);
-    date.setDate(date.getDate() - i);
-    const dateString = date.toISOString().split('T')[0].replace(/-/g, '');
-    const url = `${baseUrl}${dateString}/`;
-    try {
-      const response = await axios.get(url);
-      if (response.status === 200) {
-        logger.info(`Latest data found for date: ${dateString}`);
-        return dateString;
-      }
-    } catch (error) {
-      logger.error(`Error checking date ${dateString}:`, error.message);
+// Constants
+const MAX_RETRIES = 3;
+const TIMEOUT = 10000; // 10 seconds
+const MAX_DAYS_BACK = 7;
+
+class NoaaApiError extends Error {
+    constructor(message, statusCode) {
+        super(message);
+        this.name = 'NoaaApiError';
+        this.statusCode = statusCode;
     }
-  }
-  throw new Error('Could not find recent data within the last 7 days');
 }
 
-async function fetchNoaaData(lat, lon) {
-  logger.info(`Fetching NOAA data for lat: ${lat}, lon: ${lon}`);
+async function findLatestData(baseUrl, maxAttempts = MAX_DAYS_BACK) {
+    const dates = Array.from({ length: maxAttempts }, (_, i) => {
+        const date = new Date();
+        date.setDate(date.getDate() - i);
+        return date.toISOString().split('T')[0].replace(/-/g, '');
+    });
 
-  try {
+    for (const dateString of dates) {
+        const url = `${baseUrl}${dateString}/`;
+        try {
+            const response = await axios.get(url, { timeout: TIMEOUT });
+            if (response.status === 200) {
+                logger.info(`Latest data found for date: ${dateString}`);
+                return dateString;
+            }
+        } catch (error) {
+            if (error.response?.status === 404) {
+                continue; // Try next date
+            }
+            throw new NoaaApiError(`Error checking date ${dateString}: ${error.message}`, error.response?.status);
+        }
+    }
+    throw new NoaaApiError('No recent data available', 404);
+}
+
+async function fetchNoaaData(lat, lon, retries = MAX_RETRIES) {
+    logger.info(`Fetching NOAA data for lat: ${lat}, lon: ${lon}`);
+
     const waveBaseUrl = 'https://nomads.ncep.noaa.gov/dods/wave/gwes/';
     const windBaseUrl = 'https://nomads.ncep.noaa.gov/dods/gfs_0p25_1hr/gfs';
 
-    const latestWaveDate = await findLatestData(waveBaseUrl);
-    const latestWindDate = await findLatestData(windBaseUrl);
+    try {
+        const [latestWaveDate, latestWindDate] = await Promise.all([
+            findLatestData(waveBaseUrl),
+            findLatestData(windBaseUrl)
+        ]);
 
-    const waveUrl = `${waveBaseUrl}${latestWaveDate}/gwes_00z.ascii?htsgwsfc[0][${Math.floor(lat)}][${Math.floor(lon)}],perpwsfc[0][${Math.floor(lat)}][${Math.floor(lon)}],dirpwsfc[0][${Math.floor(lat)}][${Math.floor(lon)}]`;
-    const windUrl = `${windBaseUrl}${latestWindDate}/gfs_0p25_1hr_00z.ascii?ugrd10m[0][${Math.floor(lat)}][${Math.floor(lon)}],vgrd10m[0][${Math.floor(lat)}][${Math.floor(lon)}]`;
+        const waveUrl = `${waveBaseUrl}${latestWaveDate}/gwes_00z.ascii?htsgwsfc[0][${Math.floor(lat)}][${Math.floor(lon)}],perpwsfc[0][${Math.floor(lat)}][${Math.floor(lon)}],dirpwsfc[0][${Math.floor(lat)}][${Math.floor(lon)}]`;
+        const windUrl = `${windBaseUrl}${latestWindDate}/gfs_0p25_1hr_00z.ascii?ugrd10m[0][${Math.floor(lat)}][${Math.floor(lon)}],vgrd10m[0][${Math.floor(lat)}][${Math.floor(lon)}]`;
 
-    logger.debug('Wave data URL:', waveUrl);
-    logger.debug('Wind data URL:', windUrl);
+        const [waveResponse, windResponse] = await Promise.all([
+            axios.get(waveUrl, { timeout: TIMEOUT }),
+            axios.get(windUrl, { timeout: TIMEOUT })
+        ]);
 
-    const [waveResponse, windResponse] = await Promise.all([
-      axios.get(waveUrl),
-      axios.get(windUrl)
-    ]);
+        if (waveResponse.status !== 200 || windResponse.status !== 200) {
+            throw new NoaaApiError('Failed to fetch data from NOAA', waveResponse.status);
+        }
 
-    logger.debug('Wave Response status:', waveResponse.status);
-    logger.debug('Wind Response status:', windResponse.status);
-
-    if (waveResponse.status !== 200 || windResponse.status !== 200) {
-      throw new Error('Failed to fetch data from NOAA');
+        return {
+            waveData: waveResponse.data,
+            windData: windResponse.data,
+            waveDate: latestWaveDate,
+            windDate: latestWindDate
+        };
+    } catch (error) {
+        if (retries > 0 && error.code === 'ECONNABORTED') {
+            logger.warn(`Retry attempt ${MAX_RETRIES - retries + 1} for ${lat},${lon}`);
+            return fetchNoaaData(lat, lon, retries - 1);
+        }
+        throw error;
     }
-
-    return {
-      waveData: waveResponse.data,
-      windData: windResponse.data,
-      waveDate: latestWaveDate,
-      windDate: latestWindDate
-    };
-  } catch (error) {
-    logger.error('Error in fetchNoaaData:', error);
-    throw error;
-  }
 }
 
 function parseNoaaData(data) {

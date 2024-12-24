@@ -57,12 +57,24 @@ app.use(errorHandler)
 scheduleCacheCleanup()
 
 // Start server
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   logger.info(`Server is running on port ${PORT}`)
 })
 
-// Handle unhandled promise rejections
+// Graceful shutdown handling
+process.on('SIGTERM', () => {
+  logger.info('SIGTERM received. Starting graceful shutdown')
+  server.close(() => {
+    logger.info('Server closed')
+    process.exit(0)
+  })
+})
+
+// Improved error handling
 process.on('unhandledRejection', (err) => {
   logger.error('Unhandled Promise Rejection:', err)
-  process.exit(1)
+  // Give time for logging before exit
+  setTimeout(() => {
+    process.exit(1)
+  }, 1000)
 })
