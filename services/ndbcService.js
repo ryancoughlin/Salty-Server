@@ -1,31 +1,88 @@
-const fs = require('fs');
+const fs = require('fs').promises;
 const path = require('path');
 const axios = require('axios');
 const { logger } = require('../utils/logger');
 const { getCache, setCache } = require('../utils/cache');
 
 const NDBC_BASE_URL = 'https://www.ndbc.noaa.gov/data/realtime2';
+const CACHE_TTL = 30 * 60; // 30 minutes
+const REQUEST_TIMEOUT = 10000; // 10 seconds
+const TREND_HOURS = 4; // Hours to analyze for trends
 
 // Conversion helpers
 const metersToFeet = meters => meters * 3.28084;
 const knotsToMph = knots => knots * 1.15078;
+const celsiusToFahrenheit = celsius => (celsius * 9/5) + 32;
+
+// Beaufort Scale Wind Categories
+const BEAUFORT_SCALE = [
+    { speed: 1, description: 'Calm', seaCondition: 'Sea like a mirror' },
+    { speed: 3, description: 'Light Air', seaCondition: 'Ripples without crests' },
+    { speed: 7, description: 'Light Breeze', seaCondition: 'Small wavelets' },
+    { speed: 12, description: 'Gentle Breeze', seaCondition: 'Large wavelets' },
+    { speed: 18, description: 'Moderate Breeze', seaCondition: 'Small waves' },
+    { speed: 24, description: 'Fresh Breeze', seaCondition: 'Moderate waves' },
+    { speed: 31, description: 'Strong Breeze', seaCondition: 'Large waves' },
+    { speed: 38, description: 'Near Gale', seaCondition: 'Sea heaps up' },
+    { speed: 46, description: 'Gale', seaCondition: 'Moderately high waves' },
+    { speed: 54, description: 'Strong Gale', seaCondition: 'High waves' },
+    { speed: 63, description: 'Storm', seaCondition: 'Very high waves' },
+    { speed: 72, description: 'Violent Storm', seaCondition: 'Exceptionally high waves' },
+    { speed: 83, description: 'Hurricane', seaCondition: 'Air filled with foam and spray' }
+];
+
+// Get Beaufort scale description
+const getBeaufortDescription = (windSpeed) => {
+    const category = BEAUFORT_SCALE.find((cat, index, arr) => 
+        windSpeed <= cat.speed || index === arr.length - 1
+    );
+    return category;
+};
+
+// Column indices for NDBC data
+const COLUMNS = {
+    YEAR: 0,
+    MONTH: 1,
+    DAY: 2,
+    HOUR: 3,
+    MINUTE: 4,
+    WIND_DIR: 5,    // WDIR: Wind direction (degrees clockwise from true N)
+    WIND_SPEED: 6,  // WSPD: Wind speed (m/s)
+    WIND_GUST: 7,   // GST: Wind gust speed (m/s)
+    WAVE_HEIGHT: 8, // WVHT: Significant wave height (meters)
+    DOM_PERIOD: 9,  // DPD: Dominant wave period (seconds)
+    AVG_PERIOD: 10, // APD: Average wave period (seconds)
+    WAVE_DIR: 11,   // MWD: Wave direction (degrees clockwise from true N)
+    PRESSURE: 12,   // PRES: Sea level pressure (hPa)
+    AIR_TEMP: 13,   // ATMP: Air temperature (°C)
+    WATER_TEMP: 14, // WTMP: Sea surface temperature (°C)
+    DEW_POINT: 15   // DEWP: Dewpoint temperature (°C)
+};
 
 class NDBCService {
     constructor() {
-        this.stations = this.loadStations();
+        this.stations = [];
+        this.loadStations().catch(err => {
+            logger.error('Failed to load stations:', err);
+            process.exit(1);
+        });
     }
 
-    loadStations() {
+    async loadStations() {
         try {
             const stationsPath = path.join(__dirname, '../data/ndbc-stations.json');
-            return JSON.parse(fs.readFileSync(stationsPath, 'utf8'));
+            this.stations = JSON.parse(await fs.readFile(stationsPath, 'utf8'));
+            logger.info(`Loaded ${this.stations.length} NDBC stations`);
         } catch (error) {
             logger.error('Error loading stations:', error.message);
-            return [];
+            throw error;
         }
     }
 
     async getStationById(stationId) {
+        if (!this.stations.length) {
+            await this.loadStations();
+        }
         return this.stations.find(s => s.id === stationId);
     }
 
@@ -35,14 +92,131 @@ class NDBCService {
         if (isNaN(num)) return null;
         
         switch(type) {
-            case 'WVHT': return parseFloat((metersToFeet(num)).toFixed(1));  // meters to feet
-            case 'WSPD': return parseFloat((knotsToMph(num)).toFixed(1));    // m/s to mph
+            case 'WVHT': return parseFloat((metersToFeet(num)).toFixed(1));
+            case 'WSPD':
+            case 'GST': return parseFloat((knotsToMph(num)).toFixed(1));
             case 'DPD':
+            case 'APD':
             case 'MWD':
-            case 'WDIR': return Math.round(num);  // round directions and periods
-            case 'WTMP': return parseFloat(num.toFixed(1));  // water temp
+            case 'WDIR': return Math.round(num);
+            case 'WTMP':
+            case 'ATMP':
+            case 'DEWP': return parseFloat(celsiusToFahrenheit(num).toFixed(1));
+            case 'PRES': return parseFloat(num.toFixed(1));
             default: return num;
         }
+    }
+
+    analyzeTrends(observations) {
+        const periods = observations.slice(0, 8); // Last 4 hours (30-min intervals)
+        if (periods.length < 2) return null;
+
+        const first = periods[periods.length - 1];
+        const last = periods[0];
+        
+        // Find most recent valid wave data
+        const lastValidWaveData = periods.find(p => p.waves.height !== null);
+        const firstValidWaveData = [...periods].reverse().find(p => p.waves.height !== null);
+
+        // Calculate changes only if we have valid data points
+        const waveHeightChange = lastValidWaveData && firstValidWaveData ? 
+            lastValidWaveData.waves.height - firstValidWaveData.waves.height : null;
+        const periodChange = lastValidWaveData && firstValidWaveData ? 
+            lastValidWaveData.waves.dominantPeriod - firstValidWaveData.waves.dominantPeriod : null;
+        
+        const windSpeedChange = last.wind.speed - first.wind.speed;
+        const windDirChange = ((last.wind.direction - first.wind.direction + 540) % 360) - 180;
+
+        // Get current Beaufort conditions
+        const beaufort = getBeaufortDescription(last.wind.speed);
+
+        // Build wave trend description
+        let waveTrendDesc = '';
+        if (lastValidWaveData) {
+            const waveTrend = !waveHeightChange ? 'steady' :
+                Math.abs(waveHeightChange) < 0.5 ? 'steady' :
+                waveHeightChange > 0 ? 'building' : 'dropping';
+
+            const periodTrend = !periodChange ? 'steady' :
+                Math.abs(periodChange) < 1 ? 'steady' :
+                periodChange > 0 ? 'lengthening' : 'shortening';
+
+            waveTrendDesc = `Waves ${waveTrend} at ${lastValidWaveData.waves.height}ft` +
+                (waveHeightChange ? ` (${waveHeightChange > 0 ? '+' : ''}${waveHeightChange.toFixed(1)}ft)` : '') +
+                (lastValidWaveData.waves.dominantPeriod ? 
+                    ` with ${periodTrend} ${lastValidWaveData.waves.dominantPeriod}s period` : '');
+        } else {
+            waveTrendDesc = 'Wave data temporarily unavailable';
+        }
+
+        // Determine wind trend
+        const windTrend = Math.abs(windSpeedChange) < 2 ? 'steady' :
+            windSpeedChange > 0 ? 'increasing' : 'decreasing';
+
+        // Build complete summary
+        const summary = `${waveTrendDesc}. ${beaufort.description} winds ${windTrend} at ${last.wind.speed}mph` +
+            (beaufort.seaCondition ? ` (${beaufort.seaCondition})` : '');
+
+        return {
+            summary,
+            waveHeight: lastValidWaveData ? {
+                trend: !waveHeightChange ? 'steady' :
+                    Math.abs(waveHeightChange) < 0.5 ? 'steady' :
+                    waveHeightChange > 0 ? 'building' : 'dropping',
+                change: waveHeightChange,
+                current: lastValidWaveData.waves.height,
+                lastValidReading: lastValidWaveData.time
+            } : null,
+            wavePeriod: lastValidWaveData?.waves.dominantPeriod ? {
+                trend: !periodChange ? 'steady' :
+                    Math.abs(periodChange) < 1 ? 'steady' :
+                    periodChange > 0 ? 'lengthening' : 'shortening',
+                change: periodChange,
+                current: lastValidWaveData.waves.dominantPeriod,
+                lastValidReading: lastValidWaveData.time
+            } : null,
+            wind: {
+                trend: windTrend,
+                change: windSpeedChange,
+                current: last.wind.speed,
+                beaufort: beaufort,
+                gustFactor: last.wind.gust ? (last.wind.gust - last.wind.speed).toFixed(1) : null
+            },
+            timeSpan: {
+                start: first.time,
+                end: last.time,
+                lastValidWaveReading: lastValidWaveData?.time || null
+            }
+        };
+    }
+
+    parseDataLine(values) {
+        return {
+            time: new Date(Date.UTC(
+                parseInt(values[COLUMNS.YEAR]),
+                parseInt(values[COLUMNS.MONTH]) - 1,
+                parseInt(values[COLUMNS.DAY]),
+                parseInt(values[COLUMNS.HOUR]),
+                parseInt(values[COLUMNS.MINUTE])
+            )).toISOString(),
+            wind: {
+                direction: this.parseValue(values[COLUMNS.WIND_DIR], 'WDIR'),
+                speed: this.parseValue(values[COLUMNS.WIND_SPEED], 'WSPD'),
+                gust: this.parseValue(values[COLUMNS.WIND_GUST], 'GST')
+            },
+            waves: {
+                height: this.parseValue(values[COLUMNS.WAVE_HEIGHT], 'WVHT'),
+                dominantPeriod: this.parseValue(values[COLUMNS.DOM_PERIOD], 'DPD'),
+                averagePeriod: this.parseValue(values[COLUMNS.AVG_PERIOD], 'APD'),
+                direction: this.parseValue(values[COLUMNS.WAVE_DIR], 'MWD')
+            },
+            conditions: {
+                pressure: this.parseValue(values[COLUMNS.PRESSURE], 'PRES'),
+                airTemp: this.parseValue(values[COLUMNS.AIR_TEMP], 'ATMP'),
+                waterTemp: this.parseValue(values[COLUMNS.WATER_TEMP], 'WTMP'),
+                dewPoint: this.parseValue(values[COLUMNS.DEW_POINT], 'DEWP')
+            }
+        };
     }
 
     async fetchBuoyData(buoyId) {
@@ -52,66 +226,48 @@ class NDBCService {
             if (cached) return cached;
 
             const url = `${NDBC_BASE_URL}/${buoyId}.txt`;
-            logger.info(`Fetching buoy data from: ${url}`);
-            
-            const response = await axios.get(url);
+            const response = await axios.get(url, { timeout: REQUEST_TIMEOUT });
             const lines = response.data.trim().split('\n');
             
-            // Need at least headers and one data line
             if (lines.length < 3) {
-                logger.error('Response too short');
+                logger.error(`Invalid response for buoy ${buoyId}: insufficient data`);
                 return null;
             }
 
-            // Skip header lines starting with #
             const dataLines = lines.filter(line => !line.startsWith('#'));
             if (dataLines.length === 0) {
-                logger.error('No data lines found');
+                logger.error(`No data lines found for buoy ${buoyId}`);
                 return null;
             }
 
-            // Get the most recent data line
-            const values = dataLines[0].trim().split(/\s+/);
-            logger.info(`Processing data line: ${values.join(',')}`);
+            // Parse recent observations for trend analysis
+            const recentObservations = dataLines
+                .slice(0, 8) // Get last 4 hours of data (30-min intervals)
+                .map(line => {
+                    const values = line.trim().split(/\s+/);
+                    return this.parseDataLine(values);
+                })
+                .filter(data => data.waves.height || data.wind.speed);
 
-            // Create data object with only the fields we need
-            const data = {
-                time: new Date(Date.UTC(
-                    parseInt(values[0]),  // year
-                    parseInt(values[1]) - 1,  // month (0-based)
-                    parseInt(values[2]),  // day
-                    parseInt(values[3]),  // hour
-                    parseInt(values[4])   // minute
-                )).toISOString(),
-                waveHeight: this.parseValue(values[8], 'WVHT'),
-                dominantWavePeriod: this.parseValue(values[9], 'DPD'),
-                meanWaveDirection: this.parseValue(values[11], 'MWD'),
-                windSpeed: this.parseValue(values[6], 'WSPD'),
-                windDirection: this.parseValue(values[5], 'WDIR'),
-                waterTemp: this.parseValue(values[14], 'WTMP')
-            };
-
-            logger.info(`Parsed buoy data: ${JSON.stringify(data)}`);
-
-            // Only cache and return if we have at least wave or wind data
-            if (data.waveHeight || data.windSpeed) {
-                await setCache(cacheKey, data, 30 * 60);  // Cache for 30 minutes
-                return data;
+            // Get current conditions (most recent with wave data)
+            const currentData = recentObservations[0];
+            if (!currentData) {
+                logger.error(`No valid wave or wind data found for buoy ${buoyId}`);
+                return null;
             }
 
-            logger.error('No valid wave or wind data found');
-            return null;
+            const result = {
+                ...currentData,
+                trends: this.analyzeTrends(recentObservations)
+            };
+
+            await setCache(cacheKey, result, CACHE_TTL);
+            return result;
         } catch (error) {
             logger.error(`Error fetching buoy ${buoyId}: ${error.message}`);
             return null;
         }
     }
-
-    async findClosestStation(lat, lon) {
-        const station = this.stations.find(s => s.id === '44098');  // Jeffreys Ledge
-        return { station, distance: 0 };
-    }
 }
 
-module.exports = new NDBCService();
-// ... existing code ... 
+module.exports = new NDBCService(); 

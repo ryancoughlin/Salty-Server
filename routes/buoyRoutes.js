@@ -1,37 +1,9 @@
 const express = require('express');
-const { query, param } = require('express-validator');
+const { param } = require('express-validator');
 const { validate } = require('../middlewares/validator');
 const buoyController = require('../controllers/buoyController');
 
 const router = express.Router();
-
-/**
- * @swagger
- * /api/buoys/closest:
- *   get:
- *     summary: Get closest buoy data
- *     tags: [Buoys]
- *     parameters:
- *       - in: query
- *         name: lat
- *         required: true
- *         schema:
- *           type: number
- *       - in: query
- *         name: lon
- *         required: true
- *         schema:
- *           type: number
- */
-router.get(
-  '/closest',
-  [
-    query('lat').isFloat().withMessage('Latitude must be a valid number'),
-    query('lon').isFloat().withMessage('Longitude must be a valid number'),
-    validate
-  ],
-  buoyController.getClosestBuoy
-);
 
 /**
  * @swagger
@@ -50,7 +22,11 @@ router.get(
 router.get(
   '/:buoyId',
   [
-    param('buoyId').isString().withMessage('Buoy ID is required'),
+    param('buoyId')
+      .isString()
+      .trim()
+      .matches(/^[34]\d{4}$/)
+      .withMessage('Invalid buoy ID format'),
     validate
   ],
   buoyController.getBuoyDetails
