@@ -1,6 +1,6 @@
 const { AppError } = require('../middlewares/errorHandler');
 const { logger } = require('../utils/logger');
-const { getSevenDayForecast } = require('../services/forecastService');
+const { getSevenDayForecast } = require('../services/waveConditionsService');
 
 /**
  * Get wave forecast for provided coordinates
