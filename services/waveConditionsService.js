@@ -1,48 +1,89 @@
 const { logger } = require('../utils/logger');
 const waveModelService = require('./waveModelService');
 
-// Helper functions for condition descriptions
+// Constants for condition classifications
+const CONDITIONS = {
+    WAVE_HEIGHT: {
+        FLAT: { max: 1.0, description: 'flat' },
+        SMALL: { max: 2.0, description: 'small' },
+        MILD: { max: 3.0, description: 'mild' },
+        MODERATE: { max: 4.0, description: 'moderate' },
+        CONSIDERABLE: { max: 6.0, description: 'considerable' },
+        LARGE: { max: 8.0, description: 'large' },
+        HUGE: { max: Infinity, description: 'huge' }
+    },
+    WIND: {
+        LIGHT: { max: 5, description: 'light' },
+        GENTLE: { max: 10, description: 'gentle' },
+        MODERATE: { max: 15, description: 'moderate' },
+        FRESH: { max: 20, description: 'fresh' },
+        STRONG: { max: 25, description: 'strong' },
+        VERY_STRONG: { max: Infinity, description: 'very strong' }
+    },
+    COAST: {
+        EAST: {
+            favorable: ['W', 'NW', 'SW'],
+            unfavorable: ['E', 'NE', 'SE'],
+            neutral: ['N', 'S']
+        },
+        WEST: {
+            favorable: ['E', 'SE', 'NE'],
+            unfavorable: ['W', 'SW', 'NW'],
+            neutral: ['N', 'S']
+        }
+    }
+};
+
+/**
+ * Get wave height description based on height in feet
+ */
 const getWaveDescription = (heightInFeet) => {
-    if (heightInFeet < 1.0) return 'flat';
-    if (heightInFeet < 2.0) return 'small';
-    if (heightInFeet < 3.0) return 'mild';
-    if (heightInFeet < 4.0) return 'moderate';
-    if (heightInFeet < 6.0) return 'considerable';
-    if (heightInFeet < 8.0) return 'large';
-    return 'huge';
+    const category = Object.values(CONDITIONS.WAVE_HEIGHT)
+        .find(cat => heightInFeet <= cat.max);
+    return category.description;
 };
 
+/**
+ * Get wind description based on speed in mph
+ */
 const getWindDescription = (speed) => {
-    if (speed < 5) return 'light';
-    if (speed < 10) return 'gentle';
-    if (speed < 15) return 'moderate';
-    if (speed < 20) return 'fresh';
-    if (speed < 25) return 'strong';
-    return 'very strong';
+    const category = Object.values(CONDITIONS.WIND)
+        .find(cat => speed <= cat.max);
+    return category.description;
 };
 
+/**
+ * Convert degrees to cardinal direction
+ */
 const getWindDirectionText = (degrees) => {
     const directions = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
     const index = Math.round(((degrees + 22.5) % 360) / 45);
     return directions[index % 8];
 };
 
-const getWindImpact = (windDirection, windSpeed, location) => {
-    const coastConfigs = {
-        EAST_COAST: {
-            favorable: ['W', 'NW', 'SW'],
-            unfavorable: ['E', 'NE', 'SE'],
-            neutral: ['N', 'S']
-        },
-        WEST_COAST: {
-            favorable: ['E', 'SE', 'NE'],
-            unfavorable: ['W', 'SW', 'NW'],
-            neutral: ['N', 'S']
-        }
-    };
+/**
+ * Calculate wave steepness and quality
+ */
+const analyzeWaveQuality = (height, period) => {
+    if (!height || !period) return null;
+    
+    const steepness = height / (period * period);
+    let quality;
 
+    if (steepness < 0.004) quality = 'clean';
+    else if (steepness < 0.007) quality = 'fair';
+    else if (steepness < 0.01) quality = 'choppy';
+    else quality = 'rough';
+
+    return { steepness, quality };
+};
+
+/**
+ * Analyze wind impact based on direction and coast
+ */
+const getWindImpact = (windDirection, windSpeed, location) => {
     const windDir = getWindDirectionText(windDirection);
-    const config = location.longitude < -100 ? coastConfigs.WEST_COAST : coastConfigs.EAST_COAST;
+    const config = location.longitude < -100 ? CONDITIONS.COAST.WEST : CONDITIONS.COAST.EAST;
 
     if (config.unfavorable.includes(windDir)) {
         if (windSpeed > 15) return 'poor-choppy';
@@ -61,17 +102,56 @@ const getWindImpact = (windDirection, windSpeed, location) => {
     return 'good';
 };
 
+/**
+ * Score conditions for activity suitability
+ */
+const scoreConditions = (period) => {
+    let score = 0;
+    
+    // Wave height scoring (2-5ft ideal)
+    if (period.waveHeight >= 2 && period.waveHeight <= 5) {
+        score += 50;
+    } else if (period.waveHeight > 5) {
+        score += 30;
+    } else {
+        score += 10;
+    }
+
+    // Wind impact scoring
+    const windImpact = getWindImpact(period.windDirection, period.windSpeed, period.location);
+    const impactScores = {
+        'excellent': 50,
+        'good': 40,
+        'good-breezy': 30,
+        'fair': 20,
+        'fair-strong': 10,
+        'poor': 5,
+        'poor-choppy': 0
+    };
+
+    score += impactScores[windImpact] || 0;
+
+    return score;
+};
+
+/**
+ * Generate human-readable summaries for conditions
+ */
 const generateSummaries = (modelData, location) => {
     if (!modelData?.days?.[0]?.periods?.length) {
         throw new Error('Invalid model data structure');
     }
 
     try {
-        // Current conditions from first period
+        // Current conditions
         const current = modelData.days[0].periods[0];
         const windImpact = getWindImpact(current.windDirection, current.windSpeed, location);
+        const waveQuality = analyzeWaveQuality(current.waveHeight, current.wavePeriod);
         
-        const currentSummary = `${getWaveDescription(current.waveHeight)} ${current.waveHeight}ft waves, ${getWindDescription(current.windSpeed)} ${current.windSpeed}mph ${getWindDirectionText(current.windDirection)} winds (${windImpact} conditions)`;
+        const currentSummary = `${getWaveDescription(current.waveHeight)} ${current.waveHeight}ft waves` +
+            (waveQuality ? ` (${waveQuality.quality})` : '') +
+            `, ${getWindDescription(current.windSpeed)} ${current.windSpeed}mph ${getWindDirectionText(current.windDirection)} winds` +
+            ` (${windImpact} conditions)`;
 
         // Find peak conditions
         const peakConditions = modelData.days.reduce((peak, day) => {
@@ -91,37 +171,16 @@ const generateSummaries = (modelData, location) => {
         const peakDate = new Date(peakConditions.date);
         const weekSummary = `Building to ${peakConditions.waveHeight}ft waves and ${peakConditions.windSpeed}mph winds by ${peakDate.toLocaleDateString('en-US', { weekday: 'long' })}`;
 
-        // Find best day for conditions
+        // Find best day based on scoring
         const bestDay = modelData.days.reduce((best, current) => {
-            const score = current.periods.reduce((maxScore, period) => {
-                const windImpact = getWindImpact(period.windDirection, period.windSpeed, location);
-                let score = 0;
-                
-                // Wave height scoring (2-5ft ideal)
-                if (period.waveHeight >= 2 && period.waveHeight <= 5) {
-                    score += 50;
-                } else if (period.waveHeight > 5) {
-                    score += 30;
-                } else {
-                    score += 10;
-                }
-
-                // Wind impact scoring
-                switch (windImpact) {
-                    case 'excellent': score += 50; break;
-                    case 'good': score += 40; break;
-                    case 'good-breezy': score += 30; break;
-                    case 'fair': score += 20; break;
-                    case 'fair-strong': score += 10; break;
-                    case 'poor': score += 5; break;
-                    case 'poor-choppy': score += 0; break;
-                }
-
+            const dayScore = current.periods.reduce((maxScore, period) => {
+                period.location = location; // Add location for wind impact calculation
+                const score = scoreConditions(period);
                 return Math.max(maxScore, score);
             }, 0);
 
-            if (!best || score > best.score) {
-                return { date: current.date, score, summary: current.summary };
+            if (!best || dayScore > best.score) {
+                return { date: current.date, score: dayScore, summary: current.summary };
             }
             return best;
         }, null);
@@ -145,6 +204,9 @@ const generateSummaries = (modelData, location) => {
     }
 };
 
+/**
+ * Get processed marine conditions including forecast and summaries
+ */
 async function getProcessedMarineConditions(lat, lon) {
     try {
         logger.info(`Processing marine conditions for lat: ${lat}, lon: ${lon}`);
@@ -170,5 +232,11 @@ async function getProcessedMarineConditions(lat, lon) {
 
 module.exports = {
     getProcessedMarineConditions,
-    generateSummaries
+    generateSummaries,
+    getWindImpact,
+    getWaveDescription,
+    getWindDescription,
+    getWindDirectionText,
+    analyzeWaveQuality,
+    CONDITIONS
 }; 
