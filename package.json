@@ -4,7 +4,8 @@
   "description": "Server for Salty - Marine Weather and Tide Data API",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js",
+    "start": "pm2 start ecosystem.config.js",
+    "stop": "pm2 stop ecosystem.config.js",
     "dev": "nodemon app.js",
     "lint": "eslint .",
     "test": "jest",
@@ -25,6 +26,7 @@
     "helmet": "^7.1.0",
     "morgan": "^1.10.0",
     "node-schedule": "^2.1.1",
+    "pm2": "^5.3.0",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.0",
     "winston": "^3.11.0"
