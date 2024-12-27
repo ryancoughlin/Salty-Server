@@ -17,8 +17,14 @@ const app = express()
 const PORT = process.env.PORT || 3000
 
 // Security middleware
-app.use(helmet())
-app.use(compression())
+app.use(helmet({
+    crossOriginResourcePolicy: false,
+    crossOriginOpenerPolicy: false,
+    crossOriginEmbedderPolicy: false,
+    contentSecurityPolicy: false,
+    originAgentCluster: false
+}));
+app.use(compression());
 
 // CORS middleware
 app.use(restrictOrigin)
