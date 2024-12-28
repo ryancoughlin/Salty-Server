@@ -1,102 +1,153 @@
-# Salty API - Marine Weather and Tide Data
+# 🌊 Salty API
 
-Real-time marine conditions and forecasts from NDBC buoys and NOAA models.
+> Real-time tide predictions and marine data from NOAA stations.
 
-## Features
+## 📖 Overview
 
-- Real-time buoy observations (waves, wind, atmospheric conditions)
-- 7-day marine forecasts
-- Tide predictions
-- Trend analysis and condition summaries
-- Wave quality assessment
+Salty API provides real-time access to tide predictions and marine data from NOAA stations. Built with Node.js and Express, it offers a simple and reliable way to access marine data.
 
-## API Endpoints
-
-### Buoys
-
-```
-GET /api/buoys/:buoyId
-```
-
-Returns:
-
-- Current buoy observations
-- 4-hour trend analysis
-- 7-day forecast
-- Human-readable condition summaries
-
-### Tides
-
-```
-GET /api/tides/stations            # List all tide stations
-GET /api/tides/stations/closest    # Find nearest station to lat/lon
-GET /api/tides/stations/:id/predictions  # Get tide predictions
-```
-
-## Data Sources
-
-- NDBC (National Data Buoy Center) - Real-time observations
-- NOAA WaveWatch III - Wave and wind forecasts
-- NOAA CO-OPS - Tide predictions
-
-## Installation
+## ⚡️ Quick Start
 
 ```bash
+# Install dependencies
 npm install
-cp .env.example .env  # Configure environment variables
-npm run dev          # Start development server
+
+# Configure environment
+cp .env.example .env
+
+# Start development server
+npm run dev
 ```
 
-## Environment Variables
+## 🛠 API Reference
 
-```
-PORT=3000
-NODE_ENV=development
-CACHE_TTL=1800      # Cache duration in seconds
-```
+### Stations
 
-## Development
+All station-related endpoints for accessing tide data and predictions.
 
-```bash
-npm run dev     # Start development server
-npm run lint    # Run ESLint
-npm test        # Run tests
+#### Get All Stations
+
+```http
+GET /api/stations
 ```
 
-## Response Format
+Returns a list of all available tide stations.
 
-```javascript
+**Response**
+
+```json
 {
   "status": "success",
   "data": {
-    "buoy": {
-      "id": "44098",
-      "name": "Jeffrey's Ledge",
-      "location": { "type": "Point", "coordinates": [-70.168, 42.798] }
-    },
-    "observations": {
-      "time": "2024-01-24T20:00:00Z",
-      "wind": { "direction": 220, "speed": 15.5, "gust": 18.2 },
-      "waves": { "height": 4.5, "dominantPeriod": 8, "direction": 200 },
-      "conditions": { "pressure": 1015.2, "airTemp": 45.2, "waterTemp": 42.1 }
-    },
-    "forecast": {
-      "days": [...],
-      "summaries": { "current": "...", "week": "...", "bestDay": "..." }
-    }
+    "stations": [
+      {
+        "id": "8443970",
+        "name": "Boston",
+        "location": {
+          "type": "Point",
+          "coordinates": [-71.0503, 42.3584]
+        }
+      }
+    ]
   }
 }
 ```
 
-## Error Handling
+#### Find Nearest Station
 
-```javascript
+```http
+GET /api/stations/nearest?lat={latitude}&lon={longitude}
+```
+
+Finds the closest tide station to provided coordinates.
+
+**Parameters**
+| Name | Type | Description |
+|------|------|-------------|
+| lat | float | Latitude |
+| lon | float | Longitude |
+
+#### Get Station Predictions
+
+```http
+GET /api/stations/{stationId}?startDate={date}&endDate={date}
+```
+
+Returns tide predictions for a specific station.
+
+**Parameters**
+| Name | Type | Description |
+|-----------|--------|--------------------------------|
+| stationId | string | Station identifier |
+| startDate | string | Start date (ISO 8601, optional)|
+| endDate | string | End date (ISO 8601, optional) |
+
+## 🔧 Configuration
+
+### Environment Variables
+
+```env
+PORT=3000              # Server port
+NODE_ENV=development   # Environment (development/production)
+CACHE_TTL=1800        # Cache duration in seconds
+```
+
+## 🚀 Development
+
+```bash
+# Start development server with hot reload
+npm run dev
+
+# Run linter
+npm run lint
+
+# Run tests
+npm test
+```
+
+## 📦 Response Format
+
+### Success Response
+
+```json
+{
+  "status": "success",
+  "data": {
+    // Response data
+  }
+}
+```
+
+### Error Response
+
+```json
 {
   "status": "fail",
   "message": "Error description"
 }
 ```
 
-## License
+## 🔒 Error Handling
 
-ISC
+The API uses a centralized error handling system:
+
+- Validation errors (400)
+- Not found errors (404)
+- Server errors (500)
+
+Each error returns a consistent format with appropriate HTTP status codes.
+
+## 📝 Data Sources
+
+- **NOAA CO-OPS**: Tide predictions and water level data
+- **NOAA Stations**: Station metadata and reference data
+
+## 📄 License
+
+ISC © [Your Name]
+
+---
+
+<div align="center">
+Made with ❤️ for the marine community
+</div>
