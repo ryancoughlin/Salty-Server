@@ -3,17 +3,70 @@ const { logger } = require('../utils/logger');
 const ndbcService = require('../services/ndbcService');
 const waveModelService = require('../services/waveModelService');
 const waveConditionsService = require('../services/waveConditionsService');
+const CONFIG = require('../config/waveModelConfig');
+
+/**
+ * Calculate cache duration until next model run
+ * @returns {number} Cache duration in seconds
+ */
+const calculateCacheDuration = () => {
+    const now = new Date();
+    const currentHour = now.getUTCHours();
+    const currentMinute = now.getUTCMinutes();
+
+    // Find next model run
+    const modelRuns = CONFIG.modelRuns.hours.map(h => parseInt(h));
+    const nextRun = modelRuns.find(hour => hour > currentHour) || modelRuns[0];
+    
+    // Calculate time until next run is available
+    let hoursUntilNextRun = nextRun > currentHour ? 
+        nextRun - currentHour : 
+        (24 - currentHour) + nextRun;
+    
+    // Add availability delay
+    hoursUntilNextRun += CONFIG.modelRuns.availableAfter[nextRun.toString().padStart(2, '0')];
+
+    // Convert to seconds and subtract elapsed minutes
+    const cacheDuration = (hoursUntilNextRun * 60 - currentMinute) * 60;
+
+    // Cap at maximum cache duration from config
+    return Math.min(cacheDuration, CONFIG.cache.hours * 3600);
+};
 
 /**
  * Get buoy data by ID
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ * @param {Function} next - Express next middleware function
+ * @throws {AppError} 400 - Invalid buoy ID format
+ * @throws {AppError} 404 - Buoy data not found
+ * @throws {AppError} 500 - Internal server error
  */
 const getBuoyData = async (req, res, next) => {
+    const startTime = Date.now();
+    const { buoyId } = req.params;
+
     try {
-        const { buoyId } = req.params;
+        // Validate buoy ID format
+        if (!buoyId?.match(/^\d+$/)) {
+            throw new AppError(400, 'Invalid buoy ID format');
+        }
+
+        // Calculate dynamic cache duration
+        const cacheDuration = calculateCacheDuration();
         
-        // Fetch current observations and station info
+        // Set response headers for caching
+        res.set('Cache-Control', `public, max-age=${cacheDuration}`);
+        res.set('Vary', 'Accept-Encoding');
+
+        // Start parallel requests with timeout
         const [buoyData, stationInfo] = await Promise.all([
-            ndbcService.fetchBuoyData(buoyId),
+            Promise.race([
+                ndbcService.fetchBuoyData(buoyId),
+                new Promise((_, reject) => 
+                    setTimeout(() => reject(new AppError(504, 'Buoy data fetch timeout')), 5000)
+                )
+            ]),
             ndbcService.getStationById(buoyId)
         ]);
 
@@ -21,117 +74,138 @@ const getBuoyData = async (req, res, next) => {
             throw new AppError(404, 'Buoy data not found');
         }
 
+        if (!stationInfo) {
+            logger.warn(`Station info not found for buoy ${buoyId}`);
+        }
+
         // Structure station info
-        const buoyInfo = stationInfo ? {
+        const buoyInfo = {
             id: buoyId,
-            name: stationInfo.name,
-            location: {
-                type: "Point",
-                coordinates: [stationInfo.lon, stationInfo.lat]
-            }
-        } : { id: buoyId };
+            name: stationInfo?.name,
+            location: stationInfo?.location
+        };
 
         // Fetch forecast if we have location
         let forecast = null;
         
-        if (stationInfo && stationInfo.location && stationInfo.location.coordinates) {
+        if (stationInfo?.location?.coordinates) {
             try {
-                // GeoJSON format is [longitude, latitude]
                 const [lon, lat] = stationInfo.location.coordinates;
-                logger.info(`Checking coordinates for buoy ${buoyId}: lat=${lat}, lon=${lon}`);
+                logger.debug(`Fetching forecast for buoy ${buoyId} at lat=${lat}, lon=${lon}`);
                 
-                if (typeof lat !== 'number' || typeof lon !== 'number') {
-                    logger.warn(`Invalid coordinates for buoy ${buoyId}: lat=${lat}, lon=${lon}`);
-                } else {
-                    logger.info(`Fetching forecast for buoy ${buoyId} at lat=${lat}, lon=${lon}`);
-                    forecast = await waveModelService.getPointForecast(lat, lon);
-                    
-                    if (forecast) {
-                        logger.info(`Successfully fetched forecast for buoy ${buoyId}`);
-                        forecast.summaries = waveConditionsService.generateSummaries(forecast, {
-                            latitude: lat,
-                            longitude: lon
-                        });
-                    } else {
-                        logger.warn(`No forecast data returned for buoy ${buoyId}`);
-                    }
+                forecast = await Promise.race([
+                    waveModelService.getPointForecast(lat, lon),
+                    new Promise((_, reject) => 
+                        setTimeout(() => reject(new AppError(504, 'Forecast fetch timeout')), 10000)
+                    )
+                ]);
+                
+                if (forecast) {
+                    forecast.summaries = waveConditionsService.generateSummaries(forecast, {
+                        latitude: lat,
+                        longitude: lon
+                    });
+                    logger.debug(`Generated forecast summaries for buoy ${buoyId}`);
                 }
             } catch (forecastError) {
-                logger.warn(`Failed to fetch forecast for buoy ${buoyId}: ${forecastError.message}`, { error: forecastError });
+                logger.warn(`Failed to fetch forecast for buoy ${buoyId}:`, {
+                    error: forecastError.message,
+                    coordinates: stationInfo.location.coordinates
+                });
             }
         }
 
+        // Build response
         const response = {
-            status: 'success',
-            data: {
-                buoy: buoyInfo,
-                observations: {
-                    time: buoyData.time,
-                    wind: buoyData.wind.speed ? {
-                        direction: buoyData.wind.direction,
-                        speed: buoyData.wind.speed,
-                        gust: buoyData.wind.gust
-                    } : undefined,
-                    waves: buoyData.waves.height ? {
-                        height: buoyData.waves.height,
-                        dominantPeriod: buoyData.waves.dominantPeriod,
-                        averagePeriod: buoyData.waves.averagePeriod,
-                        direction: buoyData.waves.direction
-                    } : undefined,
-                    conditions: {
-                        pressure: buoyData.conditions.pressure,
-                        airTemp: buoyData.conditions.airTemp,
-                        waterTemp: buoyData.conditions.waterTemp,
-                        dewPoint: buoyData.conditions.dewPoint
-                    },
-                    trends: buoyData.trends
-                },
-                forecast: forecast ? {
-                    modelRun: forecast.modelRun,
-                    days: forecast.days.map(day => ({
-                        date: day.date,
-                        predictions: day.periods.map(period => ({
-                            time: period.time,
-                            waves: period.waveHeight ? {
-                                height: period.waveHeight,
-                                period: period.wavePeriod,
-                                direction: period.waveDirection
-                            } : undefined,
-                            wind: period.windSpeed ? {
-                                speed: period.windSpeed,
-                                direction: period.windDirection
-                            } : undefined
-                        })),
-                        summary: {
-                            waves: day.summary.waveHeight ? {
-                                min: day.summary.waveHeight.min,
-                                max: day.summary.waveHeight.max,
-                                avg: day.summary.waveHeight.avg
-                            } : undefined,
-                            wind: day.summary.windSpeed ? {
-                                min: day.summary.windSpeed.min,
-                                max: day.summary.windSpeed.max,
-                                avg: day.summary.windSpeed.avg
-                            } : undefined
-                        }
-                    })),
-                    summaries: forecast.summaries,
-                    units: {
-                        waveHeight: 'ft',
-                        wavePeriod: 'seconds',
-                        waveDirection: 'degrees',
-                        windSpeed: 'mph',
-                        windDirection: 'degrees'
-                    }
-                } : null
-            }
+            id: buoyInfo.id,
+            name: buoyInfo.name,
+            location: buoyInfo.location,
+            observations: {
+                time: buoyData.time,
+                wind: buoyData.wind.speed ? {
+                    direction: buoyData.wind.direction,
+                    speed: buoyData.wind.speed,
+                    gust: buoyData.wind.gust,
+                    trend: buoyData.trends?.wind || null
+                } : null,
+                waves: buoyData.waves.height ? {
+                    height: buoyData.waves.height,
+                    dominantPeriod: buoyData.waves.dominantPeriod,
+                    averagePeriod: buoyData.waves.averagePeriod,
+                    direction: buoyData.waves.direction,
+                    trend: buoyData.trends?.waveHeight || null
+                } : null,
+                weather: {
+                    pressure: buoyData.conditions.pressure,
+                    airTemp: buoyData.conditions.airTemp,
+                    waterTemp: buoyData.conditions.waterTemp,
+                    dewPoint: buoyData.conditions.dewPoint
+                }
+            },
+            summary: buoyData.trends?.summary || null
         };
 
-        // Remove undefined values
+        // Add forecast if available
+        if (forecast) {
+            response.modelRun = forecast.modelRun;
+            response.forecast = forecast.days.map(day => ({
+                date: day.date,
+                waves: day.summary.waveHeight ? {
+                    min: day.summary.waveHeight.min,
+                    max: day.summary.waveHeight.max,
+                    avg: day.summary.waveHeight.avg
+                } : null,
+                wind: day.summary.windSpeed ? {
+                    min: day.summary.windSpeed.min,
+                    max: day.summary.windSpeed.max,
+                    avg: day.summary.windSpeed.avg
+                } : null,
+                periods: day.periods.map(period => ({
+                    time: period.time,
+                    waves: period.waveHeight ? {
+                        height: period.waveHeight,
+                        period: period.wavePeriod,
+                        direction: period.waveDirection
+                    } : null,
+                    wind: period.windSpeed ? {
+                        speed: period.windSpeed,
+                        direction: period.windDirection
+                    } : null
+                }))
+            }));
+            response.summary = forecast.summaries;
+            response.units = {
+                waveHeight: 'ft',
+                wavePeriod: 'seconds',
+                waveDirection: 'degrees',
+                windSpeed: 'mph',
+                windDirection: 'degrees'
+            };
+        }
+
+        // Remove null values and send response
         const cleanResponse = JSON.parse(JSON.stringify(response));
+        
+        // Log performance metrics
+        const duration = Date.now() - startTime;
+        logger.info(`Buoy data request completed`, {
+            buoyId,
+            duration,
+            hasForecast: !!forecast,
+            cacheDuration,
+            statusCode: 200
+        });
+
         res.status(200).json(cleanResponse);
     } catch (error) {
-        logger.error('Error fetching buoy data:', error);
+        // Enhanced error logging
+        logger.error(`Error processing buoy data request`, {
+            buoyId,
+            error: error.message,
+            stack: error.stack,
+            statusCode: error.statusCode || 500,
+            duration: Date.now() - startTime
+        });
         next(error);
     }
 };
