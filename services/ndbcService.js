@@ -2,7 +2,7 @@ const fs = require('fs').promises;
 const path = require('path');
 const axios = require('axios');
 const { logger } = require('../utils/logger');
-const { getCache, setCache } = require('../utils/cache');
+const { getOrSet, DEFAULT_TTL } = require('../utils/cache');
 
 const NDBC_BASE_URL = 'https://www.ndbc.noaa.gov/data/realtime2';
 const CACHE_TTL = 30 * 60; // 30 minutes
@@ -222,50 +222,65 @@ class NDBCService {
     async fetchBuoyData(buoyId) {
         try {
             const cacheKey = `buoy_data_${buoyId}`;
-            const cached = await getCache(cacheKey);
-            if (cached) return cached;
-
-            const url = `${NDBC_BASE_URL}/${buoyId}.txt`;
-            const response = await axios.get(url, { timeout: REQUEST_TIMEOUT });
-            const lines = response.data.trim().split('\n');
             
-            if (lines.length < 3) {
-                logger.error(`Invalid response for buoy ${buoyId}: insufficient data`);
+            const { data: buoyData, fromCache } = await getOrSet(
+                cacheKey,
+                async () => {
+                    const url = `${NDBC_BASE_URL}/${buoyId}.txt`;
+                    const response = await axios.get(url, { timeout: REQUEST_TIMEOUT });
+                    const lines = response.data.trim().split('\n');
+                    
+                    if (lines.length < 3) {
+                        logger.error(`Invalid response for buoy ${buoyId}: insufficient data`);
+                        return null;
+                    }
+
+                    const dataLines = lines.filter(line => !line.startsWith('#'));
+                    if (dataLines.length === 0) {
+                        logger.error(`No data lines found for buoy ${buoyId}`);
+                        return null;
+                    }
+
+                    // Parse recent observations for trend analysis
+                    const recentObservations = dataLines
+                        .slice(0, 8)
+                        .map(line => {
+                            const values = line.trim().split(/\s+/);
+                            return this.parseDataLine(values);
+                        })
+                        .filter(data => data.waves.height || data.wind.speed);
+
+                    if (recentObservations.length === 0) {
+                        logger.error(`No valid observations found for buoy ${buoyId}`);
+                        return null;
+                    }
+
+                    const trends = this.analyzeTrends(recentObservations);
+                    const currentData = recentObservations[0];
+
+                    return {
+                        ...currentData,
+                        trends,
+                        stationId: buoyId,
+                        fetchTime: new Date().toISOString()
+                    };
+                },
+                DEFAULT_TTL
+            );
+
+            if (!buoyData) {
+                logger.error(`Failed to fetch or process data for buoy ${buoyId}`);
                 return null;
             }
 
-            const dataLines = lines.filter(line => !line.startsWith('#'));
-            if (dataLines.length === 0) {
-                logger.error(`No data lines found for buoy ${buoyId}`);
-                return null;
+            if (!fromCache) {
+                logger.info(`Fresh buoy data fetched for ${buoyId}`);
             }
 
-            // Parse recent observations for trend analysis
-            const recentObservations = dataLines
-                .slice(0, 8) // Get last 4 hours of data (30-min intervals)
-                .map(line => {
-                    const values = line.trim().split(/\s+/);
-                    return this.parseDataLine(values);
-                })
-                .filter(data => data.waves.height || data.wind.speed);
-
-            // Get current conditions (most recent with wave data)
-            const currentData = recentObservations[0];
-            if (!currentData) {
-                logger.error(`No valid wave or wind data found for buoy ${buoyId}`);
-                return null;
-            }
-
-            const result = {
-                ...currentData,
-                trends: this.analyzeTrends(recentObservations)
-            };
-
-            await setCache(cacheKey, result, CACHE_TTL);
-            return result;
+            return buoyData;
         } catch (error) {
-            logger.error(`Error fetching buoy ${buoyId}: ${error.message}`);
-            return null;
+            logger.error(`Error fetching buoy data for ${buoyId}:`, error);
+            throw error;
         }
     }
 }

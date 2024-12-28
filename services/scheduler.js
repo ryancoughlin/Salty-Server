@@ -1,22 +1,34 @@
 const schedule = require('node-schedule');
 const { logger } = require('../utils/logger');
-const { getCache, clearExpiredCache } = require('../utils/cache');
+const { getStats, clearCache } = require('../utils/cache');
 
-// Clean expired cache entries periodically
-const scheduleCacheCleanup = () => {
-    logger.info('Scheduling cache cleanup');
+// Monitor cache and cleanup if needed
+const scheduleCacheMonitoring = () => {
+    logger.info('Scheduling cache monitoring');
     
-    // Run cache cleanup every hour
+    // Monitor cache stats every hour
     schedule.scheduleJob('0 * * * *', async () => {
         try {
-            await clearExpiredCache();
-            logger.info('Completed scheduled cache cleanup');
+            const stats = getStats();
+            logger.info('Cache statistics:', {
+                hits: stats.hits,
+                misses: stats.misses,
+                hitRate: stats.hitRate,
+                keys: stats.keys.length,
+                memoryUsage: Math.round(stats.memoryUsage / 1024 / 1024) + 'MB'
+            });
+
+            // If memory usage is too high, clear the cache
+            if (stats.memoryUsage > 500 * 1024 * 1024) { // 500MB threshold
+                logger.warn('Cache memory usage too high, clearing cache');
+                clearCache();
+            }
         } catch (error) {
-            logger.error('Failed scheduled cache cleanup:', error);
+            logger.error('Failed cache monitoring:', error);
         }
     });
 };
 
 module.exports = {
-    scheduleCacheCleanup
+    scheduleCacheMonitoring
 }; 

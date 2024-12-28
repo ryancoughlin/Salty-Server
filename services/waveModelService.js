@@ -1,6 +1,6 @@
 const axios = require('axios');
 const { logger } = require('../utils/logger');
-const { getCache, setCache } = require('../utils/cache');
+const { getOrSet } = require('../utils/cache');
 
 // WAVEWATCH III Model Configuration
 const CONFIG = {
@@ -110,146 +110,148 @@ async function getPointForecast(lat, lon) {
     }
 
     const cacheKey = `ww3_forecast_${lat}_${lon}`;
+    
     try {
-        const cached = await getCache(cacheKey);
-        if (cached) return cached;
+        const { data: forecast } = await getOrSet(
+            cacheKey,
+            async () => {
+                const { latIdx, lonIdx } = getGridIndices(lat, lon);
+                const modelRun = getModelRun();
+                
+                // Construct URL
+                const url = `${CONFIG.baseUrl}/${modelRun.date}/gfswave.${CONFIG.modelName}_${modelRun.hour}z.ascii?` +
+                    CONFIG.variables.map(v => `${v}[0:7][${latIdx}][${lonIdx}]`).join(',');
 
-        const { latIdx, lonIdx } = getGridIndices(lat, lon);
-        const modelRun = getModelRun();
-        
-        // Construct URL
-        const url = `${CONFIG.baseUrl}/${modelRun.date}/gfswave.${CONFIG.modelName}_${modelRun.hour}z.ascii?` +
-            CONFIG.variables.map(v => `${v}[0:7][${latIdx}][${lonIdx}]`).join(',');
+                logger.info(`Requesting forecast from: ${url}`);
+                const response = await axios.get(url);
+                
+                if (!response.data || response.data.includes('</html>')) {
+                    throw new Error(`Model data not available for ${modelRun.date}_${modelRun.hour}z`);
+                }
 
-        logger.info(`Requesting forecast from: ${url}`);
-        const response = await axios.get(url);
-        
-        if (!response.data || response.data.includes('</html>')) {
-            throw new Error(`Model data not available for ${modelRun.date}_${modelRun.hour}z`);
-        }
+                // Parse forecast data
+                const lines = response.data.split('\n');
+                if (lines.length < 10) {
+                    throw new Error('Invalid response format from wave model');
+                }
 
-        // Parse forecast data
-        const lines = response.data.split('\n');
-        if (lines.length < 10) {
-            throw new Error('Invalid response format from wave model');
-        }
+                const forecast = Array(CONFIG.forecastDays * CONFIG.periodsPerDay).fill().map(() => ({}));
+                let currentVar = null;
+                let timeIndex = 0;
+                let foundData = false;
 
-        const forecast = Array(CONFIG.forecastDays * CONFIG.periodsPerDay).fill().map(() => ({}));
-        let currentVar = null;
-        let timeIndex = 0;
-        let foundData = false;
+                lines.forEach(line => {
+                    const varMatch = CONFIG.variables.find(v => line.includes(`${v},`));
+                    if (varMatch) {
+                        currentVar = varMatch;
+                        timeIndex = 0;
+                        return;
+                    }
 
-        lines.forEach(line => {
-            const varMatch = CONFIG.variables.find(v => line.includes(`${v},`));
-            if (varMatch) {
-                currentVar = varMatch;
-                timeIndex = 0;
-                return;
-            }
+                    if (!currentVar) return;
 
-            if (!currentVar) return;
+                    const value = parseValue(line);
+                    if (value !== null && timeIndex < forecast.length) {
+                        foundData = true;
+                        const time = new Date(Date.now() + timeIndex * 3 * 60 * 60 * 1000);
+                        forecast[timeIndex] = {
+                            ...forecast[timeIndex],
+                            time: time.toISOString(),
+                            [CONFIG.variableNames[currentVar]]: convertValue(value, currentVar)
+                        };
+                        timeIndex++;
+                    }
+                });
 
-            const value = parseValue(line);
-            if (value !== null && timeIndex < forecast.length) {
-                foundData = true;
-                const time = new Date(Date.now() + timeIndex * 3 * 60 * 60 * 1000);
-                forecast[timeIndex] = {
-                    ...forecast[timeIndex],
-                    time: time.toISOString(),
-                    [CONFIG.variableNames[currentVar]]: convertValue(value, currentVar)
+                if (!foundData) {
+                    throw new Error('No data found in wave model response');
+                }
+
+                const validForecast = forecast.filter(f => 
+                    CONFIG.variables.every(v => {
+                        const key = CONFIG.variableNames[v];
+                        return f[key] && !isNaN(parseFloat(f[key]));
+                    })
+                );
+
+                if (!validForecast.length) {
+                    throw new Error('No valid forecast periods found in response');
+                }
+
+                // Group forecast by days
+                const groupedForecast = validForecast.reduce((acc, period) => {
+                    const date = period.time.split('T')[0];
+                    if (!acc[date]) {
+                        acc[date] = {
+                            date,
+                            periods: []
+                        };
+                    }
+                    acc[date].periods.push({
+                        time: period.time,
+                        waveHeight: period.waveHeight,
+                        wavePeriod: period.wavePeriod,
+                        waveDirection: period.waveDirection,
+                        windSpeed: period.windSpeed,
+                        windDirection: period.windDirection
+                    });
+                    return acc;
+                }, {});
+
+                // Calculate daily summaries
+                const days = Object.values(groupedForecast).map(day => {
+                    const periods = day.periods;
+                    const summary = {
+                        waveHeight: {
+                            min: Math.min(...periods.map(p => parseFloat(p.waveHeight))),
+                            max: Math.max(...periods.map(p => parseFloat(p.waveHeight))),
+                            avg: parseFloat((periods.reduce((sum, p) => sum + parseFloat(p.waveHeight), 0) / periods.length).toFixed(1))
+                        },
+                        wavePeriod: {
+                            min: Math.min(...periods.map(p => parseFloat(p.wavePeriod))),
+                            max: Math.max(...periods.map(p => parseFloat(p.wavePeriod))),
+                            avg: parseFloat((periods.reduce((sum, p) => sum + parseFloat(p.wavePeriod), 0) / periods.length).toFixed(1))
+                        },
+                        windSpeed: {
+                            min: Math.min(...periods.map(p => parseFloat(p.windSpeed))),
+                            max: Math.max(...periods.map(p => parseFloat(p.windSpeed))),
+                            avg: parseFloat((periods.reduce((sum, p) => sum + parseFloat(p.windSpeed), 0) / periods.length).toFixed(1))
+                        }
+                    };
+
+                    return {
+                        date: day.date,
+                        summary,
+                        periods: periods
+                    };
+                });
+
+                return {
+                    location: { latitude: lat, longitude: lon },
+                    generated: new Date().toISOString(),
+                    modelRun: `${modelRun.date}${modelRun.hour}z`,
+                    units: {
+                        waveHeight: 'ft',
+                        wavePeriod: 'seconds',
+                        waveDirection: 'degrees',
+                        windSpeed: 'mph',
+                        windDirection: 'degrees'
+                    },
+                    days: days
                 };
-                timeIndex++;
-            }
-        });
-
-        if (!foundData) {
-            throw new Error('No data found in wave model response');
-        }
-
-        const validForecast = forecast.filter(f => 
-            CONFIG.variables.every(v => {
-                const key = CONFIG.variableNames[v];
-                return f[key] && !isNaN(parseFloat(f[key]));
-            })
+            },
+            CONFIG.cacheHours * 60 * 60 // Convert hours to seconds for TTL
         );
 
-        if (!validForecast.length) {
-            throw new Error('No valid forecast periods found in response');
-        }
-
-        // Group forecast by days
-        const groupedForecast = validForecast.reduce((acc, period) => {
-            const date = period.time.split('T')[0];
-            if (!acc[date]) {
-                acc[date] = {
-                    date,
-                    periods: []
-                };
-            }
-            acc[date].periods.push({
-                time: period.time,
-                waveHeight: period.waveHeight,
-                wavePeriod: period.wavePeriod,
-                waveDirection: period.waveDirection,
-                windSpeed: period.windSpeed,
-                windDirection: period.windDirection
-            });
-            return acc;
-        }, {});
-
-        // Calculate daily summaries
-        const days = Object.values(groupedForecast).map(day => {
-            const periods = day.periods;
-            const summary = {
-                waveHeight: {
-                    min: Math.min(...periods.map(p => parseFloat(p.waveHeight))),
-                    max: Math.max(...periods.map(p => parseFloat(p.waveHeight))),
-                    avg: parseFloat((periods.reduce((sum, p) => sum + parseFloat(p.waveHeight), 0) / periods.length).toFixed(1))
-                },
-                wavePeriod: {
-                    min: Math.min(...periods.map(p => parseFloat(p.wavePeriod))),
-                    max: Math.max(...periods.map(p => parseFloat(p.wavePeriod))),
-                    avg: parseFloat((periods.reduce((sum, p) => sum + parseFloat(p.wavePeriod), 0) / periods.length).toFixed(1))
-                },
-                windSpeed: {
-                    min: Math.min(...periods.map(p => parseFloat(p.windSpeed))),
-                    max: Math.max(...periods.map(p => parseFloat(p.windSpeed))),
-                    avg: parseFloat((periods.reduce((sum, p) => sum + parseFloat(p.windSpeed), 0) / periods.length).toFixed(1))
-                }
-            };
-
-            return {
-                date: day.date,
-                summary,
-                periods: periods
-            };
-        });
-
-        // Add units to the response
-        const result = {
-            location: { latitude: lat, longitude: lon },
-            generated: new Date().toISOString(),
-            modelRun: `${modelRun.date}${modelRun.hour}z`,
-            units: {
-                waveHeight: 'ft',
-                wavePeriod: 'seconds',
-                waveDirection: 'degrees',
-                windSpeed: 'mph',
-                windDirection: 'degrees'
-            },
-            days: days
-        };
-
-        await setCache(cacheKey, result, CONFIG.cacheHours * 60 * 60);
-        return result;
+        return forecast;
 
     } catch (error) {
         logger.error(`Forecast error for ${lat}N ${lon}W: ${error.message}`);
-        if (error.response) {
-            logger.error(`Response status: ${error.response.status}`);
-        }
         throw new Error(`Unable to get wave forecast: ${error.message}`);
     }
 }
 
-module.exports = { getPointForecast }; 
+module.exports = {
+    getPointForecast,
+    CONFIG
+}; 

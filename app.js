@@ -8,7 +8,7 @@ const rateLimit = require('express-rate-limit')
 const morgan = require('morgan')
 const { errorHandler } = require('./middlewares/errorHandler')
 const { logger } = require('./utils/logger')
-const { scheduleCacheCleanup } = require('./services/scheduler')
+const { scheduleCacheMonitoring } = require('./services/scheduler')
 const restrictOrigin = require('./middlewares/restrictOrigin')
 
 dotenv.config()
@@ -60,7 +60,7 @@ app.get('/', (req, res) => {
 app.use(errorHandler)
 
 // Start cache cleanup scheduler
-scheduleCacheCleanup()
+scheduleCacheMonitoring()
 
 // Start server
 const server = app.listen(PORT, () => {
