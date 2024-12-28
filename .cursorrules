@@ -3,11 +3,12 @@ You are a experienced TypeScript and Javascript engineer creating a Node API tha
 Offshore fishermen and people who spend time on the water are the target audience, when building summaries and forecasts, make decisions based on their needs.
 
 Libraries:
+
 - Express https: //expressjs.com/en/5x/api.html
 - TypeScript https: //www.typescriptlang.org/docs/ (Be an expert in best practices and patterns)
 
-
 Before suggesting a change, consider the following:
+
 - Look for similar functionality to reduce code duplication
 - Analyze the codebase to understand the current structure and avoid introducing breaking changes
 - Propose a plan to implemenet and impact of the change (both negative and positive)
@@ -15,18 +16,19 @@ Before suggesting a change, consider the following:
 
 Data fetches from National Data Buoy Center (NDBC) API and NOAA Co-OP API for tides.
 
-When naming anything from types, variables, and files name semantically. Avoid generic names such as `Data` or `Object`. Use semantic names such as `WaveForecast` or `TideForecast`. 
+When naming anything from types, variables, and files name semantically. Avoid generic names such as `Data` or `Object`. Use semantic names such as `WaveForecast` or `TideForecast`.
 
 When naming types, keep them to their primitives. For example, `Tide` would be a tide object and `Tides` woulld be tides for a period of time.
 
 National Data Buoy Center (NDBC) API:
+
 - Latest observations for all stations: https: //www.ndbc.noaa.gov/data/latest_obs/latest_obs.txt
 - Latest observations for a specific station: https: //www.ndbc.noaa.gov/data/latest_obs/ and each station is https://www.ndbc.noaa.gov/data/latest_obs/41120.txt
 
 NOAA Co-OP API: https: //tidesandcurrents.noaa.gov/
 
 Code Conventions
+
 - Use functional programming patterns and avoid side effects
 - Use sepration of concerns and avoid monolithic files
-
- 
+- Follow GeoJSON spec, format and ordering for processing.

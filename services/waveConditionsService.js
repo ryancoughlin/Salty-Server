@@ -143,63 +143,62 @@ const generateSummaries = (modelData, location) => {
     }
 
     try {
-        // Current conditions
         const current = modelData.days[0].periods[0];
-        const windImpact = getWindImpact(current.windDirection, current.windSpeed, location);
-        const waveQuality = analyzeWaveQuality(current.waveHeight, current.wavePeriod);
+        const next12Hours = modelData.days[0].periods.slice(0, 4);
         
-        const currentSummary = `${getWaveDescription(current.waveHeight)} ${current.waveHeight}ft waves` +
-            (waveQuality ? ` (${waveQuality.quality})` : '') +
-            `, ${getWindDescription(current.windSpeed)} ${current.windSpeed}mph ${getWindDirectionText(current.windDirection)} winds` +
-            ` (${windImpact} conditions)`;
+        // Build summary parts based on available data
+        const summaryParts = [];
+        
+        // Wave summary if available
+        if (current.waveHeight) {
+            const maxWaveHeight = Math.max(...next12Hours.map(p => p.waveHeight));
+            const waveChange = maxWaveHeight - current.waveHeight;
+            const trend = Math.abs(waveChange) >= 0.5 ? 
+                (waveChange > 0 ? 'increasing' : 'decreasing') : 
+                'steady';
+            
+            summaryParts.push(`${current.waveHeight}ft waves${current.wavePeriod ? ` at ${current.wavePeriod}s` : ''}, ${trend}`);
+        }
 
-        // Find peak conditions
-        const peakConditions = modelData.days.reduce((peak, day) => {
-            const maxWaveHeight = day.summary.waveHeight.max;
-            const maxWindSpeed = day.summary.windSpeed.max;
-            if (!peak || maxWaveHeight > peak.waveHeight || maxWindSpeed > peak.windSpeed) {
-                return {
-                    date: day.date,
-                    waveHeight: maxWaveHeight,
-                    windSpeed: maxWindSpeed,
-                    windDirection: day.periods[0].windDirection
-                };
-            }
-            return peak;
+        // Wind summary if available
+        if (current.windSpeed) {
+            summaryParts.push(`${getWindDescription(current.windSpeed)}mph ${getWindDirectionText(current.windDirection)}`);
+        }
+
+        const currentSummary = summaryParts.join(', ');
+
+        // Week summary based on available data
+        const peakDay = modelData.days.reduce((peak, day) => {
+            if (!day.summary.waveHeight?.max) return peak;
+            return (!peak || day.summary.waveHeight.max > peak.waveHeight) ? 
+                { 
+                    date: day.date, 
+                    waveHeight: day.summary.waveHeight.max,
+                    windSpeed: day.summary.windSpeed?.avg 
+                } : 
+                peak;
         }, null);
 
-        const peakDate = new Date(peakConditions.date);
-        const weekSummary = `Building to ${peakConditions.waveHeight}ft waves and ${peakConditions.windSpeed}mph winds by ${peakDate.toLocaleDateString('en-US', { weekday: 'long' })}`;
-
-        // Find best day based on scoring
-        const bestDay = modelData.days.reduce((best, current) => {
-            const dayScore = current.periods.reduce((maxScore, period) => {
-                period.location = location; // Add location for wind impact calculation
-                const score = scoreConditions(period);
-                return Math.max(maxScore, score);
-            }, 0);
-
-            if (!best || dayScore > best.score) {
-                return { date: current.date, score: dayScore, summary: current.summary };
-            }
-            return best;
-        }, null);
-
-        const bestDate = new Date(bestDay.date);
-        const bestDaySummary = `Best on ${bestDate.toLocaleDateString('en-US', { weekday: 'long' })}: ${bestDay.summary.waveHeight.avg}ft waves, ${bestDay.summary.windSpeed.avg}mph winds`;
+        let weekSummary = '';
+        if (peakDay) {
+            const peakDate = new Date(peakDay.date);
+            weekSummary = `Peaks ${peakDate.toLocaleDateString('en-US', { weekday: 'long' })} at ${peakDay.waveHeight}ft` + 
+                (peakDay.windSpeed ? ` with ${getWindDescription(peakDay.windSpeed)}mph winds` : '');
+        }
 
         return {
-            current: currentSummary,
-            week: weekSummary,
-            bestDay: bestDaySummary,
-            conditions: windImpact
+            current: currentSummary || 'No current observations available',
+            week: weekSummary || 'No forecast available',
+            conditions: current.waveHeight && current.wavePeriod ? 
+                analyzeWaveQuality(current.waveHeight, current.wavePeriod)?.quality : 
+                'unknown'
         };
     } catch (error) {
         logger.error('Error generating summaries:', error);
         return {
-            current: 'Forecast data unavailable',
-            week: 'Unable to generate week summary',
-            bestDay: 'Unable to determine best conditions'
+            current: 'Forecast unavailable',
+            week: 'Forecast unavailable',
+            conditions: 'unknown'
         };
     }
 };

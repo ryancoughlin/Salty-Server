@@ -2,117 +2,282 @@ const axios = require('axios');
 const { logger } = require('../utils/logger');
 const { getOrSet } = require('../utils/cache');
 
-// Simplified configuration
+// Pure configuration without logic
 const CONFIG = {
     baseUrl: 'https://nomads.ncep.noaa.gov/dods/wave/gfswave',
-    modelName: 'atlocn.0p16',
-    grid: {
-        lat: { size: 331, start: 0, end: 55, resolution: 0.167 },
-        lon: { size: 301, start: 260, end: 310, resolution: 0.167 }
+    models: {
+        atlantic: {
+            name: 'atlocn.0p16',
+            grid: {
+                lat: { 
+                    size: 331,
+                    start: 0.00000000000,
+                    end: 55.00011000000,
+                    resolution: 0.166667
+                },
+                lon: { 
+                    size: 301,
+                    start: 260.00000000000,
+                    end: 310.00010000000,
+                    resolution: 0.166667
+                }
+            },
+            bounds: { min: -100, max: -50 }
+        }
     },
     variables: {
-        waveHeight: { key: 'htsgwsfc', unit: 'ft', convert: v => (v * 3.28084).toFixed(1) },
-        wavePeriod: { key: 'perpwsfc', unit: 'seconds', convert: v => parseFloat(v.toFixed(1)) },
-        waveDirection: { key: 'dirpwsfc', unit: 'degrees', convert: v => Math.round(v) },
-        windSpeed: { key: 'windsfc', unit: 'mph', convert: v => (v * 2.237).toFixed(1) },
-        windDirection: { key: 'wdirsfc', unit: 'degrees', convert: v => Math.round(v) }
+        waveHeight: { 
+            key: 'htsgwsfc', 
+            unit: 'ft', 
+            convert: v => (v * 3.28084).toFixed(1) 
+        },
+        wavePeriod: { 
+            key: 'perpwsfc', 
+            unit: 'seconds', 
+            convert: v => parseFloat(v.toFixed(1)) 
+        },
+        waveDirection: { 
+            key: 'dirpwsfc', 
+            unit: 'degrees', 
+            convert: v => Math.round(v) 
+        },
+        windSpeed: { 
+            key: 'windsfc', 
+            unit: 'mph', 
+            convert: v => (v * 2.237).toFixed(1) 
+        },
+        windDirection: { 
+            key: 'wdirsfc', 
+            unit: 'degrees', 
+            convert: v => Math.round(v) 
+        }
     },
-    forecastDays: 7,
-    periodsPerDay: 8,
-    cacheHours: 6
+    modelRuns: {
+        hours: ['00', '06', '12', '18'],
+        availableAfter: { // Hours after run time when data is typically available
+            '00': 5,  // Available ~05:12 UTC
+            '06': 5,  // Available ~11:09 UTC
+            '12': 5,  // Available ~17:00 UTC
+            '18': 5   // Available ~23:00 UTC
+        }
+    },
+    forecast: {
+        days: 7,
+        periodsPerDay: 8,
+        periodHours: 3
+    },
+    cache: {
+        hours: 6
+    },
+    request: {
+        timeout: 60000,
+        maxRetries: 3,
+        retryDelay: 2000
+    }
 };
 
-// Pure utility functions
-const getModelRun = (now = new Date()) => {
-    const hour = now.getUTCHours();
-    const runHour = hour >= 18 ? 12 : 
-                   hour >= 12 ? 6 : 
-                   hour >= 6 ? 0 : 18;
-    
-    const date = new Date(now);
-    if (runHour === 18 && hour < 6) {
-        date.setUTCDate(date.getUTCDate() - 1);
-    }
-    
-    return {
-        date: date.toISOString().split('T')[0].replace(/-/g, ''),
-        hour: runHour.toString().padStart(2, '0')
-    };
+// Pure functions for model selection
+const isPointInBounds = (lat, lon, model) => {
+    const inLatRange = lat >= model.grid.lat.start && lat <= model.grid.lat.end;
+    const inLonRange = lon >= model.bounds.min && lon <= model.bounds.max;
+    return inLatRange && inLonRange;
 };
 
-const getGridLocation = (lat, lon) => {
-    const normalizedLon = lon < 0 ? lon + 360 : lon;
-    const latIdx = Math.round((lat - CONFIG.grid.lat.start) / CONFIG.grid.lat.resolution);
-    const lonIdx = Math.round((normalizedLon - CONFIG.grid.lon.start) / CONFIG.grid.lon.resolution);
+const findModelForLocation = (lat, lon, models) => {
+    const model = Object.entries(models)
+        .find(([_, m]) => isPointInBounds(lat, lon, m));
     
-    if (latIdx < 0 || latIdx >= CONFIG.grid.lat.size || 
-        lonIdx < 0 || lonIdx >= CONFIG.grid.lon.size) {
-        throw new Error(`Location (${lat}, ${lon}) is outside model bounds`);
+    if (!model) {
+        throw new Error('Location is outside all regional model bounds');
     }
     
+    return { id: model[0], ...model[1] };
+};
+
+// Pure functions for grid calculations
+const normalizeGridCoordinate = (value, isLongitude) => 
+    isLongitude && value < 0 ? value + 360 : value;
+
+const calculateGridIndex = (value, start, resolution) => 
+    Math.round((value - start) / resolution);
+
+const validateGridIndex = (index, size, dimension) => {
+    if (isNaN(index) || index < 0 || index >= size) {
+        throw new Error(`Invalid ${dimension} grid index: ${index} (max ${size - 1})`);
+    }
+    return index;
+};
+
+// Compose grid location functions
+const getGridLocation = (lat, lon, model) => {
+    logger.debug(`Calculating grid indices for lat=${lat}, lon=${lon} in ${model.id} model`);
+    
+    // Normalize coordinates
+    const normalizedLon = normalizeGridCoordinate(lon, true);
+    logger.debug(`Normalized longitude: ${normalizedLon}`);
+    
+    // Calculate indices
+    const latIdx = calculateGridIndex(lat, model.grid.lat.start, model.grid.lat.resolution);
+    const lonIdx = calculateGridIndex(normalizedLon, model.grid.lon.start, model.grid.lon.resolution);
+    
+    // Validate indices
+    validateGridIndex(latIdx, model.grid.lat.size, 'latitude');
+    validateGridIndex(lonIdx, model.grid.lon.size, 'longitude');
+    
+    logger.info(`Valid grid indices calculated: latIdx=${latIdx}, lonIdx=${lonIdx}`);
     return { latIdx, lonIdx };
 };
 
-const parseModelValue = line => {
-    const match = line.match(/\[\d+\]\[\d+\],\s*([-\d.]+)/);
-    const value = match ? parseFloat(match[1]) : null;
-    return (value !== null && !isNaN(value) && value < 9.9e19) ? value : null;
+// Error handling utility
+const logError = (message, error, level = 'error') => {
+    logger[level](`${message}: ${error.message}`, { error });
+    return null;
 };
 
-const processModelData = (lines) => {
-    const forecast = Array(CONFIG.forecastDays * CONFIG.periodsPerDay).fill().map(() => ({}));
-    let currentVar = null;
-    let timeIndex = 0;
+// Pure functions for model run selection
+const getAvailableModelRun = (now = new Date()) => {
+    const hour = now.getUTCHours();
+    
+    // Find the most recent available run
+    const availableRun = CONFIG.modelRuns.hours
+        .map(runHour => ({
+            hour: runHour,
+            availableAt: parseInt(runHour) + CONFIG.modelRuns.availableAfter[runHour]
+        }))
+        .reverse() // Start with most recent
+        .find(run => hour >= run.availableAt);
+    
+    if (!availableRun) {
+        // If no runs are available yet today, use yesterday's last run
+        const yesterday = new Date(now);
+        yesterday.setUTCDate(yesterday.getUTCDate() - 1);
+        return {
+            date: formatModelDate(yesterday),
+            hour: CONFIG.modelRuns.hours[CONFIG.modelRuns.hours.length - 1]
+        };
+    }
+    
+    return {
+        date: formatModelDate(now),
+        hour: availableRun.hour
+    };
+};
 
+const formatModelDate = date => 
+    date.toISOString().split('T')[0].replace(/-/g, '');
+
+// Pure functions for data processing
+const createTimePoint = (baseTime, index) => 
+    new Date(baseTime + index * CONFIG.forecast.periodHours * 60 * 60 * 1000).toISOString();
+
+const parseModelLine = line => {
+    const match = line.match(/\[\d+\]\[\d+\],\s*([-\d.]+)/);
+    if (!match) return null;
+    
+    const value = parseFloat(match[1]);
+    return (!isNaN(value) && value < 9.9e19) ? value : null;
+};
+
+const processModelData = (modelRun, lines) => {
+    // Calculate base time
+    const [year, month, day] = [
+        modelRun.date.slice(0, 4),
+        modelRun.date.slice(4, 6),
+        modelRun.date.slice(6, 8)
+    ].map(Number);
+    const baseTime = Date.UTC(year, month - 1, day, parseInt(modelRun.hour));
+    
+    // Initialize data structure
+    const timePoints = CONFIG.forecast.days * CONFIG.forecast.periodsPerDay;
+    const data = new Array(timePoints).fill().map((_, i) => ({
+        time: createTimePoint(baseTime, i)
+    }));
+    
+    // Process each variable
+    let currentVar = null;
+    let currentTimeIndex = 0;
+    
     lines.forEach(line => {
-        const varMatch = Object.values(CONFIG.variables)
-            .find(v => line.includes(`${v.key},`));
+        // Check if line defines a new variable
+        const varMatch = Object.entries(CONFIG.variables)
+            .find(([_, v]) => line.includes(`${v.key},`));
         
         if (varMatch) {
-            currentVar = varMatch;
-            timeIndex = 0;
+            currentVar = varMatch[1];
+            currentTimeIndex = 0;
             return;
         }
-
-        if (!currentVar || timeIndex >= forecast.length) return;
-
-        const value = parseModelValue(line);
-        if (value !== null) {
-            const varName = Object.entries(CONFIG.variables)
-                .find(([_, v]) => v === currentVar)[0];
-            
-            forecast[timeIndex] = {
-                ...forecast[timeIndex],
-                time: new Date(Date.now() + timeIndex * 3 * 60 * 60 * 1000).toISOString(),
-                [varName]: currentVar.convert(value)
-            };
-            timeIndex++;
-        }
+        
+        if (!currentVar || currentTimeIndex >= timePoints) return;
+        
+        const value = parseModelLine(line);
+        if (value === null) return;
+        
+        const varName = Object.entries(CONFIG.variables)
+            .find(([_, v]) => v === currentVar)[0];
+        
+        data[currentTimeIndex][varName] = currentVar.convert(value);
+        currentTimeIndex++;
     });
-
-    return forecast.filter(f => 
+    
+    // Filter for complete records
+    return data.filter(point => 
         Object.keys(CONFIG.variables)
-            .every(key => f[key] && !isNaN(parseFloat(f[key])))
+            .every(key => point[key] && !isNaN(parseFloat(point[key])))
     );
 };
 
-const calculateDailySummary = periods => ({
-    waveHeight: {
-        min: Math.min(...periods.map(p => parseFloat(p.waveHeight))),
-        max: Math.max(...periods.map(p => parseFloat(p.waveHeight))),
-        avg: parseFloat((periods.reduce((sum, p) => sum + parseFloat(p.waveHeight), 0) / periods.length).toFixed(1))
-    },
-    wavePeriod: {
-        min: Math.min(...periods.map(p => parseFloat(p.wavePeriod))),
-        max: Math.max(...periods.map(p => parseFloat(p.wavePeriod))),
-        avg: parseFloat((periods.reduce((sum, p) => sum + parseFloat(p.wavePeriod), 0) / periods.length).toFixed(1))
-    },
-    windSpeed: {
-        min: Math.min(...periods.map(p => parseFloat(p.windSpeed))),
-        max: Math.max(...periods.map(p => parseFloat(p.windSpeed))),
-        avg: parseFloat((periods.reduce((sum, p) => sum + parseFloat(p.windSpeed), 0) / periods.length).toFixed(1))
+const groupForecastByDay = forecast => {
+    const grouped = forecast.reduce((acc, period) => {
+        const date = period.time.split('T')[0];
+        if (!acc[date]) {
+            acc[date] = { date, periods: [] };
+        }
+        acc[date].periods.push(period);
+        return acc;
+    }, {});
+    
+    return Object.values(grouped);
+};
+
+// API request handling
+const checkModelAvailability = async (modelRun) => {
+    try {
+        // Check the directory listing first
+        const response = await axios.get(`${CONFIG.baseUrl}/${modelRun.date}`, {
+            timeout: CONFIG.request.timeout,
+            headers: { 'Accept-Encoding': 'gzip, deflate' }
+        });
+        
+        // Look for model run in directory listing
+        const modelRunExists = response.data.includes(`_${modelRun.hour}z`);
+        if (!modelRunExists) {
+            logger.warn(`Model run ${modelRun.date}_${modelRun.hour}z not found in directory listing`);
+            return false;
+        }
+        
+        return true;
+    } catch (error) {
+        logger.warn(`Failed to check model availability: ${error.message}`);
+        return false;
     }
-});
+};
+
+const retryRequest = async (url, attempt = 1) => {
+    try {
+        logger.info(`Attempt ${attempt} to fetch data from ${url}`);
+        return await axios.get(url, { 
+            timeout: CONFIG.request.timeout,
+            headers: { 'Accept-Encoding': 'gzip, deflate' }
+        });
+    } catch (error) {
+        if (attempt >= CONFIG.request.maxRetries) throw error;
+        
+        logger.warn(`Attempt ${attempt} failed, retrying in ${CONFIG.request.retryDelay}ms...`);
+        await new Promise(resolve => setTimeout(resolve, CONFIG.request.retryDelay));
+        return retryRequest(url, attempt + 1);
+    }
+};
 
 // Main forecast function
 async function getPointForecast(lat, lon) {
@@ -126,58 +291,101 @@ async function getPointForecast(lat, lon) {
         const { data: forecast } = await getOrSet(
             cacheKey,
             async () => {
-                const { latIdx, lonIdx } = getGridLocation(lat, lon);
-                const modelRun = getModelRun();
-                
-                const url = `${CONFIG.baseUrl}/${modelRun.date}/gfswave.${CONFIG.modelName}_${modelRun.hour}z.ascii?` +
-                    Object.values(CONFIG.variables)
-                        .map(v => `${v.key}[0:7][${latIdx}][${lonIdx}]`)
-                        .join(',');
+                try {
+                    const model = findModelForLocation(lat, lon, CONFIG.models);
+                    const { latIdx, lonIdx } = getGridLocation(lat, lon, model);
+                    const modelRun = getAvailableModelRun();
+                    
+                    // Check if model run is available
+                    const isAvailable = await checkModelAvailability(modelRun);
+                    if (!isAvailable) {
+                        // Try previous run
+                        const prevDate = new Date();
+                        prevDate.setUTCHours(prevDate.getUTCHours() - 6);
+                        const prevRun = getAvailableModelRun(prevDate);
+                        
+                        const prevAvailable = await checkModelAvailability(prevRun);
+                        if (!prevAvailable) {
+                            return logError('No recent model runs available', new Error('Data unavailable'));
+                        }
+                        
+                        logger.info(`Using previous model run ${prevRun.date}_${prevRun.hour}z`);
+                        Object.assign(modelRun, prevRun);
+                    }
 
-                logger.info(`Requesting forecast from: ${url}`);
-                const response = await axios.get(url);
-                
-                if (!response.data || response.data.includes('</html>')) {
-                    throw new Error(`Model data not available for ${modelRun.date}_${modelRun.hour}z`);
+                    const url = `${CONFIG.baseUrl}/${modelRun.date}/gfswave.${model.name}_${modelRun.hour}z.ascii?` +
+                        Object.values(CONFIG.variables)
+                            .map(v => `${v.key}[0:${CONFIG.forecast.days * CONFIG.forecast.periodsPerDay - 1}][${latIdx}][${lonIdx}]`)
+                            .join(',');
+
+                    const response = await retryRequest(url);
+                    if (!response.data || response.data.includes('</html>')) {
+                        return logError('Model data not available', new Error(`${modelRun.date}_${modelRun.hour}z`));
+                    }
+
+                    const validForecast = processModelData(modelRun, response.data.trim().split('\n'));
+                    if (!validForecast.length) {
+                        return logError('No valid forecast data found', new Error('Empty forecast'));
+                    }
+
+                    const groupedForecast = validForecast.reduce((acc, period) => {
+                        const date = period.time.split('T')[0];
+                        if (!acc[date]) {
+                            logger.debug(`Creating new group for date ${date}`);
+                            acc[date] = { date, periods: [] };
+                        }
+                        acc[date].periods.push(period);
+                        logger.debug(`Added period for ${date}: ${period.time} - Wave Height: ${period.waveHeight}ft`);
+                        return acc;
+                    }, {});
+
+                    logger.info(`Grouped forecast into ${Object.keys(groupedForecast).length} days`);
+                    Object.entries(groupedForecast).forEach(([date, day]) => {
+                        logger.info(`${date}: ${day.periods.length} periods`);
+                    });
+
+                    return {
+                        location: { latitude: lat, longitude: lon },
+                        generated: new Date().toISOString(),
+                        modelRun: `${modelRun.date}${modelRun.hour}z`,
+                        model: model.id,
+                        days: Object.values(groupedForecast).map(day => ({
+                            date: day.date,
+                            summary: calculateDailySummary(day.periods),
+                            periods: day.periods
+                        }))
+                    };
+                } catch (error) {
+                    return logError('Error fetching model data', error);
                 }
-
-                const validForecast = processModelData(response.data.trim().split('\n'));
-                
-                if (!validForecast.length) {
-                    throw new Error('No valid forecast data found');
-                }
-
-                // Group by days
-                const groupedForecast = validForecast.reduce((acc, period) => {
-                    const date = period.time.split('T')[0];
-                    if (!acc[date]) acc[date] = { date, periods: [] };
-                    acc[date].periods.push(period);
-                    return acc;
-                }, {});
-
-                return {
-                    location: { latitude: lat, longitude: lon },
-                    generated: new Date().toISOString(),
-                    modelRun: `${modelRun.date}${modelRun.hour}z`,
-                    units: Object.fromEntries(
-                        Object.entries(CONFIG.variables)
-                            .map(([name, config]) => [name, config.unit])
-                    ),
-                    days: Object.values(groupedForecast).map(day => ({
-                        date: day.date,
-                        summary: calculateDailySummary(day.periods),
-                        periods: day.periods
-                    }))
-                };
             },
-            CONFIG.cacheHours * 60 * 60
+            CONFIG.cache.hours * 60 * 60
         );
 
         return forecast;
-
     } catch (error) {
-        logger.error(`Forecast error for ${lat}N ${lon}W: ${error.message}`);
-        throw new Error(`Unable to get wave forecast: ${error.message}`);
+        return logError(`Forecast error for ${lat}N ${lon}W`, error);
+    }
+}
+
+// Helper function to calculate daily summary
+function calculateDailySummary(periods) {
+    if (!periods?.length) return null;
+    
+    try {
+        const calcStats = values => ({
+            min: Math.min(...values),
+            max: Math.max(...values),
+            avg: parseFloat((values.reduce((a, b) => a + b, 0) / values.length).toFixed(1))
+        });
+
+        return {
+            waveHeight: calcStats(periods.map(p => parseFloat(p.waveHeight))),
+            wavePeriod: calcStats(periods.map(p => parseFloat(p.wavePeriod))),
+            windSpeed: calcStats(periods.map(p => parseFloat(p.windSpeed)))
+        };
+    } catch (error) {
+        return logError('Error calculating daily summary', error);
     }
 }
 
