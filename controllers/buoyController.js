@@ -3,35 +3,7 @@ const { logger } = require('../utils/logger');
 const ndbcService = require('../services/ndbcService');
 const waveModelService = require('../services/waveModelService');
 const waveConditionsService = require('../services/waveConditionsService');
-const CONFIG = require('../config/waveModelConfig');
-
-/**
- * Calculate cache duration until next model run
- * @returns {number} Cache duration in seconds
- */
-const calculateCacheDuration = () => {
-    const now = new Date();
-    const currentHour = now.getUTCHours();
-    const currentMinute = now.getUTCMinutes();
-
-    // Find next model run
-    const modelRuns = CONFIG.modelRuns.hours.map(h => parseInt(h));
-    const nextRun = modelRuns.find(hour => hour > currentHour) || modelRuns[0];
-    
-    // Calculate time until next run is available
-    let hoursUntilNextRun = nextRun > currentHour ? 
-        nextRun - currentHour : 
-        (24 - currentHour) + nextRun;
-    
-    // Add availability delay
-    hoursUntilNextRun += CONFIG.modelRuns.availableAfter[nextRun.toString().padStart(2, '0')];
-
-    // Convert to seconds and subtract elapsed minutes
-    const cacheDuration = (hoursUntilNextRun * 60 - currentMinute) * 60;
-
-    // Cap at maximum cache duration from config
-    return Math.min(cacheDuration, CONFIG.cache.hours * 3600);
-};
+const { getModelRunCacheDuration } = require('../utils/cacheManager');
 
 /**
  * Get buoy data by ID
@@ -52,10 +24,8 @@ const getBuoyData = async (req, res, next) => {
             throw new AppError(400, 'Invalid buoy ID format');
         }
 
-        // Calculate dynamic cache duration
-        const cacheDuration = calculateCacheDuration();
-        
-        // Set response headers for caching
+        // Get cache duration from cache manager
+        const cacheDuration = getModelRunCacheDuration();
         res.set('Cache-Control', `public, max-age=${cacheDuration}`);
         res.set('Vary', 'Accept-Encoding');
 
@@ -198,7 +168,6 @@ const getBuoyData = async (req, res, next) => {
 
         res.status(200).json(cleanResponse);
     } catch (error) {
-        // Enhanced error logging
         logger.error(`Error processing buoy data request`, {
             buoyId,
             error: error.message,
